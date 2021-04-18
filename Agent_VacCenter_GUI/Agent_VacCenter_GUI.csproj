@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{82E21D67-EF12-4AEF-AB8E-0C53DAEA3B6B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Agent_VacCenter_GUI</RootNamespace>
+    <AssemblyName>Agent_VacCenter_GUI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ABACore, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\ABACore.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="agents\AgentCakarne.cs" />
+    <Compile Include="agents\AgentModelu.cs" />
+    <Compile Include="agents\AgentOckovania.cs" />
+    <Compile Include="agents\AgentOkolia.cs" />
+    <Compile Include="agents\AgentPresunu.cs" />
+    <Compile Include="agents\AgentRegistracie.cs" />
+    <Compile Include="agents\AgentVakCentra.cs" />
+    <Compile Include="agents\AgentVysetrenia.cs" />
+    <Compile Include="continualAssistants\ProcessCakania.cs" />
+    <Compile Include="continualAssistants\ProcessOckovania.cs" />
+    <Compile Include="continualAssistants\ProcessPresunu.cs" />
+    <Compile Include="continualAssistants\ProcessRegistracie.cs" />
+    <Compile Include="continualAssistants\ProcessVysetrenia.cs" />
+    <Compile Include="continualAssistants\SchedulerPrichodov.cs" />
+    <Compile Include="entities\Pacient.cs" />
+    <Compile Include="entities\PohyblivaEntita.cs" />
+    <Compile Include="entities\Pracovnik.cs" />
+    <Compile Include="entities\Sestricka.cs" />
+    <Compile Include="AppGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppGUI.Designer.cs">
+      <DependentUpon>AppGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="managers\ManagerCakarne.cs" />
+    <Compile Include="managers\ManagerModelu.cs" />
+    <Compile Include="managers\ManagerOckovania.cs" />
+    <Compile Include="managers\ManagerOkolia.cs" />
+    <Compile Include="managers\ManagerPresunu.cs" />
+    <Compile Include="managers\ManagerRegistracie.cs" />
+    <Compile Include="managers\ManagerVakCentra.cs" />
+    <Compile Include="managers\ManagerVysetrenia.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="simulation\EntitySimulacie.cs" />
+    <Compile Include="simulation\Lokacie.cs" />
+    <Compile Include="simulation\Mc.cs" />
+    <Compile Include="simulation\SimId.cs" />
+    <Compile Include="simulation\Sprava.cs" />
+    <Compile Include="simulation\SpravaPresunu.cs" />
+    <Compile Include="simulation\VacCenterSimulation.cs" />
+    <EmbeddedResource Include="AppGUI.resx">
+      <DependentUpon>AppGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ABACore.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="instantAssistants\" />
+    <Folder Include="petriNets\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
