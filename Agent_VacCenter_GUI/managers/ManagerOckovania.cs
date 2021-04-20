@@ -31,9 +31,9 @@ namespace managers
         //meta! sender="ProcessOckovania", id="46", type="Notice"
         public void ProcessNoticeKoniecOckovania(MessageForm message)
         {
-            message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
             NavratPracovnika(message);
-            Notice(message);
+            message.Code = Mc.ZaockujPacienta;
+            Response(message);
 
             if (Front.Count > 0)
             {
@@ -75,6 +75,7 @@ namespace managers
         {
             var sprava = message as Sprava;
             message.Addressee = MyAgent.ProcessOckovania;
+            message.Code = Mc.NoticeZaciatokOckovania;
             sprava.ZaciatokObsluhy = MySim.CurrentTime;
             if (!MyAgent.ObsluhaVolna)
             {
@@ -110,7 +111,7 @@ namespace managers
         {
             switch (message.Code)
             {
-                case Mc.NoticeZaciatokOckovania:
+                case Mc.ZaockujPacienta:
                     ProcessNoticeZaciatokOckovania(message);
                     break;
 

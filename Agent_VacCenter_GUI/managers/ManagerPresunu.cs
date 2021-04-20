@@ -27,13 +27,15 @@ namespace managers
         public void ProcessNoticeZaciatokPresunu(MessageForm message)
         {
             message.Addressee = MyAgent.ProcessPresunu;
+            message.Code = Mc.NoticeZaciatokPresunu;
             Notice(message);
         }
 
         public void ProcessNoticeKoniecPresunu(MessageForm message)
         {
-            message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
-            Notice(message);
+            message.Code = Mc.VykonajPresun;
+            //message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
+            Response(message);
         }
 
         //meta! userInfo="Process messages defined in code", id="0"
@@ -53,7 +55,7 @@ namespace managers
         {
             switch (message.Code)
             {
-                case Mc.NoticeZaciatokPresunu:
+                case Mc.VykonajPresun:
                     ProcessNoticeZaciatokPresunu(message);
                     break;
 

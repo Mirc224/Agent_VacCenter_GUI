@@ -33,6 +33,7 @@ namespace managers
         {
             var sprava = message as Sprava;
             message.Addressee = MyAgent.ProcessVysetrenia;
+            message.Code = Mc.NoticeZaciatokVysetrenia;
             sprava.ZaciatokObsluhy = MySim.CurrentTime;
             if (!MyAgent.ObsluhaVolna)
             {
@@ -65,9 +66,9 @@ namespace managers
         //meta! sender="ProcessVysetrenia", id="41", type="Notice"
         public void ProcessNoticeKoniecVysetrenia(MessageForm message)
         {
-            message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
             NavratPracovnika(message);
-            Notice(message);
+            message.Code = Mc.VysetriPacienta;
+            Response(message);
 
             if (Front.Count > 0)
             {
@@ -111,7 +112,7 @@ namespace managers
         {
             switch (message.Code)
             {
-                case Mc.NoticeZaciatokVysetrenia:
+                case Mc.VysetriPacienta:
                     ProcessNoticeZaciatokVysetrenia(message);
                     break;
 

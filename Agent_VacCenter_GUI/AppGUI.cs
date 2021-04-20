@@ -5,17 +5,27 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Agent_VacCenter_GUI
 {
+    public class ParametreSimulace
+    {
+        public int replikacie;
+        public double casSimulacie;
+    }
     public partial class AppGUI : Form
     {
+        delegate void SetTimeCallback(OSPABA.Simulation sim);
         private simulation.VacCenterSimulation _simulation;
         public AppGUI()
         {
             _simulation = new simulation.VacCenterSimulation(this);
+            _simulation.OnSimulationDidFinish(OnStart);
+            _simulation.SetSimSpeed(1, 1);
+            _simulation.OnRefreshUI(OnUIRefresh);
             InitializeComponent();
             Init();
         }
@@ -56,13 +66,60 @@ namespace Agent_VacCenter_GUI
             tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemerneVytazenieSestricka/ replikacia).ToString();
         }
 
+        public void OnRefresh(OSPABA.Simulation sim)
+        {
+            Console.WriteLine("Refresh");
+        }
+
+        public void OnStart(OSPABA.Simulation sim)
+        {
+            var simulacia = sim as simulation.VacCenterSimulation;
+            InicializujTabulku(tabulkaRegistracia, simulacia.AgentRegistracie.StatistikyPracoviska.UdajeOPracovnikoch);
+            InicializujTabulku(tabulkaVysetrenie, simulacia.AgentVysetrenia.StatistikyPracoviska.UdajeOPracovnikoch);
+            InicializujTabulku(tabulkaOckovanie, simulacia.AgentOckovania.StatistikyPracoviska.UdajeOPracovnikoch);
+        }
+
+        public void OnUIRefresh(OSPABA.Simulation sim)
+        {
+            var simulacia = sim as simulation.VacCenterSimulation;
+            if(casLabel.InvokeRequired)
+            {
+
+                SetTimeCallback d = new SetTimeCallback(OnUIRefresh);
+                Invoke(d, new object[] { sim });
+            }
+            else
+            {
+                TimeSpan t = TimeSpan.FromSeconds(simulacia.RealnyCasVSekundach);
+                var startTime = t.ToString(@"hh\:mm\:ss");
+                casLabel.Text = startTime;
+            }
+            
+        }
+
+        private void InicializujTabulku(DataGridView tabulka, string[][] udaje)
+        {
+            tabulka.Rows.Clear();
+            for (int i = 0; i < udaje.Length; ++i)
+            {
+                tabulka.Rows.Add(udaje[i]);
+            }
+        }
+
         private void startStopButton_Click(object sender, EventArgs e)
         {
-            var replikacie = 4;
+            var replikacie = 1;
             //var casReplikacie = 540 * 60;
-            var casReplikacie = 540 * 600;
+            var casReplikacie = 540 * 60;
+            Thread thread = new Thread(new ParameterizedThreadStart(SpustSimulaciu));
+            thread.Start(new ParametreSimulace() { replikacie = replikacie, casSimulacie = casReplikacie});
+            //_simulation.Simulate(replikacie, casReplikacie);
+        }
 
-            _simulation.Simulate(replikacie, casReplikacie);
+        private void SpustSimulaciu(object obj)
+        {
+            var parametre = obj as ParametreSimulace;
+            _simulation.Simulate(parametre.replikacie, parametre.casSimulacie);
         }
     }
 }

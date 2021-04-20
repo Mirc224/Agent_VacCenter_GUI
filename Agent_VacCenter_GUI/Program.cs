@@ -18,16 +18,17 @@ namespace Agent_VacCenter_GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new AppGUI());
-            /*            Console.WriteLine("Simulating...");
+            Console.WriteLine("Simulating...");
 
-                        var replikacie = 4;
-                        //var casReplikacie = 540 * 60;
-                        var casReplikacie = 540 * 6000;
+/*            var replikacie = 1000;
+            var casReplikacie = 540 * 60;
+            //var casReplikacie = 540 * 6000;
 
 
-                        new VacCenterSimulation(null).Simulate(replikacie, casReplikacie);
+            new VacCenterSimulation(null).Simulate(replikacie, casReplikacie);
 
-                        Console.WriteLine("Finished...");*/
+            Console.WriteLine("Finished...");*/
+
         }
     }
 }

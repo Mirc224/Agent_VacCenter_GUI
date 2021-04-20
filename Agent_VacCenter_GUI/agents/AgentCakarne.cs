@@ -33,6 +33,7 @@ namespace agents
 			ProcessCakania = new ProcessCakania(SimId.ProcessCakania, MySim, this);
 			AddOwnMessage(Mc.NoticeKoniecCakania);
 			AddOwnMessage(Mc.NoticeZaciatokCakania);
+			AddOwnMessage(Mc.PacientCakaj);
 
 			DlzkaRadu = new WStat(MySim);
 		}

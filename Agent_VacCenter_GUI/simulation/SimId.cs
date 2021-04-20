@@ -20,7 +20,7 @@ namespace simulation
 		public const int ManagerOckovania = 106;
 		public const int ManagerCakarne = 111;
 		public const int ManagerPresunu = 112;
-		public const int ProcessPrechodu = 1006;
+		public const int ProcessPresunu = 1006;
 		public const int ProcessVysetrenia = 1003;
 		public const int ProcessOckovania = 1004;
 		public const int ProcessCakania = 1005;

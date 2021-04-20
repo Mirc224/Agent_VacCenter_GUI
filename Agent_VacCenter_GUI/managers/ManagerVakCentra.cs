@@ -30,21 +30,21 @@ namespace managers
         public void ProcessNoticeKoniecOckovania(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentCakarne;
-            message.Code = Mc.NoticeZaciatokCakania;
+            message.Code = Mc.PacientCakaj;
             
             var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostCakaren, message as Sprava);
 
-            Notice(spravaPresunu);
+            Request(spravaPresunu);
         }
 
         //meta! sender="AgentRegistracie", id="20", type="Notice"
         public void ProcessNoticeKoniecRegistracie(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentVysetrenia;
-            message.Code = Mc.NoticeZaciatokVysetrenia;
+            message.Code = Mc.VysetriPacienta;
             var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostVysetrenie, message as Sprava);
             
-            Notice(spravaPresunu);
+            Request(spravaPresunu);
         }
 
         //meta! sender="AgentModelu", id="17", type="Notice"
@@ -52,11 +52,11 @@ namespace managers
         {
 
             message.Addressee = ((VacCenterSimulation)MySim).AgentRegistracie;
-            message.Code = Mc.NoticeZaciatokRegistracie;
+            message.Code = Mc.ZaregistrujPacienta;
 
             //var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostRegistracia, message as Sprava);
 
-            Notice(message);
+            Request(message);
         }
 
         public SpravaPresunu NaplanujPresun(int entitaPresunu, int lokaciaPresunu, Sprava povodnaSprava)
@@ -65,7 +65,7 @@ namespace managers
             spravaPresunu.Addressee = ((VacCenterSimulation)MySim).AgentPresunu;
             spravaPresunu.EntitaPresunu = entitaPresunu;
             spravaPresunu.CielovaLokacia = lokaciaPresunu;
-            spravaPresunu.Code = Mc.NoticeZaciatokPresunu;
+            spravaPresunu.Code = Mc.VykonajPresun;
             return spravaPresunu;
         }
 
@@ -73,11 +73,11 @@ namespace managers
         public void ProcessNoticeKoniecVysetrenia(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentOckovania;
-            message.Code = Mc.NoticeZaciatokOckovania;
+            message.Code = Mc.ZaockujPacienta;
 
             var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostOckovanie, message as Sprava);
 
-            Notice(spravaPresunu);
+            Request(spravaPresunu);
         }
 
         //meta! sender="AgentCakarne", id="52", type="Notice"
@@ -91,7 +91,10 @@ namespace managers
         public void ProcessNoticeKoniecPresunu(MessageForm message)
         {
             var povodnaSprava = (message as SpravaPresunu).PovodnaSprava;
-            Notice(povodnaSprava);
+            //if (povodnaSprava.Code == Mc.PacientCakaj)
+            Request(povodnaSprava);
+/*            else
+                Notice(povodnaSprava);*/
         }
         //meta! userInfo="Process messages defined in code", id="0"
         public void ProcessDefault(MessageForm message)
@@ -113,23 +116,20 @@ namespace managers
                 case Mc.NoticePrichodPacienta:
                     ProcessNoticePrichodPacienta(message);
                     break;
-
-                case Mc.NoticeKoniecVysetrenia:
+                case Mc.VysetriPacienta:
                     ProcessNoticeKoniecVysetrenia(message);
                     break;
-
-                case Mc.NoticeKoniecOckovania:
+                case Mc.ZaockujPacienta:
                     ProcessNoticeKoniecOckovania(message);
                     break;
-
-                case Mc.NoticeKoniecRegistracie:
+                case Mc.ZaregistrujPacienta:
                     ProcessNoticeKoniecRegistracie(message);
                     break;
-                case Mc.NoticeKoniecCakania:
-                    ProcessNoticeKoniecCakania(message);
-                    break;
-                case Mc.NoticeKoniecPresunu:
+                case Mc.VykonajPresun:
                     ProcessNoticeKoniecPresunu(message);
+                    break;
+                case Mc.PacientCakaj:
+                    ProcessNoticeKoniecCakania(message);
                     break;
                 default:
                     ProcessDefault(message);

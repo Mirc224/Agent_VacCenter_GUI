@@ -23,12 +23,12 @@ namespace agents
         private void Init()
         {
             new ManagerVakCentra(SimId.ManagerVakCentra, MySim, this);
-            AddOwnMessage(Mc.NoticeKoniecOckovania);
-            AddOwnMessage(Mc.NoticeKoniecRegistracie);
             AddOwnMessage(Mc.NoticePrichodPacienta);
-            AddOwnMessage(Mc.NoticeKoniecVysetrenia);
-            AddOwnMessage(Mc.NoticeKoniecCakania);
-            AddOwnMessage(Mc.NoticeKoniecPresunu);
+            AddOwnMessage(Mc.VykonajPresun);
+            AddOwnMessage(Mc.ZaregistrujPacienta);
+            AddOwnMessage(Mc.VysetriPacienta);
+            AddOwnMessage(Mc.ZaockujPacienta);
+            AddOwnMessage(Mc.PacientCakaj);
         }
         //meta! tag="end"
     }

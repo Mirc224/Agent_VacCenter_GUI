@@ -24,9 +24,10 @@ namespace agents
 		private void Init()
 		{
 			new ManagerPresunu(SimId.ManagerPresunu, MySim, this);
-			ProcessPresunu = new ProcessPresunu(SimId.ProcessPrechodu, MySim, this);
+			ProcessPresunu = new ProcessPresunu(SimId.ProcessPresunu, MySim, this);
 			AddOwnMessage(Mc.NoticeKoniecPresunu);
 			AddOwnMessage(Mc.NoticeZaciatokPresunu);
+			AddOwnMessage(Mc.VykonajPresun);
 		}
 		//meta! tag="end"
 	}

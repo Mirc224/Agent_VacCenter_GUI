@@ -27,16 +27,18 @@ namespace managers
 		//meta! sender="ProcessCakania", id="57", type="Notice"
 		public void ProcessNoticeKoniecCakania(MessageForm message)
 		{
-			message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
+			//message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
+			message.Code = Mc.PacientCakaj;
 			--MyAgent.PocetLudiVCakarni;
 			MyAgent.DlzkaRadu.AddSample(MyAgent.PocetLudiVCakarni);
-			Notice(message);
+			Response(message);
 		}
 
 		//meta! sender="AgentVakCentra", id="51", type="Notice"
 		public void ProcessNoticeZaciatokCakania(MessageForm message)
 		{
 			message.Addressee = MyAgent.ProcessCakania;
+			message.Code = Mc.NoticeZaciatokCakania;
 			((Sprava)message).ZaciatokObsluhy = MySim.CurrentTime;
 			++MyAgent.PocetLudiVCakarni;
 			MyAgent.DlzkaRadu.AddSample(MyAgent.PocetLudiVCakarni);
@@ -65,10 +67,13 @@ namespace managers
 			break;
 
 			case Mc.NoticeZaciatokCakania:
+                    System.Console.WriteLine("zle");
 				ProcessNoticeZaciatokCakania(message);
 			break;
-
-			default:
+				case Mc.PacientCakaj:
+					ProcessNoticeZaciatokCakania(message);
+					break;
+				default:
 				ProcessDefault(message);
 			break;
 			}

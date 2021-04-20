@@ -32,9 +32,9 @@ namespace managers
 		//meta! sender="ProcessRegistracie", id="35", type="Notice"
 		public void ProcessNoticeKoniecRegistracie(MessageForm message)
 		{
-			message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
 			NavratPracovnika(message);
-			Notice(message);
+			message.Code = Mc.ZaregistrujPacienta;
+			Response(message);
 
 			if(Front.Count > 0)
             {
@@ -65,6 +65,7 @@ namespace managers
 		public void ProcessNoticeZaciatokRegistracie(MessageForm message)
 		{
 			var sprava = message as Sprava;
+			message.Code = Mc.NoticeZaciatokRegistracie;
 			message.Addressee = MyAgent.ProcessRegistracie;
 			sprava.ZaciatokObsluhy = MySim.CurrentTime;
 			if(!MyAgent.ObsluhaVolna)
@@ -110,7 +111,7 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.NoticeZaciatokRegistracie:
+			case Mc.ZaregistrujPacienta:
 				ProcessNoticeZaciatokRegistracie(message);
 			break;
 

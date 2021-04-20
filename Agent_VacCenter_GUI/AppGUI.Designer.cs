@@ -47,30 +47,28 @@ namespace Agent_VacCenter_GUI
             this.tabRegistracia = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabulkaRegistracia = new System.Windows.Forms.DataGridView();
-            this.cisloPracovnikaRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stavPracovnikaRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.obsluhovanyPacientRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.obedovalRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vytazenieRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabVysetrenie = new System.Windows.Forms.TabPage();
             this.vysetreniePanel = new System.Windows.Forms.Panel();
             this.tabulkaVysetrenie = new System.Windows.Forms.DataGridView();
-            this.cisloPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stavPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.obsluhovanyPacientVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.obedovalVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vytazenieVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabOckovanie = new System.Windows.Forms.TabPage();
             this.ockovaniePanel = new System.Windows.Forms.Panel();
             this.tabulkaOckovanie = new System.Windows.Forms.DataGridView();
-            this.cisloPracovnikaOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stavPracovnikaOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.obsluhovanyPacientOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pocetStriekaciekOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.obedovalOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vytazenieOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabZavislost = new System.Windows.Forms.TabPage();
             this.startStopButton = new System.Windows.Forms.Button();
+            this.cisloPracovnikaRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stavPracovnikaRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.obedovalRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vytazenieRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cisloPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stavPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.obedovalVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vytazenieVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cisloPracovnikaOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stavPracovnikaOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.obedovalOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vytazenieOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pocetStriekaciekOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.casLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabReplikacie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaReplikacie)).BeginInit();
@@ -277,7 +275,6 @@ namespace Agent_VacCenter_GUI
             this.tabulkaRegistracia.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cisloPracovnikaRegistracia,
             this.stavPracovnikaRegistracia,
-            this.obsluhovanyPacientRegistracia,
             this.obedovalRegistracia,
             this.vytazenieRegistracia});
             this.tabulkaRegistracia.Location = new System.Drawing.Point(3, 64);
@@ -288,46 +285,6 @@ namespace Agent_VacCenter_GUI
             this.tabulkaRegistracia.RowTemplate.Height = 24;
             this.tabulkaRegistracia.Size = new System.Drawing.Size(1069, 502);
             this.tabulkaRegistracia.TabIndex = 0;
-            // 
-            // cisloPracovnikaRegistracia
-            // 
-            this.cisloPracovnikaRegistracia.HeaderText = "Číslo pracovníka";
-            this.cisloPracovnikaRegistracia.MinimumWidth = 6;
-            this.cisloPracovnikaRegistracia.Name = "cisloPracovnikaRegistracia";
-            this.cisloPracovnikaRegistracia.ReadOnly = true;
-            this.cisloPracovnikaRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // stavPracovnikaRegistracia
-            // 
-            this.stavPracovnikaRegistracia.HeaderText = "Stav";
-            this.stavPracovnikaRegistracia.MinimumWidth = 6;
-            this.stavPracovnikaRegistracia.Name = "stavPracovnikaRegistracia";
-            this.stavPracovnikaRegistracia.ReadOnly = true;
-            this.stavPracovnikaRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // obsluhovanyPacientRegistracia
-            // 
-            this.obsluhovanyPacientRegistracia.HeaderText = "Obsluhovaný pacient";
-            this.obsluhovanyPacientRegistracia.MinimumWidth = 6;
-            this.obsluhovanyPacientRegistracia.Name = "obsluhovanyPacientRegistracia";
-            this.obsluhovanyPacientRegistracia.ReadOnly = true;
-            this.obsluhovanyPacientRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // obedovalRegistracia
-            // 
-            this.obedovalRegistracia.HeaderText = "Obedoval";
-            this.obedovalRegistracia.MinimumWidth = 6;
-            this.obedovalRegistracia.Name = "obedovalRegistracia";
-            this.obedovalRegistracia.ReadOnly = true;
-            this.obedovalRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // vytazenieRegistracia
-            // 
-            this.vytazenieRegistracia.HeaderText = "Vyťaženie";
-            this.vytazenieRegistracia.MinimumWidth = 6;
-            this.vytazenieRegistracia.Name = "vytazenieRegistracia";
-            this.vytazenieRegistracia.ReadOnly = true;
-            this.vytazenieRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tabVysetrenie
             // 
@@ -360,7 +317,6 @@ namespace Agent_VacCenter_GUI
             this.tabulkaVysetrenie.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cisloPracovnikaVysetrenie,
             this.stavPracovnikaVysetrenie,
-            this.obsluhovanyPacientVysetrenie,
             this.obedovalVysetrenie,
             this.vytazenieVysetrenie});
             this.tabulkaVysetrenie.Location = new System.Drawing.Point(3, 61);
@@ -371,45 +327,6 @@ namespace Agent_VacCenter_GUI
             this.tabulkaVysetrenie.RowTemplate.Height = 24;
             this.tabulkaVysetrenie.Size = new System.Drawing.Size(1072, 505);
             this.tabulkaVysetrenie.TabIndex = 1;
-            // 
-            // cisloPracovnikaVysetrenie
-            // 
-            this.cisloPracovnikaVysetrenie.HeaderText = "Číslo pracovníka";
-            this.cisloPracovnikaVysetrenie.MinimumWidth = 6;
-            this.cisloPracovnikaVysetrenie.Name = "cisloPracovnikaVysetrenie";
-            this.cisloPracovnikaVysetrenie.ReadOnly = true;
-            this.cisloPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // stavPracovnikaVysetrenie
-            // 
-            this.stavPracovnikaVysetrenie.HeaderText = "Stav";
-            this.stavPracovnikaVysetrenie.MinimumWidth = 6;
-            this.stavPracovnikaVysetrenie.Name = "stavPracovnikaVysetrenie";
-            this.stavPracovnikaVysetrenie.ReadOnly = true;
-            this.stavPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // obsluhovanyPacientVysetrenie
-            // 
-            this.obsluhovanyPacientVysetrenie.HeaderText = "Obsluhovaný pacient";
-            this.obsluhovanyPacientVysetrenie.MinimumWidth = 6;
-            this.obsluhovanyPacientVysetrenie.Name = "obsluhovanyPacientVysetrenie";
-            this.obsluhovanyPacientVysetrenie.ReadOnly = true;
-            this.obsluhovanyPacientVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // obedovalVysetrenie
-            // 
-            this.obedovalVysetrenie.HeaderText = "Obedoval";
-            this.obedovalVysetrenie.MinimumWidth = 6;
-            this.obedovalVysetrenie.Name = "obedovalVysetrenie";
-            this.obedovalVysetrenie.ReadOnly = true;
-            this.obedovalVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // vytazenieVysetrenie
-            // 
-            this.vytazenieVysetrenie.HeaderText = "Vyťaženie";
-            this.vytazenieVysetrenie.MinimumWidth = 6;
-            this.vytazenieVysetrenie.Name = "vytazenieVysetrenie";
-            this.vytazenieVysetrenie.ReadOnly = true;
             // 
             // tabOckovanie
             // 
@@ -442,10 +359,9 @@ namespace Agent_VacCenter_GUI
             this.tabulkaOckovanie.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cisloPracovnikaOckovanie,
             this.stavPracovnikaOckovanie,
-            this.obsluhovanyPacientOckovanie,
-            this.pocetStriekaciekOckovanie,
             this.obedovalOckovanie,
-            this.vytazenieOckovanie});
+            this.vytazenieOckovanie,
+            this.pocetStriekaciekOckovanie});
             this.tabulkaOckovanie.Location = new System.Drawing.Point(3, 61);
             this.tabulkaOckovanie.Name = "tabulkaOckovanie";
             this.tabulkaOckovanie.ReadOnly = true;
@@ -454,53 +370,6 @@ namespace Agent_VacCenter_GUI
             this.tabulkaOckovanie.RowTemplate.Height = 24;
             this.tabulkaOckovanie.Size = new System.Drawing.Size(1072, 505);
             this.tabulkaOckovanie.TabIndex = 1;
-            // 
-            // cisloPracovnikaOckovanie
-            // 
-            this.cisloPracovnikaOckovanie.HeaderText = "Číslo pracovníka";
-            this.cisloPracovnikaOckovanie.MinimumWidth = 6;
-            this.cisloPracovnikaOckovanie.Name = "cisloPracovnikaOckovanie";
-            this.cisloPracovnikaOckovanie.ReadOnly = true;
-            this.cisloPracovnikaOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // stavPracovnikaOckovanie
-            // 
-            this.stavPracovnikaOckovanie.HeaderText = "Stav";
-            this.stavPracovnikaOckovanie.MinimumWidth = 6;
-            this.stavPracovnikaOckovanie.Name = "stavPracovnikaOckovanie";
-            this.stavPracovnikaOckovanie.ReadOnly = true;
-            this.stavPracovnikaOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // obsluhovanyPacientOckovanie
-            // 
-            this.obsluhovanyPacientOckovanie.HeaderText = "Obsluhovaný pacient";
-            this.obsluhovanyPacientOckovanie.MinimumWidth = 6;
-            this.obsluhovanyPacientOckovanie.Name = "obsluhovanyPacientOckovanie";
-            this.obsluhovanyPacientOckovanie.ReadOnly = true;
-            this.obsluhovanyPacientOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // pocetStriekaciekOckovanie
-            // 
-            this.pocetStriekaciekOckovanie.HeaderText = "Počet striekačiek";
-            this.pocetStriekaciekOckovanie.MinimumWidth = 6;
-            this.pocetStriekaciekOckovanie.Name = "pocetStriekaciekOckovanie";
-            this.pocetStriekaciekOckovanie.ReadOnly = true;
-            this.pocetStriekaciekOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // obedovalOckovanie
-            // 
-            this.obedovalOckovanie.HeaderText = "Obedoval";
-            this.obedovalOckovanie.MinimumWidth = 6;
-            this.obedovalOckovanie.Name = "obedovalOckovanie";
-            this.obedovalOckovanie.ReadOnly = true;
-            this.obedovalOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // vytazenieOckovanie
-            // 
-            this.vytazenieOckovanie.HeaderText = "Vyťaženie";
-            this.vytazenieOckovanie.MinimumWidth = 6;
-            this.vytazenieOckovanie.Name = "vytazenieOckovanie";
-            this.vytazenieOckovanie.ReadOnly = true;
             // 
             // tabZavislost
             // 
@@ -522,11 +391,124 @@ namespace Agent_VacCenter_GUI
             this.startStopButton.UseVisualStyleBackColor = true;
             this.startStopButton.Click += new System.EventHandler(this.startStopButton_Click);
             // 
+            // cisloPracovnikaRegistracia
+            // 
+            this.cisloPracovnikaRegistracia.HeaderText = "Číslo pracovníka";
+            this.cisloPracovnikaRegistracia.MinimumWidth = 6;
+            this.cisloPracovnikaRegistracia.Name = "cisloPracovnikaRegistracia";
+            this.cisloPracovnikaRegistracia.ReadOnly = true;
+            this.cisloPracovnikaRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // stavPracovnikaRegistracia
+            // 
+            this.stavPracovnikaRegistracia.HeaderText = "Stav";
+            this.stavPracovnikaRegistracia.MinimumWidth = 6;
+            this.stavPracovnikaRegistracia.Name = "stavPracovnikaRegistracia";
+            this.stavPracovnikaRegistracia.ReadOnly = true;
+            this.stavPracovnikaRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // obedovalRegistracia
+            // 
+            this.obedovalRegistracia.HeaderText = "Obedoval";
+            this.obedovalRegistracia.MinimumWidth = 6;
+            this.obedovalRegistracia.Name = "obedovalRegistracia";
+            this.obedovalRegistracia.ReadOnly = true;
+            this.obedovalRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // vytazenieRegistracia
+            // 
+            this.vytazenieRegistracia.HeaderText = "Vyťaženie";
+            this.vytazenieRegistracia.MinimumWidth = 6;
+            this.vytazenieRegistracia.Name = "vytazenieRegistracia";
+            this.vytazenieRegistracia.ReadOnly = true;
+            this.vytazenieRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cisloPracovnikaVysetrenie
+            // 
+            this.cisloPracovnikaVysetrenie.HeaderText = "Číslo pracovníka";
+            this.cisloPracovnikaVysetrenie.MinimumWidth = 6;
+            this.cisloPracovnikaVysetrenie.Name = "cisloPracovnikaVysetrenie";
+            this.cisloPracovnikaVysetrenie.ReadOnly = true;
+            this.cisloPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // stavPracovnikaVysetrenie
+            // 
+            this.stavPracovnikaVysetrenie.HeaderText = "Stav";
+            this.stavPracovnikaVysetrenie.MinimumWidth = 6;
+            this.stavPracovnikaVysetrenie.Name = "stavPracovnikaVysetrenie";
+            this.stavPracovnikaVysetrenie.ReadOnly = true;
+            this.stavPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // obedovalVysetrenie
+            // 
+            this.obedovalVysetrenie.HeaderText = "Obedoval";
+            this.obedovalVysetrenie.MinimumWidth = 6;
+            this.obedovalVysetrenie.Name = "obedovalVysetrenie";
+            this.obedovalVysetrenie.ReadOnly = true;
+            this.obedovalVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // vytazenieVysetrenie
+            // 
+            this.vytazenieVysetrenie.HeaderText = "Vyťaženie";
+            this.vytazenieVysetrenie.MinimumWidth = 6;
+            this.vytazenieVysetrenie.Name = "vytazenieVysetrenie";
+            this.vytazenieVysetrenie.ReadOnly = true;
+            // 
+            // cisloPracovnikaOckovanie
+            // 
+            this.cisloPracovnikaOckovanie.HeaderText = "Číslo pracovníka";
+            this.cisloPracovnikaOckovanie.MinimumWidth = 6;
+            this.cisloPracovnikaOckovanie.Name = "cisloPracovnikaOckovanie";
+            this.cisloPracovnikaOckovanie.ReadOnly = true;
+            this.cisloPracovnikaOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // stavPracovnikaOckovanie
+            // 
+            this.stavPracovnikaOckovanie.HeaderText = "Stav";
+            this.stavPracovnikaOckovanie.MinimumWidth = 6;
+            this.stavPracovnikaOckovanie.Name = "stavPracovnikaOckovanie";
+            this.stavPracovnikaOckovanie.ReadOnly = true;
+            this.stavPracovnikaOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // obedovalOckovanie
+            // 
+            this.obedovalOckovanie.HeaderText = "Obedoval";
+            this.obedovalOckovanie.MinimumWidth = 6;
+            this.obedovalOckovanie.Name = "obedovalOckovanie";
+            this.obedovalOckovanie.ReadOnly = true;
+            this.obedovalOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // vytazenieOckovanie
+            // 
+            this.vytazenieOckovanie.HeaderText = "Vyťaženie";
+            this.vytazenieOckovanie.MinimumWidth = 6;
+            this.vytazenieOckovanie.Name = "vytazenieOckovanie";
+            this.vytazenieOckovanie.ReadOnly = true;
+            // 
+            // pocetStriekaciekOckovanie
+            // 
+            this.pocetStriekaciekOckovanie.HeaderText = "Počet striekačiek";
+            this.pocetStriekaciekOckovanie.MinimumWidth = 6;
+            this.pocetStriekaciekOckovanie.Name = "pocetStriekaciekOckovanie";
+            this.pocetStriekaciekOckovanie.ReadOnly = true;
+            this.pocetStriekaciekOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // casLabel
+            // 
+            this.casLabel.AutoSize = true;
+            this.casLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.casLabel.Location = new System.Drawing.Point(886, 10);
+            this.casLabel.Name = "casLabel";
+            this.casLabel.Size = new System.Drawing.Size(123, 31);
+            this.casLabel.TabIndex = 2;
+            this.casLabel.Text = "00:00:00";
+            // 
             // AppGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 692);
+            this.Controls.Add(this.casLabel);
             this.Controls.Add(this.startStopButton);
             this.Controls.Add(this.tabControl1);
             this.Name = "AppGUI";
@@ -543,6 +525,7 @@ namespace Agent_VacCenter_GUI
             this.tabOckovanie.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaOckovanie)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -568,28 +551,26 @@ namespace Agent_VacCenter_GUI
         private System.Windows.Forms.DataGridViewTextBoxColumn cakanieCakaren;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView tabulkaRegistracia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaRegistracia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaRegistracia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obsluhovanyPacientRegistracia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalRegistracia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieRegistracia;
         private System.Windows.Forms.Panel vysetreniePanel;
         private System.Windows.Forms.DataGridView tabulkaVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obsluhovanyPacientVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieVysetrenie;
         private System.Windows.Forms.Panel ockovaniePanel;
         private System.Windows.Forms.DataGridView tabulkaOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obsluhovanyPacientOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pocetStriekaciekOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieOckovanie;
         private System.Windows.Forms.TabPage tabZavislost;
         private System.Windows.Forms.Button startStopButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaRegistracia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaRegistracia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalRegistracia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieRegistracia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pocetStriekaciekOckovanie;
+        private System.Windows.Forms.Label casLabel;
     }
 }
 

@@ -6,6 +6,7 @@ namespace simulation
 {
 	public class VacCenterSimulation : Simulation
 	{
+		public double RealnyCasVSekundach { get => CurrentTime + 28800; }
 		public double PriemernaDlzkaRaduRegistracia;
 		public double PriemernaDlzkaRaduVysetrenie;
 		public double PriemernaDlzkaRaduOckovanie;
