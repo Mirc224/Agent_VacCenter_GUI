@@ -28,7 +28,7 @@ namespace managers
         {
             message.Addressee = MyAgent.ProcessPresunu;
             message.Code = Mc.NoticeZaciatokPresunu;
-            Notice(message);
+            StartContinualAssistant(message);
         }
 
         public void ProcessNoticeKoniecPresunu(MessageForm message)
@@ -59,7 +59,7 @@ namespace managers
                     ProcessNoticeZaciatokPresunu(message);
                     break;
 
-                case Mc.NoticeKoniecPresunu:
+                case Mc.Finish:
                     ProcessNoticeKoniecPresunu(message);
                     break;
                 default:

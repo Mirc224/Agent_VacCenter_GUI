@@ -27,28 +27,29 @@ namespace managers
         }
 
         //meta! sender="AgentOckovania", id="24", type="Notice"
-        public void ProcessNoticeKoniecOckovania(MessageForm message)
+        public void ProcessKoniecOckovania(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentCakarne;
             message.Code = Mc.PacientCakaj;
-            
+            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
             var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostCakaren, message as Sprava);
 
             Request(spravaPresunu);
         }
 
         //meta! sender="AgentRegistracie", id="20", type="Notice"
-        public void ProcessNoticeKoniecRegistracie(MessageForm message)
+        public void ProcessKoniecRegistracie(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentVysetrenia;
             message.Code = Mc.VysetriPacienta;
+            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
             var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostVysetrenie, message as Sprava);
-            
+
             Request(spravaPresunu);
         }
 
         //meta! sender="AgentModelu", id="17", type="Notice"
-        public void ProcessNoticePrichodPacienta(MessageForm message)
+        public void ProcessPrichodPacienta(MessageForm message)
         {
 
             message.Addressee = ((VacCenterSimulation)MySim).AgentRegistracie;
@@ -70,29 +71,60 @@ namespace managers
         }
 
         //meta! sender="AgentVysetrenia", id="22", type="Notice"
-        public void ProcessNoticeKoniecVysetrenia(MessageForm message)
+        public void ProcessKoniecVysetrenia(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentOckovania;
             message.Code = Mc.ZaockujPacienta;
-
+            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
             var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostOckovanie, message as Sprava);
 
             Request(spravaPresunu);
         }
 
         //meta! sender="AgentCakarne", id="52", type="Notice"
-        public void ProcessNoticeKoniecCakania(MessageForm message)
+        public void ProcessKoniecCakania(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentModelu;
             message.Code = Mc.NoticeOdchodPacienta;
             Notice(message);
         }
 
-        public void ProcessNoticeKoniecPresunu(MessageForm message)
+        public void ProcessNaplnStriekacky(MessageForm message)
         {
-            var povodnaSprava = (message as SpravaPresunu).PovodnaSprava;
-            //if (povodnaSprava.Code == Mc.PacientCakaj)
-            Request(povodnaSprava);
+            message.Addressee = ((VacCenterSimulation)MySim).AgentPripravyDavok;
+            message.Code = Mc.NaplnStriekacky;
+            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
+            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pracovnik, Lokacie.MiestnostPriravyDavky, message as Sprava);
+
+            Request(spravaPresunu);
+        }
+
+        public void ProcessKoniecNaplnaniaStriekackiek(MessageForm message)
+        {
+            message.Addressee = ((VacCenterSimulation)MySim).AgentOckovania;
+            message.Code = Mc.NaplnStriekacky;
+            ((Sprava)message).TypSpravy = TypSpravy.RESPONSE;
+            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pracovnik, Lokacie.MiestnostPriravyDavky, message as Sprava);
+            Request(spravaPresunu);
+        }
+
+        public void ProcessKoniecPresunu(MessageForm message)
+        {
+            var povodnaSprava = (message as SpravaPresunu).PovodnaSprava as Sprava;
+            
+            switch(povodnaSprava.TypSpravy)
+            {
+                case TypSpravy.RESPONSE:
+                    Response(povodnaSprava);
+                    break;
+                case TypSpravy.REQUEST:
+                    Request(povodnaSprava);
+                    break;
+                case TypSpravy.NOTICE:
+                    Notice(povodnaSprava);
+                    break;
+            }
+            
 /*            else
                 Notice(povodnaSprava);*/
         }
@@ -114,22 +146,33 @@ namespace managers
             switch (message.Code)
             {
                 case Mc.NoticePrichodPacienta:
-                    ProcessNoticePrichodPacienta(message);
+                    ProcessPrichodPacienta(message);
                     break;
                 case Mc.VysetriPacienta:
-                    ProcessNoticeKoniecVysetrenia(message);
+                    ProcessKoniecVysetrenia(message);
                     break;
                 case Mc.ZaockujPacienta:
-                    ProcessNoticeKoniecOckovania(message);
+                    ProcessKoniecOckovania(message);
                     break;
                 case Mc.ZaregistrujPacienta:
-                    ProcessNoticeKoniecRegistracie(message);
+                    ProcessKoniecRegistracie(message);
                     break;
                 case Mc.VykonajPresun:
-                    ProcessNoticeKoniecPresunu(message);
+                    ProcessKoniecPresunu(message);
                     break;
                 case Mc.PacientCakaj:
-                    ProcessNoticeKoniecCakania(message);
+                    ProcessKoniecCakania(message);
+                    break;
+                case Mc.NaplnStriekacky:
+                    switch(message.Sender.Id)
+                    {
+                        case SimId.AgentOckovania:
+                            ProcessNaplnStriekacky(message);
+                            break;
+                        case SimId.AgentPripravyDavok:
+                            ProcessKoniecNaplnaniaStriekackiek(message);
+                            break;
+                    }
                     break;
                 default:
                     ProcessDefault(message);

@@ -2,16 +2,13 @@
 using OSPABA;
 using OSPStat;
 using simulation;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Agent_VacCenter_GUI.model
 {
     public abstract class BaseAgentPracoviska: Agent
     {
+        public Process ProcessObsluhy { get; protected set; }
         public StatistikyPracoviska StatistikyPracoviska { get; set; } = new StatistikyPracoviska();
         public int MaxPocetPracovnikov { get; set; } = 3;
         public int PocetVolnychPracovnikov { get; set; }
@@ -50,16 +47,15 @@ namespace Agent_VacCenter_GUI.model
 
         }
 
-        public virtual void InicializaciaPredReplikaciou(int lokaciaPracoviska)
+        public void InicializaciaPredSimulaciou(int lokaciaPracoviska)
         {
-            PocetVolnychPracovnikov = MaxPocetPracovnikov;
             _staff = new Pracovnik[MaxPocetPracovnikov];
             if (MaxPocetPracovnikov > 1)
                 _generatoryVyberuZamenstnanca = new OSPRNG.UniformDiscreteRNG[MaxPocetPracovnikov - 1];
 
             for (int i = 0; i < MaxPocetPracovnikov; ++i)
             {
-                if(lokaciaPracoviska == Lokacie.MiestnostOckovanie)
+                if (lokaciaPracoviska == Lokacie.MiestnostOckovanie)
                 {
                     _staff[i] = new Sestricka(MySim);
                 }
@@ -73,11 +69,24 @@ namespace Agent_VacCenter_GUI.model
             for (int i = 0; i < MaxPocetPracovnikov - 1; ++i)
                 _generatoryVyberuZamenstnanca[i] = new OSPRNG.UniformDiscreteRNG(0, i + 1);
             _dostupniPracovnici = new List<Pracovnik>(MaxPocetPracovnikov);
+        }
+
+        public virtual void InicializaciaPredReplikaciou()
+        {
+            for (int i = 0; i < _generatoryVyberuZamenstnanca.Length; ++i)
+                _generatoryVyberuZamenstnanca[i].Seed();
+
+            for (int i = 0; i < MaxPocetPracovnikov; ++i)
+            {
+                _staff[i].Clear();
+            }
+
+            _dostupniPracovnici.Clear();
 
             DlzkaCakania.Clear();
             DlzkaRadu.Clear();
             VytazeniePracovnikov.Clear();
-
+            PocetVolnychPracovnikov = MaxPocetPracovnikov;
             InicializujStatisitky();
         }
 

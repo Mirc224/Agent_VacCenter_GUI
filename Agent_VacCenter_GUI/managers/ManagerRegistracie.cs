@@ -4,17 +4,18 @@ using agents;
 using continualAssistants;
 using System.Collections.Generic;
 using entities;
+using Agent_VacCenter_GUI.model;
 
 namespace managers
 {
 	//meta! id="4"
-	public class ManagerRegistracie : Manager
+	public class ManagerRegistracie : BaseManagerPracoviska
 	{
-		public Queue<Sprava> Front { get; private set; }
 		public ManagerRegistracie(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{
 			Init();
+			Front = new Queue<Sprava>();
 		}
 
 		override public void PrepareReplication()
@@ -26,39 +27,17 @@ namespace managers
 			{
 				PetriNet.Clear();
 			}
-			Front = new Queue<Sprava>();
+			Front.Clear();
 		}
 
 		//meta! sender="ProcessRegistracie", id="35", type="Notice"
 		public void ProcessNoticeKoniecRegistracie(MessageForm message)
 		{
-			NavratPracovnika(message);
+			NavratPracovnika(((Sprava)message).Pracovnik);
 			message.Code = Mc.ZaregistrujPacienta;
 			Response(message);
 
-			if(Front.Count > 0)
-            {
-				var sprava = Front.Dequeue();
-				double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-				sprava.Pacient.DobaCakaniaNaRegistraciu = dobaCakania;
-				MyAgent.DlzkaCakania.AddSample(dobaCakania);
-				
-				sprava.Addressee = MyAgent.ProcessRegistracie;
-				MyAgent.DlzkaRadu.AddSample(Front.Count);
-				NaplanujObsluhu(sprava);
-				Notice(sprava);
-            }
-		}
-
-		private void NavratPracovnika(MessageForm message)
-        {
-			var sprava = ((Sprava)message);
-			sprava.Pracovnik.Obsadeny = false;
-			double trvanieObsluhy = MySim.CurrentTime - sprava.Pracovnik.ZaciatokObsluhovania;
-			sprava.Pracovnik.Utilization.AddSample(0);
-			MyAgent.VytazeniePracovnikov.AddSample(trvanieObsluhy);
-			++MyAgent.PocetVolnychPracovnikov;
-			MyAgent.VytazeniePracovnikov.AddSample(MyAgent.MaxPocetPracovnikov - MyAgent.PocetVolnychPracovnikov);
+			AkCakaSpracujDalsieho();
 		}
 
 		//meta! sender="AgentVakCentra", id="19", type="Notice"
@@ -76,22 +55,12 @@ namespace managers
 			else
             {
 				double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-				sprava.Pacient.DobaCakaniaNaRegistraciu = dobaCakania;
+				sprava.Pacient.CelkovaDobaCakania += dobaCakania;
 				MyAgent.DlzkaCakania.AddSample(dobaCakania);
 				NaplanujObsluhu(message);
-				Notice(message);
+				StartContinualAssistant(message);
+				//Notice(message);
 			}
-		}
-
-		private void NaplanujObsluhu(MessageForm message)
-        {
-			var pracovnik = MyAgent.DajVolnehoPracovnika();
-			--MyAgent.PocetVolnychPracovnikov;
-			pracovnik.Utilization.AddSample(1);
-			MyAgent.VytazeniePracovnikov.AddSample(MyAgent.MaxPocetPracovnikov - MyAgent.PocetVolnychPracovnikov);
-			pracovnik.ZaciatokObsluhovania = MySim.CurrentTime;
-			pracovnik.Obsadeny = true;
-			((Sprava)message).Pracovnik = pracovnik;
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -115,7 +84,7 @@ namespace managers
 				ProcessNoticeZaciatokRegistracie(message);
 			break;
 
-			case Mc.NoticeKoniecRegistracie:
+			case Mc.Finish:
 				ProcessNoticeKoniecRegistracie(message);
 			break;
 

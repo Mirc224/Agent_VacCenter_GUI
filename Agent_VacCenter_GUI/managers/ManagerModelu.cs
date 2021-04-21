@@ -2,6 +2,8 @@ using OSPABA;
 using simulation;
 using agents;
 using continualAssistants;
+using System.Diagnostics;
+
 namespace managers
 {
 	//meta! id="1"
@@ -15,6 +17,7 @@ namespace managers
 
 		override public void PrepareReplication()
 		{
+			Stopwatch sw = new Stopwatch();
 			base.PrepareReplication();
 			// Setup component for the next replication
 

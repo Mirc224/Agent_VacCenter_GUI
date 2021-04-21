@@ -25,5 +25,15 @@ namespace entities
         public int Pracovisko { get; set; }
         public Pracovnik(OSPABA.Simulation sim)
             :base(sim) { Utilization = new WStat(sim); }
+
+        public virtual void Clear()
+        {
+            Stav = "Nečinný";
+            Obedoval = false;
+            Obsadeny = false;
+
+            ZaciatokObsluhovania = 0;
+            Utilization.Clear();
+        }
     }
 }

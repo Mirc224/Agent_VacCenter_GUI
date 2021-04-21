@@ -14,7 +14,10 @@ namespace simulation
 		public const int NoticePrichodPacienta = 1002;
 		public const int VykonajPresun = 1035;
 		public const int NoticeOdchodPacienta = 1003;
+		public const int NaplnStriekacky = 1036;
 		public const int NoticeNaplanujPrichod = 1012;
+		public const int NoticeZaciatokNaplnania = 1038;
+		public const int NoticeKoniecNaplnania = 1039;
 		public const int NoticeZaciatokRegistracie = 1015;
 		public const int NoticeKoniecRegistracie = 1016;
 		public const int NoticeZaciatokVysetrenia = 1017;

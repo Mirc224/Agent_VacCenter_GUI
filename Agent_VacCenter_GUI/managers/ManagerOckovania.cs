@@ -3,17 +3,19 @@ using simulation;
 using agents;
 using continualAssistants;
 using System.Collections.Generic;
+using Agent_VacCenter_GUI.model;
+using entities;
 
 namespace managers
 {
     //meta! id="6"
-    public class ManagerOckovania : Manager
+    public class ManagerOckovania : BaseManagerPracoviska
     {
-        public Queue<Sprava> Front { get; private set; }
         public ManagerOckovania(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {
             Init();
+            Front = new Queue<Sprava>();
         }
 
         override public void PrepareReplication()
@@ -25,51 +27,40 @@ namespace managers
             {
                 PetriNet.Clear();
             }
-            Front = new Queue<Sprava>();
+            Front.Clear();
         }
 
         //meta! sender="ProcessOckovania", id="46", type="Notice"
         public void ProcessNoticeKoniecOckovania(MessageForm message)
         {
-            NavratPracovnika(message);
+            var sestricka = ((Sprava)message).Pracovnik as Sestricka;
             message.Code = Mc.ZaockujPacienta;
             Response(message);
 
-            if (Front.Count > 0)
+            --sestricka.PocetNaplnenych;
+            if(sestricka.PocetNaplnenych > 0)
             {
-                var sprava = Front.Dequeue();
-                double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-                sprava.Pacient.DobaCakaniaNaOckovanie = dobaCakania;
-                MyAgent.DlzkaCakania.AddSample(dobaCakania);
-
-                sprava.Addressee = MyAgent.ProcessOckovania;
-                MyAgent.DlzkaRadu.AddSample(Front.Count);
-                NaplanujObsluhu(sprava);
-                Notice(sprava);
+                NavratPracovnika(sestricka);
+                AkCakaSpracujDalsieho();
             }
+            else
+            {
+                var sprava = new Sprava(MySim);
+                sprava.Pracovnik = sestricka;
+                sprava.Code = Mc.NaplnStriekacky;
+                sprava.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
+                Request(sprava);
+            }
+            
         }
 
-        private void NaplanujObsluhu(MessageForm message)
+        public void ProcessNaplnStriekacky(MessageForm message)
         {
-            var pracovnik = MyAgent.DajVolnehoPracovnika();
-            --MyAgent.PocetVolnychPracovnikov;
-            pracovnik.Utilization.AddSample(1);
-            MyAgent.VytazeniePracovnikov.AddSample(MyAgent.MaxPocetPracovnikov - MyAgent.PocetVolnychPracovnikov);
-            pracovnik.ZaciatokObsluhovania = MySim.CurrentTime;
-            pracovnik.Obsadeny = true;
-            ((Sprava)message).Pracovnik = pracovnik;
+            NavratPracovnika((message as Sprava).Pracovnik);
+            AkCakaSpracujDalsieho();
         }
 
-        private void NavratPracovnika(MessageForm message)
-        {
-            var sprava = ((Sprava)message);
-            sprava.Pracovnik.Obsadeny = false;
-            double trvanieObsluhy = MySim.CurrentTime - sprava.Pracovnik.ZaciatokObsluhovania;
-            sprava.Pracovnik.Utilization.AddSample(0);
-            MyAgent.VytazeniePracovnikov.AddSample(trvanieObsluhy);
-            ++MyAgent.PocetVolnychPracovnikov;
-            MyAgent.VytazeniePracovnikov.AddSample(MyAgent.MaxPocetPracovnikov - MyAgent.PocetVolnychPracovnikov);
-        }
+       
         //meta! sender="AgentVakCentra", id="23", type="Notice"
         public void ProcessNoticeZaciatokOckovania(MessageForm message)
         {
@@ -85,12 +76,12 @@ namespace managers
             else
             {
                 double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-                sprava.Pacient.DobaCakaniaNaOckovanie = dobaCakania;
+                sprava.Pacient.CelkovaDobaCakania += dobaCakania;
                 MyAgent.DlzkaCakania.AddSample(dobaCakania);
 
                 NaplanujObsluhu(message);
 
-                Notice(message);
+                StartContinualAssistant(message);
             }
         }
 
@@ -115,10 +106,12 @@ namespace managers
                     ProcessNoticeZaciatokOckovania(message);
                     break;
 
-                case Mc.NoticeKoniecOckovania:
+                case Mc.Finish:
                     ProcessNoticeKoniecOckovania(message);
                     break;
-
+                case Mc.NaplnStriekacky:
+                    ProcessNaplnStriekacky(message);
+                    break;
                 default:
                     ProcessDefault(message);
                     break;

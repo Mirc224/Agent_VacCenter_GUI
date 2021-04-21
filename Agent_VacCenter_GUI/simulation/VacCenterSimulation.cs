@@ -19,6 +19,9 @@ namespace simulation
 		public double PriemerneVytazenieDoktor;
 		public double PriemerneVytazenieSestricka;
 
+		public double PriemernaDlzkaRaduStriekacky;
+		public double PriemernyCasCakaniaStriekacky;
+
 		public double PriemernaCakaciaDoba;
 		public double PriemernyPocetLudiVCakarni;
 
@@ -47,6 +50,9 @@ namespace simulation
 			PriemerneVytazenieDoktor = 0;
 			PriemerneVytazenieSestricka = 0;
 
+			PriemernaDlzkaRaduStriekacky = 0;
+			PriemernyCasCakaniaStriekacky = 0;
+
 			PriemernaCakaciaDoba = 0;
 			PriemernyPocetLudiVCakarni = 0;
 			
@@ -63,7 +69,6 @@ namespace simulation
 			// Collect local statistics into global, update UI, etc...
 			base.ReplicationFinished();
 
-            System.Console.WriteLine(CurrentTime);
 
 			PriemernaDlzkaRaduRegistracia += AgentRegistracie.DlzkaRadu.Mean();
 			PriemernaDlzkaRaduVysetrenie += AgentVysetrenia.DlzkaRadu.Mean();
@@ -77,11 +82,14 @@ namespace simulation
 			PriemerneVytazenieDoktor += AgentVysetrenia.PriemerneVytazeniePracovnikov;
 			PriemerneVytazenieSestricka += AgentOckovania.PriemerneVytazeniePracovnikov;
 
+			PriemernaDlzkaRaduStriekacky += AgentPripravyDavok.DlzkaRadu.Mean();
+			PriemernyCasCakaniaStriekacky += AgentPripravyDavok.DlzkaCakania.Mean();
+
 			PriemernyPocetLudiVCakarni += AgentCakarne.DlzkaRadu.Mean();
 
 			PriemernaCakaciaDoba += AgentOkolia.CelkovaDobaCakaniaPacientov.Mean();
 
-			if((CurrentReplication + 1) % 100 == 0 || true)
+			if((CurrentReplication + 1) % 100 == 0)
             {
 				System.Console.WriteLine($"R{CurrentReplication + 1}: Koniec replikace");
 				System.Console.WriteLine($"Vytazenie administracie: {PriemerneVytazenieAdmin / (CurrentReplication + 1)}");
@@ -97,6 +105,10 @@ namespace simulation
 				System.Console.WriteLine($"Vytazenie sestriciek: {PriemerneVytazenieSestricka / (CurrentReplication + 1)}");
 				System.Console.WriteLine($"Priemerna dlzka radu: {PriemernaDlzkaRaduOckovanie / (CurrentReplication + 1)}");
 				System.Console.WriteLine($"Priemerny cas cakania: {PriemernyCasCakaniaOckovanie / (CurrentReplication + 1)}");
+				System.Console.WriteLine();
+
+				System.Console.WriteLine($"Priemerna dlzka radu striekacky: {PriemernaDlzkaRaduStriekacky / (CurrentReplication + 1)}");
+				System.Console.WriteLine($"Priemerny cas cakania striekacky: {PriemernyCasCakaniaStriekacky / (CurrentReplication + 1)}");
 				System.Console.WriteLine();
 
 				System.Console.WriteLine($"Priemerny pocet ludi v cakarni: {PriemernyPocetLudiVCakarni / (CurrentReplication + 1)}");
@@ -127,6 +139,7 @@ namespace simulation
 			AgentVysetrenia = new AgentVysetrenia(SimId.AgentVysetrenia, this, AgentVakCentra);
 			AgentOckovania = new AgentOckovania(SimId.AgentOckovania, this, AgentVakCentra);
 			AgentCakarne = new AgentCakarne(SimId.AgentCakarne, this, AgentVakCentra);
+			AgentPripravyDavok = new AgentPripravyDavok(SimId.AgentPripravyDavok, this, AgentVakCentra);
 			AgentPresunu = new AgentPresunu(SimId.AgentPresunu, this, AgentVakCentra);
 		}
 		public AgentModelu AgentModelu
@@ -144,6 +157,8 @@ namespace simulation
 		public AgentCakarne AgentCakarne
 		{ get; set; }
 		public AgentPresunu AgentPresunu
+		{ get; set; }
+		public AgentPripravyDavok AgentPripravyDavok
 		{ get; set; }
 		//meta! tag="end"
 	}

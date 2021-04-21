@@ -44,9 +44,7 @@ namespace managers
         {
             var pacient = ((Sprava)message).Pacient;
             ++MyAgent.PocetPacientovOdidenych;
-            MyAgent.CelkovaDobaCakaniaPacientov.AddSample((pacient.DobaCakaniaNaRegistraciu + 
-                                                           pacient.DobaCakaniaNaVysetrenie +
-                                                           pacient.DobaCakaniaNaOckovanie)/3);
+            MyAgent.CelkovaDobaCakaniaPacientov.AddSample(pacient.CelkovaDobaCakania);
         }
 
         //meta! sender="SchedulerPrichodov", id="29", type="Notice"

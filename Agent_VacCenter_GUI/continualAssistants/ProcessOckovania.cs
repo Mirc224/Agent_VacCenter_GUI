@@ -39,12 +39,12 @@ namespace continualAssistants
         {
             switch (message.Code)
             {
-                case Mc.NoticeZaciatokOckovania:
+                case Mc.Start:
                     ProcessNoticeZaciatokOckovania(message);
                     break;
                 case Mc.NoticeKoniecOckovania:
                     message.Addressee = MyAgent;
-                    Notice(message);
+                    AssistantFinished(message);
                     break;
                 default:
                     ProcessDefault(message);

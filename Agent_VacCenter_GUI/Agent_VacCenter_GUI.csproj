@@ -55,10 +55,12 @@
     <Compile Include="agents\AgentOckovania.cs" />
     <Compile Include="agents\AgentOkolia.cs" />
     <Compile Include="agents\AgentPresunu.cs" />
+    <Compile Include="agents\AgentPripravyDavok.cs" />
     <Compile Include="agents\AgentRegistracie.cs" />
     <Compile Include="agents\AgentVakCentra.cs" />
     <Compile Include="agents\AgentVysetrenia.cs" />
     <Compile Include="continualAssistants\ProcessCakania.cs" />
+    <Compile Include="continualAssistants\ProcessNaplnaniaDavok.cs" />
     <Compile Include="continualAssistants\ProcessOckovania.cs" />
     <Compile Include="continualAssistants\ProcessPresunu.cs" />
     <Compile Include="continualAssistants\ProcessRegistracie.cs" />
@@ -77,10 +79,12 @@
     <Compile Include="managers\ManagerOckovania.cs" />
     <Compile Include="managers\ManagerOkolia.cs" />
     <Compile Include="managers\ManagerPresunu.cs" />
+    <Compile Include="managers\ManagerPripravyDavok.cs" />
     <Compile Include="managers\ManagerRegistracie.cs" />
     <Compile Include="managers\ManagerVakCentra.cs" />
     <Compile Include="managers\ManagerVysetrenia.cs" />
     <Compile Include="model\BaseAgentPracoviska.cs" />
+    <Compile Include="model\BaseManagerPracoviska.cs" />
     <Compile Include="model\StatistikyPracoviska.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

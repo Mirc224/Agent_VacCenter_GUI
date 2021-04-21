@@ -33,7 +33,7 @@ namespace continualAssistants
         public void ProcessNoticeKoniecPresunu(MessageForm message)
         {
             message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
-            Notice(message);
+            AssistantFinished(message);
         }
         public void ProcessNoticeZaciatokPresunu(MessageForm message)
         {
@@ -48,7 +48,7 @@ namespace continualAssistants
                     trvaniePrechodu = _generatorTrvaniaPrechoduOckovanie.Sample();
                     break;
                 case Lokacie.MiestnostCakaren:
-                    trvaniePrechodu = _generatorTrvaniaPrechoduOckovanie.Sample();
+                    trvaniePrechodu = _generatorTrvaniaPrechoduCakaren.Sample();
                     break;
                 case Lokacie.MiestnostJedalen:
                     trvaniePrechodu = _generatorTrvaniaPrechoduJedalen.Sample();
@@ -60,7 +60,7 @@ namespace continualAssistants
                     break;
             }
             sprava.Code = Mc.NoticeKoniecPresunu;
-            Hold(trvaniePrechodu, sprava);
+            Hold(trvaniePrechodu/60, sprava);
         }
 
         //meta! userInfo="Process messages defined in code", id="0"
@@ -76,7 +76,7 @@ namespace continualAssistants
         {
             switch (message.Code)
             {
-                case Mc.NoticeZaciatokPresunu:
+                case Mc.Start:
                     ProcessNoticeZaciatokPresunu(message);
                     break;
                 case Mc.NoticeKoniecPresunu:

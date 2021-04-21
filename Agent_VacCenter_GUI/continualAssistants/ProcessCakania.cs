@@ -28,7 +28,6 @@ namespace continualAssistants
 				trvanie = 15 * 60;
 			else
 				trvanie = 30 * 60;
-
 			Hold(trvanie, message);
 		}
 

@@ -3,8 +3,15 @@ using entities;
 
 namespace simulation
 {
+	public enum TypSpravy
+    {
+		RESPONSE,
+		REQUEST,
+		NOTICE
+    }
 	public class Sprava : MessageForm
 	{
+		public TypSpravy TypSpravy { get; set; } = TypSpravy.REQUEST;
 		public double ZaciatokObsluhy { get; set; }
 		public Pacient Pacient { get; set; } = null;
 		public Pracovnik Pracovnik { get; set; } = null;

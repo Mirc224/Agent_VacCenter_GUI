@@ -13,8 +13,8 @@ namespace agents
 		public Stat CelkovaDobaCakaniaPacientov { get; private set; }
 		public int PocetNepridenychPacientov { get; private set; }
 
-		public int PocetObjednanychPacientov { get; private set; } = 540;
-		public double CasMedziPrichodmi { get; private set; } = 60;
+		public int PocetObjednanychPacientov { get; private set; } = 1000;
+		public double CasMedziPrichodmi { get => (double)(540 * 60)/ PocetObjednanychPacientov;}
 
 		public int PocetPacientovVojdenych { get; set; }
 		public int PocetPacientovOdidenych { get; set; }

@@ -17,14 +17,15 @@ namespace agents
             base(id, mySim, parent)
         {
             Init();
-            MaxPocetPracovnikov = 3;
+            MaxPocetPracovnikov = 5;
+            InicializaciaPredSimulaciou(Lokacie.MiestnostOckovanie);
         }
 
         override public void PrepareReplication()
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            InicializaciaPredReplikaciou(Lokacie.MiestnostOckovanie);
+            InicializaciaPredReplikaciou();
         }
 
 
@@ -33,9 +34,11 @@ namespace agents
         {
             new ManagerOckovania(SimId.ManagerOckovania, MySim, this);
             ProcessOckovania = new ProcessOckovania(SimId.ProcessOckovania, MySim, this);
+            ProcessObsluhy = ProcessOckovania;
             AddOwnMessage(Mc.NoticeKoniecOckovania);
             AddOwnMessage(Mc.NoticeZaciatokOckovania);
             AddOwnMessage(Mc.ZaockujPacienta);
+            AddOwnMessage(Mc.NaplnStriekacky);
 
             DlzkaCakania = new Stat();
             DlzkaRadu = new WStat(MySim);

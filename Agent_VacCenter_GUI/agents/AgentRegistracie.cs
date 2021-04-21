@@ -19,14 +19,15 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-			MaxPocetPracovnikov = 4;
+			MaxPocetPracovnikov = 7;
+			InicializaciaPredSimulaciou(Lokacie.MiestnostRegistracia);
 		}
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-			InicializaciaPredReplikaciou(Lokacie.MiestnostRegistracia);
+			InicializaciaPredReplikaciou();
 		}
 
 
@@ -35,6 +36,7 @@ namespace agents
 		{
 			new ManagerRegistracie(SimId.ManagerRegistracie, MySim, this);
 			ProcessRegistracie =  new ProcessRegistracie(SimId.ProcessRegistracie, MySim, this);
+			ProcessObsluhy = ProcessRegistracie;
 			AddOwnMessage(Mc.NoticeKoniecRegistracie);
 			AddOwnMessage(Mc.NoticeZaciatokRegistracie);
 			AddOwnMessage(Mc.ZaregistrujPacienta);

@@ -17,14 +17,15 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-			MaxPocetPracovnikov = 6;
+			MaxPocetPracovnikov = 11;
+			InicializaciaPredSimulaciou(Lokacie.MiestnostVysetrenie);
 		}
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-			InicializaciaPredReplikaciou(Lokacie.MiestnostVysetrenie);
+			InicializaciaPredReplikaciou();
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -32,6 +33,7 @@ namespace agents
 		{
 			new ManagerVysetrenia(SimId.ManagerVysetrenia, MySim, this);
 			ProcessVysetrenia = new ProcessVysetrenia(SimId.ProcessVysetrenia, MySim, this);
+			ProcessObsluhy = ProcessVysetrenia;
 			AddOwnMessage(Mc.VysetriPacienta);
 			AddOwnMessage(Mc.NoticeZaciatokVysetrenia);
 			AddOwnMessage(Mc.NoticeKoniecVysetrenia);

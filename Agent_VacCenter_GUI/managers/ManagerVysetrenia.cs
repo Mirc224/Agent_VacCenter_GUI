@@ -3,17 +3,18 @@ using simulation;
 using agents;
 using continualAssistants;
 using System.Collections.Generic;
+using Agent_VacCenter_GUI.model;
 
 namespace managers
 {
     //meta! id="5"
-    public class ManagerVysetrenia : Manager
+    public class ManagerVysetrenia : BaseManagerPracoviska
     {
-        public Queue<Sprava> Front { get; private set; }
         public ManagerVysetrenia(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {
             Init();
+            Front = new Queue<Sprava>();
         }
 
         override public void PrepareReplication()
@@ -25,7 +26,7 @@ namespace managers
             {
                 PetriNet.Clear();
             }
-            Front = new Queue<Sprava>();
+            Front.Clear();
         }
 
         //meta! sender="AgentVakCentra", id="21", type="Notice"
@@ -43,57 +44,25 @@ namespace managers
             else
             {
                 double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-                sprava.Pacient.DobaCakaniaNaVysetrenie = dobaCakania;
+                sprava.Pacient.CelkovaDobaCakania += dobaCakania;
                 MyAgent.DlzkaCakania.AddSample(dobaCakania);
 
                 NaplanujObsluhu(message);
 
-                Notice(message);
+                StartContinualAssistant(message);
             }
-        }
-
-        private void NaplanujObsluhu(MessageForm message)
-        {
-            var pracovnik = MyAgent.DajVolnehoPracovnika();
-            --MyAgent.PocetVolnychPracovnikov;
-            pracovnik.Utilization.AddSample(1);
-            MyAgent.VytazeniePracovnikov.AddSample(MyAgent.MaxPocetPracovnikov - MyAgent.PocetVolnychPracovnikov);
-            pracovnik.ZaciatokObsluhovania = MySim.CurrentTime;
-            pracovnik.Obsadeny = true;
-            ((Sprava)message).Pracovnik = pracovnik;
         }
 
         //meta! sender="ProcessVysetrenia", id="41", type="Notice"
         public void ProcessNoticeKoniecVysetrenia(MessageForm message)
         {
-            NavratPracovnika(message);
+            NavratPracovnika(((Sprava)message).Pracovnik);
             message.Code = Mc.VysetriPacienta;
             Response(message);
 
-            if (Front.Count > 0)
-            {
-                var sprava = Front.Dequeue();
-                double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-                sprava.Pacient.DobaCakaniaNaVysetrenie = dobaCakania;
-                MyAgent.DlzkaCakania.AddSample(dobaCakania);
-
-                sprava.Addressee = MyAgent.ProcessVysetrenia;
-                MyAgent.DlzkaRadu.AddSample(Front.Count);
-                NaplanujObsluhu(sprava);
-                Notice(sprava);
-            }
+            AkCakaSpracujDalsieho();
         }
 
-        private void NavratPracovnika(MessageForm message)
-        {
-            var sprava = ((Sprava)message);
-            sprava.Pracovnik.Obsadeny = false;
-            double trvanieObsluhy = MySim.CurrentTime - sprava.Pracovnik.ZaciatokObsluhovania;
-            sprava.Pracovnik.Utilization.AddSample(0);
-            MyAgent.VytazeniePracovnikov.AddSample(trvanieObsluhy);
-            ++MyAgent.PocetVolnychPracovnikov;
-            MyAgent.VytazeniePracovnikov.AddSample(MyAgent.MaxPocetPracovnikov - MyAgent.PocetVolnychPracovnikov);
-        }
 
         //meta! userInfo="Process messages defined in code", id="0"
         public void ProcessDefault(MessageForm message)
@@ -116,7 +85,7 @@ namespace managers
                     ProcessNoticeZaciatokVysetrenia(message);
                     break;
 
-                case Mc.NoticeKoniecVysetrenia:
+                case Mc.Finish:
                     ProcessNoticeKoniecVysetrenia(message);
                     break;
 

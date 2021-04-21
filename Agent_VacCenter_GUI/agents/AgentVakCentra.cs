@@ -29,6 +29,7 @@ namespace agents
             AddOwnMessage(Mc.VysetriPacienta);
             AddOwnMessage(Mc.ZaockujPacienta);
             AddOwnMessage(Mc.PacientCakaj);
+            AddOwnMessage(Mc.NaplnStriekacky);
         }
         //meta! tag="end"
     }

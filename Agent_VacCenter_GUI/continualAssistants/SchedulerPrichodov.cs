@@ -23,11 +23,11 @@ namespace continualAssistants
 		public void ProcessNoticeNaplanujPrichod(MessageForm message)
 		{
 			int multiplier = 1;
-			while(_generatorPravdepodobnosti.Sample() < MyAgent.PocetNepridenychPacientov / (double)MyAgent.PocetObjednanychPacientov)
+            while (_generatorPravdepodobnosti.Sample() < MyAgent.PocetNepridenychPacientov / (double)MyAgent.PocetObjednanychPacientov)
             {
-				++multiplier;		
+                ++multiplier;
             }
-			message.Code = Mc.NoticePrichodPacienta;
+            message.Code = Mc.NoticePrichodPacienta;
 			Hold(multiplier * MyAgent.CasMedziPrichodmi, message);
 		}
 
