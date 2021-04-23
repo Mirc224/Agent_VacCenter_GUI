@@ -22,8 +22,12 @@ namespace continualAssistants
         //meta! sender="AgentVysetrenia", id="40", type="Notice"
         public void ProcessNoticeZaciatokVysetrenia(MessageForm message)
         {
+            var sprava = message as Sprava;
+            var trvanie = _generatorTrvania.Sample();
+            sprava.Pacient.Stav = $"Vysetrovany pracovnikom: {sprava.Pracovnik.IDPracovnika} ({string.Format("{0:0.##}", trvanie)}s)";
+            sprava.Pracovnik.Stav = $"Obsluhuje pacienta: {sprava.Pacient.IDPacienta} ({string.Format("{0:0.##}", trvanie)}s)";
             message.Code = Mc.NoticeKoniecVysetrenia;
-            Hold(_generatorTrvania.Sample(), message);
+            Hold(trvanie, message);
         }
 
         //meta! userInfo="Process messages defined in code", id="0"

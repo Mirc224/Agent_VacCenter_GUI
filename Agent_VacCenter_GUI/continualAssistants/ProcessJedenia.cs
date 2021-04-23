@@ -3,11 +3,11 @@ using simulation;
 using agents;
 namespace continualAssistants
 {
-    //meta! id="43"
-    public class ProcessOckovania : Process
+    //meta! id="124"
+    public class ProcessJedenia : Process
     {
-        private OSPRNG.TriangularRNG _generatorTrvania = new OSPRNG.TriangularRNG(20, 75, 100);
-        public ProcessOckovania(int id, Simulation mySim, CommonAgent myAgent) :
+        private OSPRNG.TriangularRNG _generatorTrvania = new OSPRNG.TriangularRNG(5 * 60, 15 * 60, 30 * 60);
+        public ProcessJedenia(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
         }
@@ -19,14 +19,12 @@ namespace continualAssistants
             _generatorTrvania.Seed();
         }
 
-        //meta! sender="AgentOckovania", id="45", type="Notice"
-        public void ProcessNoticeZaciatokOckovania(MessageForm message)
+        //meta! sender="AgentJedalne", id="125", type="Start"
+        public void ProcessStart(MessageForm message)
         {
             var trvanie = _generatorTrvania.Sample();
-            var sprava = message as Sprava;
-            sprava.Pacient.Stav = $"Ockovany pracovnikom: {sprava.Pracovnik.IDPracovnika} ({string.Format("{0:0.##}", trvanie)}s)";
-            sprava.Pracovnik.Stav = $"Obsluhuje pacienta: {sprava.Pacient.IDPacienta} ({string.Format("{0:0.##}", trvanie)}s)";
-            message.Code = Mc.NoticeKoniecOckovania;
+            (message as Sprava).Pracovnik.Stav = $"Obeduje ({string.Format("{0:0.##}", trvanie/60)}min)";
+            message.Code = Mc.VykonajObed;
             Hold(trvanie, message);
         }
 
@@ -44,23 +42,24 @@ namespace continualAssistants
             switch (message.Code)
             {
                 case Mc.Start:
-                    ProcessNoticeZaciatokOckovania(message);
+                    ProcessStart(message);
                     break;
-                case Mc.NoticeKoniecOckovania:
+                case Mc.VykonajObed:
                     message.Addressee = MyAgent;
                     AssistantFinished(message);
                     break;
+
                 default:
                     ProcessDefault(message);
                     break;
             }
         }
         //meta! tag="end"
-        public new AgentOckovania MyAgent
+        public new AgentJedalne MyAgent
         {
             get
             {
-                return (AgentOckovania)base.MyAgent;
+                return (AgentJedalne)base.MyAgent;
             }
         }
     }

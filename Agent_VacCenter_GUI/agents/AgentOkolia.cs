@@ -3,6 +3,7 @@ using simulation;
 using managers;
 using continualAssistants;
 using OSPStat;
+using entities;
 
 namespace agents
 {
@@ -13,7 +14,7 @@ namespace agents
 		public Stat CelkovaDobaCakaniaPacientov { get; private set; }
 		public int PocetNepridenychPacientov { get; private set; }
 
-		public int PocetObjednanychPacientov { get; private set; } = 1000;
+		public int PocetObjednanychPacientov { get; private set; } = 540;
 		public double CasMedziPrichodmi { get => (double)(540 * 60)/ PocetObjednanychPacientov;}
 
 		public int PocetPacientovVojdenych { get; set; }
@@ -33,6 +34,7 @@ namespace agents
 			_generatorNepridenychPacientov.Seed();
 			PocetPacientovVojdenych = 0;
 			PocetPacientovOdidenych = 0;
+			Pacient.AktualneID = 0;
 			CelkovaDobaCakaniaPacientov.Clear();
 			PocetNepridenychPacientov = _generatorNepridenychPacientov.Sample();
 		}

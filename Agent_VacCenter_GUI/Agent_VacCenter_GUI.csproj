@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="agents\AgentCakarne.cs" />
+    <Compile Include="agents\AgentJedalne.cs" />
     <Compile Include="agents\AgentModelu.cs" />
     <Compile Include="agents\AgentOckovania.cs" />
     <Compile Include="agents\AgentOkolia.cs" />
@@ -60,14 +61,18 @@
     <Compile Include="agents\AgentVakCentra.cs" />
     <Compile Include="agents\AgentVysetrenia.cs" />
     <Compile Include="continualAssistants\ProcessCakania.cs" />
+    <Compile Include="continualAssistants\ProcessJedenia.cs" />
     <Compile Include="continualAssistants\ProcessNaplnaniaDavok.cs" />
     <Compile Include="continualAssistants\ProcessOckovania.cs" />
     <Compile Include="continualAssistants\ProcessPresunu.cs" />
     <Compile Include="continualAssistants\ProcessRegistracie.cs" />
     <Compile Include="continualAssistants\ProcessVysetrenia.cs" />
+    <Compile Include="continualAssistants\SchedulerObeduAdminov.cs" />
+    <Compile Include="continualAssistants\SchedulerObeduDoktorov.cs" />
+    <Compile Include="continualAssistants\SchedulerObeduSestriciek.cs" />
     <Compile Include="continualAssistants\SchedulerPrichodov.cs" />
     <Compile Include="entities\Pacient.cs" />
-    <Compile Include="entities\PohyblivaEntita.cs" />
+    <Compile Include="entities\StavovaEntita.cs" />
     <Compile Include="entities\Pracovnik.cs" />
     <Compile Include="entities\Sestricka.cs" />
     <Compile Include="AppGUI.cs" />
@@ -75,6 +80,7 @@
       <DependentUpon>AppGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="managers\ManagerCakarne.cs" />
+    <Compile Include="managers\ManagerJedalne.cs" />
     <Compile Include="managers\ManagerModelu.cs" />
     <Compile Include="managers\ManagerOckovania.cs" />
     <Compile Include="managers\ManagerOkolia.cs" />
@@ -85,6 +91,7 @@
     <Compile Include="managers\ManagerVysetrenia.cs" />
     <Compile Include="model\BaseAgentPracoviska.cs" />
     <Compile Include="model\BaseManagerPracoviska.cs" />
+    <Compile Include="model\BaseSchedulerObedov.cs" />
     <Compile Include="model\StatistikyPracoviska.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

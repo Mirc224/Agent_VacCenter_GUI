@@ -22,8 +22,13 @@ namespace continualAssistants
         //meta! sender="AgentRegistracie", id="34", type="Notice"
         public void ProcessNoticeZaciatokRegistracie(MessageForm message)
         {
+            var sprava = message as Sprava;
+            var trvanie = _generatorTrvania.Sample();
+            sprava.Pacient.Stav = $"Registrovany pracovnikom: {sprava.Pracovnik.IDPracovnika} ({string.Format("{0:0.##}", trvanie)}s)";
+            sprava.Pracovnik.Stav = $"Obsluhuje pacienta: {sprava.Pacient.IDPacienta} ({string.Format("{0:0.##}", trvanie)}s)";
             message.Code = Mc.NoticeKoniecRegistracie;
-            Hold(_generatorTrvania.Sample(), message);
+            
+            Hold(trvanie, message);
         }
 
         //meta! userInfo="Process messages defined in code", id="0"

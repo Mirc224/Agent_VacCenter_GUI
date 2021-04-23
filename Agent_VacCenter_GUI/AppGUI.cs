@@ -18,13 +18,13 @@ namespace Agent_VacCenter_GUI
     }
     public partial class AppGUI : Form
     {
-        delegate void SetTimeCallback(OSPABA.Simulation sim);
+        delegate void GUIStatUpdateCallback(OSPABA.Simulation sim);
         private simulation.VacCenterSimulation _simulation;
         public AppGUI()
         {
             _simulation = new simulation.VacCenterSimulation(this);
-            _simulation.OnSimulationDidFinish(OnStart);
-            _simulation.SetSimSpeed(1, 1);
+            _simulation.OnSimulationDidFinish(OnFinish);
+            //_simulation.SetSimSpeed(5, 0.0001);
             _simulation.OnRefreshUI(OnUIRefresh);
             InitializeComponent();
             Init();
@@ -35,12 +35,13 @@ namespace Agent_VacCenter_GUI
             string[] statNames = new string[] {"Replikacia",
                                                "Registrácia - AVG dĺžka radu:", "Registrácia - AVG dĺžka čakania:", "Registrácia - AVG vyťaženie:",
                                                "Vyšetrenie - AVG dĺžka radu:", "Vyšetrenie - AVG dĺžka čakania:", "Vyšetrenie - AVG vyťaženie:",
-                                               "Očkovanie - AVG dĺžka radu:", "Očkovanie - AVG dĺžka čakania:", "Očkovanie - AVG vyťaženie:"
-                                               };
+                                               "Očkovanie - AVG dĺžka radu:", "Očkovanie - AVG dĺžka čakania:", "Očkovanie - AVG vyťaženie:",
+                                               "Priemerný počet ľudí v čakárni:", "Priemerný čas čakania:"};
             string[] statValues = new string[] {"0",
                                                "0", "0", "0",
                                                "0", "0", "0",
-                                               "0", "0", "0"
+                                               "0", "0", "0",
+                                               "0", "0"
                                                };
             tabulkaReplikacie.Rows.Clear();
             for (int i = 0; i < statNames.Length; ++i)
@@ -55,15 +56,17 @@ namespace Agent_VacCenter_GUI
             int i = 0;
             int replikacia = _simulation.CurrentReplication + 1;
             tabulkaReplikacie.Rows[i++].Cells[1].Value = (replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemernaDlzkaRaduRegistracia/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemernyCasCakaniaRegistracia/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemerneVytazenieAdmin/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemernaDlzkaRaduVysetrenie/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemernyCasCakaniaVysetrenie/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemerneVytazenieDoktor/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemernaDlzkaRaduOckovanie/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemernyCasCakaniaOckovanie/ replikacia).ToString();
-            tabulkaReplikacie.Rows[i++].Cells[1].Value = (_simulation.PriemerneVytazenieSestricka/ replikacia).ToString();
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.####}", (_simulation.PriemernaDlzkaRaduRegistracia/ replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.####}s", (_simulation.PriemernyCasCakaniaRegistracia/ replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.##}%",(_simulation.PriemerneVytazenieAdmin * 100 / replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.####}", (_simulation.PriemernaDlzkaRaduVysetrenie/ replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.####}s", (_simulation.PriemernyCasCakaniaVysetrenie/ replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.##}%", (_simulation.PriemerneVytazenieDoktor * 100 / replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.####}", (_simulation.PriemernaDlzkaRaduOckovanie/ replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.####}s", (_simulation.PriemernyCasCakaniaOckovanie/ replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.##}%",(_simulation.PriemerneVytazenieSestricka * 100 / replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.##}",(_simulation.PriemernyPocetLudiVCakarni / replikacia));
+            tabulkaReplikacie.Rows[i++].Cells[1].Value = string.Format("{0:0.##}s", (_simulation.PriemernaCakaciaDoba / replikacia));
         }
 
         public void OnRefresh(OSPABA.Simulation sim)
@@ -71,12 +74,24 @@ namespace Agent_VacCenter_GUI
             Console.WriteLine("Refresh");
         }
 
-        public void OnStart(OSPABA.Simulation sim)
+        public void OnFinish(OSPABA.Simulation sim)
         {
             var simulacia = sim as simulation.VacCenterSimulation;
-            InicializujTabulku(tabulkaRegistracia, simulacia.AgentRegistracie.StatistikyPracoviska.UdajeOPracovnikoch);
-            InicializujTabulku(tabulkaVysetrenie, simulacia.AgentVysetrenia.StatistikyPracoviska.UdajeOPracovnikoch);
-            InicializujTabulku(tabulkaOckovanie, simulacia.AgentOckovania.StatistikyPracoviska.UdajeOPracovnikoch);
+            if (casLabel.InvokeRequired)
+            {
+
+                GUIStatUpdateCallback d = new GUIStatUpdateCallback(OnFinish);
+                Invoke(d, new object[] { sim });
+            }
+            else
+            {
+                Console.WriteLine("Teraz");
+                casLabel.Text = simulacia.NaformovatovanyCas;
+                simulacia.VykonajUpdateStavu();
+                InicializujTabulku(tabulkaRegistracia, simulacia.AgentRegistracie.StatistikyPracoviska.UdajeOPracovnikoch);
+                InicializujTabulku(tabulkaVysetrenie, simulacia.AgentVysetrenia.StatistikyPracoviska.UdajeOPracovnikoch);
+                InicializujTabulku(tabulkaOckovanie, simulacia.AgentOckovania.StatistikyPracoviska.UdajeOPracovnikoch);
+            }
         }
 
         public void OnUIRefresh(OSPABA.Simulation sim)
@@ -85,14 +100,16 @@ namespace Agent_VacCenter_GUI
             if(casLabel.InvokeRequired)
             {
 
-                SetTimeCallback d = new SetTimeCallback(OnUIRefresh);
+                GUIStatUpdateCallback d = new GUIStatUpdateCallback(OnUIRefresh);
                 Invoke(d, new object[] { sim });
             }
             else
             {
-                TimeSpan t = TimeSpan.FromSeconds(simulacia.RealnyCasVSekundach);
-                var startTime = t.ToString(@"hh\:mm\:ss");
-                casLabel.Text = startTime;
+                casLabel.Text = simulacia.NaformovatovanyCas;
+                simulacia.VykonajUpdateStavu();
+                InicializujTabulku(tabulkaRegistracia, simulacia.AgentRegistracie.StatistikyPracoviska.UdajeOPracovnikoch);
+                InicializujTabulku(tabulkaVysetrenie, simulacia.AgentVysetrenia.StatistikyPracoviska.UdajeOPracovnikoch);
+                InicializujTabulku(tabulkaOckovanie, simulacia.AgentOckovania.StatistikyPracoviska.UdajeOPracovnikoch);
             }
             
         }
@@ -108,7 +125,7 @@ namespace Agent_VacCenter_GUI
 
         private void startStopButton_Click(object sender, EventArgs e)
         {
-            var replikacie = 1;
+            var replikacie = 1000;
             //var casReplikacie = 540 * 60;
             var casReplikacie = 540 * 60;
             Thread thread = new Thread(new ParameterizedThreadStart(SpustSimulaciu));
@@ -119,6 +136,7 @@ namespace Agent_VacCenter_GUI
         private void SpustSimulaciu(object obj)
         {
             var parametre = obj as ParametreSimulace;
+
             _simulation.Simulate(parametre.replikacie, parametre.casSimulacie);
         }
     }

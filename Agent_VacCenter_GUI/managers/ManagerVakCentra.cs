@@ -26,28 +26,6 @@ namespace managers
             }
         }
 
-        //meta! sender="AgentOckovania", id="24", type="Notice"
-        public void ProcessKoniecOckovania(MessageForm message)
-        {
-            message.Addressee = ((VacCenterSimulation)MySim).AgentCakarne;
-            message.Code = Mc.PacientCakaj;
-            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
-            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostCakaren, message as Sprava);
-
-            Request(spravaPresunu);
-        }
-
-        //meta! sender="AgentRegistracie", id="20", type="Notice"
-        public void ProcessKoniecRegistracie(MessageForm message)
-        {
-            message.Addressee = ((VacCenterSimulation)MySim).AgentVysetrenia;
-            message.Code = Mc.VysetriPacienta;
-            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
-            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostVysetrenie, message as Sprava);
-
-            Request(spravaPresunu);
-        }
-
         //meta! sender="AgentModelu", id="17", type="Notice"
         public void ProcessPrichodPacienta(MessageForm message)
         {
@@ -60,19 +38,33 @@ namespace managers
             Request(message);
         }
 
-        public SpravaPresunu NaplanujPresun(int entitaPresunu, int lokaciaPresunu, Sprava povodnaSprava)
+        //meta! sender="AgentRegistracie", id="20", type="Notice"
+        public void ProcessKoniecRegistracie(MessageForm message)
         {
-            var spravaPresunu = new SpravaPresunu(MySim) { PovodnaSprava = povodnaSprava};
-            spravaPresunu.Addressee = ((VacCenterSimulation)MySim).AgentPresunu;
-            spravaPresunu.EntitaPresunu = entitaPresunu;
-            spravaPresunu.CielovaLokacia = lokaciaPresunu;
-            spravaPresunu.Code = Mc.VykonajPresun;
-            return spravaPresunu;
+            (message as Sprava).Pacient.Stav = "Presun na vyšetrenie: ";
+            message.Addressee = ((VacCenterSimulation)MySim).AgentVysetrenia;
+            message.Code = Mc.VysetriPacienta;
+            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
+            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostVysetrenie, message as Sprava);
+
+            Request(spravaPresunu);
         }
 
+        //meta! sender="AgentOckovania", id="24", type="Notice"
+        public void ProcessKoniecOckovania(MessageForm message)
+        {
+            (message as Sprava).Pacient.Stav = "Presun do èakárne: ";
+            message.Addressee = ((VacCenterSimulation)MySim).AgentCakarne;
+            message.Code = Mc.PacientCakaj;
+            ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
+            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostCakaren, message as Sprava);
+
+            Request(spravaPresunu);
+        }
         //meta! sender="AgentVysetrenia", id="22", type="Notice"
         public void ProcessKoniecVysetrenia(MessageForm message)
         {
+            (message as Sprava).Pacient.Stav = "Presun na oèkovanie: ";
             message.Addressee = ((VacCenterSimulation)MySim).AgentOckovania;
             message.Code = Mc.ZaockujPacienta;
             ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
@@ -84,6 +76,7 @@ namespace managers
         //meta! sender="AgentCakarne", id="52", type="Notice"
         public void ProcessKoniecCakania(MessageForm message)
         {
+            (message as Sprava).Pacient.Stav = "Odišiel z vakcinaèného centra";
             message.Addressee = ((VacCenterSimulation)MySim).AgentModelu;
             message.Code = Mc.NoticeOdchodPacienta;
             Notice(message);
@@ -91,6 +84,7 @@ namespace managers
 
         public void ProcessNaplnStriekacky(MessageForm message)
         {
+            (message as Sprava).Pracovnik.Stav = "Presun do prípravovne dávok: ";
             message.Addressee = ((VacCenterSimulation)MySim).AgentPripravyDavok;
             message.Code = Mc.NaplnStriekacky;
             ((Sprava)message).TypSpravy = TypSpravy.REQUEST;
@@ -101,10 +95,43 @@ namespace managers
 
         public void ProcessKoniecNaplnaniaStriekackiek(MessageForm message)
         {
+            (message as Sprava).Pracovnik.Stav = "Presun do oèkovacej miestnosti: ";
             message.Addressee = ((VacCenterSimulation)MySim).AgentOckovania;
             message.Code = Mc.NaplnStriekacky;
             ((Sprava)message).TypSpravy = TypSpravy.RESPONSE;
             var spravaPresunu = NaplanujPresun(EntitySimulacie.Pracovnik, Lokacie.MiestnostPriravyDavky, message as Sprava);
+            Request(spravaPresunu);
+        }
+
+        public SpravaPresunu NaplanujPresun(int entitaPresunu, int lokaciaPresunu, Sprava povodnaSprava)
+        {
+            var spravaPresunu = new SpravaPresunu(MySim) { PovodnaSprava = povodnaSprava};
+            spravaPresunu.Addressee = ((VacCenterSimulation)MySim).AgentPresunu;
+            spravaPresunu.EntitaPresunu = entitaPresunu;
+            spravaPresunu.CielovaLokacia = lokaciaPresunu;
+            spravaPresunu.Code = Mc.VykonajPresun;
+            return spravaPresunu;
+        }
+
+        public void ProcessObedPracovnika(MessageForm message)
+        {
+            var sprava = message as Sprava;
+            sprava.Pracovnik.Stav = "Presud do jedálne: ";
+            message.Addressee = ((VacCenterSimulation)MySim).AgentJedalne;
+            message.Code = Mc.VykonajObed;
+            sprava.TypSpravy = TypSpravy.REQUEST;
+            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pracovnik, Lokacie.MiestnostJedalen, message as Sprava);
+            Request(spravaPresunu);
+        }
+
+        public void ProcessKoniecObeduPracovnika(MessageForm message)
+        {
+            //message.Addressee = ((VacCenterSimulation)MySim).AgentJedalne;
+            var sprava = message as Sprava;
+            sprava.Pracovnik.Stav = "Presun na pracovisko: ";
+            message.Code = Mc.VykonajObed;
+            ((Sprava)message).TypSpravy = TypSpravy.RESPONSE;
+            var spravaPresunu = NaplanujPresun(EntitySimulacie.Pracovnik, Lokacie.MiestnostJedalen, message as Sprava);
             Request(spravaPresunu);
         }
 
@@ -171,6 +198,20 @@ namespace managers
                             break;
                         case SimId.AgentPripravyDavok:
                             ProcessKoniecNaplnaniaStriekackiek(message);
+                            break;
+                    }
+                    break;
+                case Mc.VykonajObed:
+                    switch(message.Sender.Id)
+                    {
+                        case SimId.AgentJedalne:
+                            ProcessKoniecObeduPracovnika(message);
+                            break;
+
+                        case SimId.AgentRegistracie:
+                        case SimId.AgentVysetrenia:
+                        case SimId.AgentOckovania:
+                            ProcessObedPracovnika(message);
                             break;
                     }
                     break;

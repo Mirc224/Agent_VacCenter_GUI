@@ -14,12 +14,11 @@ namespace agents
 	{
 
 		public ProcessRegistracie ProcessRegistracie { get; private set; }
-
 		public AgentRegistracie(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
-			MaxPocetPracovnikov = 7;
+			MaxPocetPracovnikov = 4;
 			InicializaciaPredSimulaciou(Lokacie.MiestnostRegistracia);
 		}
 
@@ -36,10 +35,14 @@ namespace agents
 		{
 			new ManagerRegistracie(SimId.ManagerRegistracie, MySim, this);
 			ProcessRegistracie =  new ProcessRegistracie(SimId.ProcessRegistracie, MySim, this);
+			SchedulerObedov = new SchedulerObeduAdminov(SimId.SchedulerObeduAdminov, MySim, this);
+
 			ProcessObsluhy = ProcessRegistracie;
 			AddOwnMessage(Mc.NoticeKoniecRegistracie);
 			AddOwnMessage(Mc.NoticeZaciatokRegistracie);
 			AddOwnMessage(Mc.ZaregistrujPacienta);
+			AddOwnMessage(Mc.NoticeCasObeda);
+			AddOwnMessage(Mc.VykonajObed);
 
 			DlzkaCakania = new Stat();
 			DlzkaRadu = new WStat(MySim);

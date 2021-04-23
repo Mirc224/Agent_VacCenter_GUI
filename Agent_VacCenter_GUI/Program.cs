@@ -15,12 +15,12 @@ namespace Agent_VacCenter_GUI
         [STAThread]
         static void Main()
         {
-            /*Application.EnableVisualStyles();
+            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new AppGUI());
             Console.WriteLine("Simulating...");
-*/
-            var replikacie = 2000;
+
+            /*var replikacie = 2000;
             //var casReplikacie = 540 * 60;
             var casReplikacie = 540 * 60;
 
@@ -29,7 +29,7 @@ namespace Agent_VacCenter_GUI
             sim.SetMaxSimSpeed();
             sim.Simulate(replikacie, casReplikacie);
 
-            Console.WriteLine("Finished...");
+            Console.WriteLine("Finished...");*/
 
         }
     }

@@ -24,8 +24,10 @@ namespace continualAssistants
         //meta! sender="AgentPripravyDavok", id="92", type="Notice"
         public void ProcessNoticeZaciatokNaplnania(MessageForm message)
         {
+            var trvanie = _generatorTrvania.Sample();
+            (message as Sprava).Pracovnik.Stav = $"Napåòa striekaèku è. {(((message as Sprava).Pracovnik)as Sestricka).PocetNaplnenych + 1} ({string.Format("{0:0.##}", trvanie)}s)";
             message.Code = Mc.NoticeKoniecNaplnania;
-            Hold(_generatorTrvania.Sample(), message);
+            Hold(trvanie, message);
         }
 
         public void ProcessNoticeKoniecNaplnania(MessageForm message)

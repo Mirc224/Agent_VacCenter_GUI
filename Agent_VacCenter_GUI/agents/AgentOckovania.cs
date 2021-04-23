@@ -17,7 +17,7 @@ namespace agents
             base(id, mySim, parent)
         {
             Init();
-            MaxPocetPracovnikov = 5;
+            MaxPocetPracovnikov = 3;
             InicializaciaPredSimulaciou(Lokacie.MiestnostOckovanie);
         }
 
@@ -34,11 +34,14 @@ namespace agents
         {
             new ManagerOckovania(SimId.ManagerOckovania, MySim, this);
             ProcessOckovania = new ProcessOckovania(SimId.ProcessOckovania, MySim, this);
+            SchedulerObedov = new SchedulerObeduSestriciek(SimId.SchedulerObeduDoktorov, MySim, this);
             ProcessObsluhy = ProcessOckovania;
             AddOwnMessage(Mc.NoticeKoniecOckovania);
             AddOwnMessage(Mc.NoticeZaciatokOckovania);
             AddOwnMessage(Mc.ZaockujPacienta);
             AddOwnMessage(Mc.NaplnStriekacky);
+            AddOwnMessage(Mc.NoticeCasObeda);
+            AddOwnMessage(Mc.VykonajObed);
 
             DlzkaCakania = new Stat();
             DlzkaRadu = new WStat(MySim);

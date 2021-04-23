@@ -54,6 +54,7 @@ namespace managers
             //message.Addressee = MySim.FindAgent(SimId.AgentModelu);
             message.Addressee = ((VacCenterSimulation)MySim).AgentModelu;
             ((Sprava)message).Pacient = new Pacient(MySim);
+
             Notice(message);
 
             var novaInicializacnaSprava = new Sprava(MySim) { Addressee = MyAgent.SchedulerPrichodov, Code = Mc.NoticeNaplanujPrichod };

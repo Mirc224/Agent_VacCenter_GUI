@@ -4,15 +4,19 @@ using System.Text;
 
 namespace entities
 {
-    public class Pacient : PohyblivaEntita
+    public class Pacient : StavovaEntita
     {
-        public int IDPacienta { get; set; }
+        public static int AktualneID {get; set;}
+        public int IDPacienta { get; private set; }
         public double CelkovaDobaCakania { get; set; }
         /*public double DobaCakaniaNaRegistraciu { get; set; }
         public double DobaCakaniaNaVysetrenie { get; set; }
         public double DobaCakaniaNaOckovanie { get; set; }*/
         public Pacient(OSPABA.Simulation sim)
-            : base(sim) { }
+            : base(sim) 
+        {
+            IDPacienta = AktualneID++;
+        }
 
     }
 }

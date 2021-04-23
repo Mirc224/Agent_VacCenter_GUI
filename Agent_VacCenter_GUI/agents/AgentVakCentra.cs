@@ -30,6 +30,7 @@ namespace agents
             AddOwnMessage(Mc.ZaockujPacienta);
             AddOwnMessage(Mc.PacientCakaj);
             AddOwnMessage(Mc.NaplnStriekacky);
+            AddOwnMessage(Mc.VykonajObed);
         }
         //meta! tag="end"
     }

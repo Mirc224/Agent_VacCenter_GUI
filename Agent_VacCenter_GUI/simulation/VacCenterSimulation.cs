@@ -1,12 +1,21 @@
 using OSPABA;
 using agents;
 using Agent_VacCenter_GUI;
+using System;
 
 namespace simulation
 {
 	public class VacCenterSimulation : Simulation
 	{
-		public double RealnyCasVSekundach { get => CurrentTime + 28800; }
+		public string NaformovatovanyCas {
+			get
+			{
+				TimeSpan t = TimeSpan.FromSeconds(RealnyCasVSekundach);
+				return t.ToString(@"hh\:mm\:ss");
+			}
+		}
+	public double ZaciatocnyCasVSekundach { get => 28800; }
+		public double RealnyCasVSekundach { get => CurrentTime + ZaciatocnyCasVSekundach; }
 		public double PriemernaDlzkaRaduRegistracia;
 		public double PriemernaDlzkaRaduVysetrenie;
 		public double PriemernaDlzkaRaduOckovanie;
@@ -117,10 +126,9 @@ namespace simulation
 				System.Console.WriteLine();
 
 				System.Console.WriteLine(AgentOkolia.PocetNepridenychPacientov + " " + AgentOkolia.PocetPacientovVojdenych);
-				if (GUI != null)
-					GUI.AfterReplicationGUIUpdate();
 			}
-
+			if (GUI != null)
+				GUI.AfterReplicationGUIUpdate();
 		}
 
 		override protected void SimulationFinished()
@@ -140,8 +148,16 @@ namespace simulation
 			AgentOckovania = new AgentOckovania(SimId.AgentOckovania, this, AgentVakCentra);
 			AgentCakarne = new AgentCakarne(SimId.AgentCakarne, this, AgentVakCentra);
 			AgentPripravyDavok = new AgentPripravyDavok(SimId.AgentPripravyDavok, this, AgentVakCentra);
+			AgentJedalne = new AgentJedalne(SimId.AgentJedalne, this, AgentVakCentra);
 			AgentPresunu = new AgentPresunu(SimId.AgentPresunu, this, AgentVakCentra);
 		}
+
+		public void VykonajUpdateStavu()
+        {
+			AgentRegistracie.UpdatujStatistiky();
+			AgentVysetrenia.UpdatujStatistiky();
+			AgentOckovania.UpdatujStatistiky();
+        }
 		public AgentModelu AgentModelu
 		{ get; set; }
 		public AgentOkolia AgentOkolia
@@ -159,6 +175,8 @@ namespace simulation
 		public AgentPresunu AgentPresunu
 		{ get; set; }
 		public AgentPripravyDavok AgentPripravyDavok
+		{ get; set; }
+		public AgentJedalne AgentJedalne
 		{ get; set; }
 		//meta! tag="end"
 	}

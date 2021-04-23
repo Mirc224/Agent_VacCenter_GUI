@@ -34,14 +34,15 @@ namespace managers
         public void ProcessNoticeKoniecOckovania(MessageForm message)
         {
             var sestricka = ((Sprava)message).Pracovnik as Sestricka;
+            (message as Sprava).Pracovnik = null;
             message.Code = Mc.ZaockujPacienta;
             Response(message);
 
             --sestricka.PocetNaplnenych;
             if(sestricka.PocetNaplnenych > 0)
             {
-                NavratPracovnika(sestricka);
-                AkCakaSpracujDalsieho();
+                DokonceniePracePracovnikom(sestricka);
+                //AkCakaSpracujDalsieho();
             }
             else
             {
@@ -56,8 +57,8 @@ namespace managers
 
         public void ProcessNaplnStriekacky(MessageForm message)
         {
-            NavratPracovnika((message as Sprava).Pracovnik);
-            AkCakaSpracujDalsieho();
+            DokonceniePracePracovnikom((message as Sprava).Pracovnik);
+            //AkCakaSpracujDalsieho();
         }
 
        
@@ -111,6 +112,14 @@ namespace managers
                     break;
                 case Mc.NaplnStriekacky:
                     ProcessNaplnStriekacky(message);
+                    break;
+                case Mc.NoticeCasObeda:
+                    MyAgent.JeCasObeda = true;
+                    NaplanujMozneObedy();
+                    //System.Console.WriteLine(((VacCenterSimulation)MySim).NaformovatovanyCas);
+                    break;
+                case Mc.VykonajObed:
+                    NavratPracovnikaZObedu((message as Sprava).Pracovnik);
                     break;
                 default:
                     ProcessDefault(message);

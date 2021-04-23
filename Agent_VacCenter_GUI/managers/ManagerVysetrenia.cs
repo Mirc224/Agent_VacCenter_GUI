@@ -56,12 +56,14 @@ namespace managers
         //meta! sender="ProcessVysetrenia", id="41", type="Notice"
         public void ProcessNoticeKoniecVysetrenia(MessageForm message)
         {
-            NavratPracovnika(((Sprava)message).Pracovnik);
+            DokonceniePracePracovnikom(((Sprava)message).Pracovnik);
+            (message as Sprava).Pracovnik = null;
             message.Code = Mc.VysetriPacienta;
             Response(message);
 
-            AkCakaSpracujDalsieho();
+            //AkCakaSpracujDalsieho();
         }
+
 
 
         //meta! userInfo="Process messages defined in code", id="0"
@@ -88,7 +90,14 @@ namespace managers
                 case Mc.Finish:
                     ProcessNoticeKoniecVysetrenia(message);
                     break;
-
+                case Mc.NoticeCasObeda:
+                    MyAgent.JeCasObeda = true;
+                    NaplanujMozneObedy();
+                    //System.Console.WriteLine(((VacCenterSimulation)MySim).NaformovatovanyCas);
+                    break;
+                case Mc.VykonajObed:
+                    NavratPracovnikaZObedu((message as Sprava).Pracovnik);
+                    break;
                 default:
                     ProcessDefault(message);
                     break;

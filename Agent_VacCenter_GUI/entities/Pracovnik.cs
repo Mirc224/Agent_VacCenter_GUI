@@ -12,13 +12,13 @@ namespace entities
         DOKTOR = Lokacie.MiestnostVysetrenie,
         SESTRICKA = Lokacie.MiestnostOckovanie
     }
-    public class Pracovnik: PohyblivaEntita
+    public class Pracovnik: StavovaEntita
     {
         public TypPracovnika TypPracovnika { get; set; }
         public int IDPracovnika { get; set; }
         public string Stav { get; set; } = "Nečinný";
         public bool Obedoval { get; set; } = false;
-        public bool Obsadeny { get; set; } = false;
+        //public bool Nedostupny { get; set; } = false;
         public double ZaciatokObsluhovania { get; set; } = 0;
         public WStat Utilization { get; private set; }
         public double MeanUtiliztion { get => Utilization.Mean(); }
@@ -30,7 +30,7 @@ namespace entities
         {
             Stav = "Nečinný";
             Obedoval = false;
-            Obsadeny = false;
+            //Nedostupny = false;
 
             ZaciatokObsluhovania = 0;
             Utilization.Clear();

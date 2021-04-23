@@ -60,7 +60,11 @@ namespace continualAssistants
                     break;
             }
             sprava.Code = Mc.NoticeKoniecPresunu;
-            Hold(trvaniePrechodu/60, sprava);
+            if (sprava.EntitaPresunu == EntitySimulacie.Pracovnik)
+                sprava.PovodnaSprava.Pracovnik.Stav += $" ({string.Format("{0:0.##}", trvaniePrechodu)}s)";
+            else
+                sprava.PovodnaSprava.Pacient.Stav += $" ({string.Format("{0:0.##}", trvaniePrechodu)}s)";
+            Hold(trvaniePrechodu, sprava);
         }
 
         //meta! userInfo="Process messages defined in code", id="0"
