@@ -46,12 +46,10 @@ namespace Agent_VacCenter_GUI.model
 
         protected void DokonceniePracePracovnikom(Pracovnik pracovnik)
         {
-            //pracovnik.Nedostupny = false;
             MyAgent.DostupniPracovnici.Set(pracovnik.IDPracovnika, true);
-            //double trvanieObsluhy = MySim.CurrentTime - pracovnik.ZaciatokObsluhovania;
             pracovnik.Utilization.AddSample(0);
-            //MyAgent.VytazeniePracovnikov.AddSample(trvanieObsluhy);
             --MyAgent.PocetPracujucich;
+            pracovnik.Stav = "Nečinný";
             MyAgent.VytazeniePracovnikov.AddSample(MyAgent.PocetPracujucich);
 
             SkusPoslatNaObedAleboObsluzDalsieho(pracovnik);
@@ -117,6 +115,7 @@ namespace Agent_VacCenter_GUI.model
             MyAgent.NenajedeniPracovnici.Set(pracovnik.IDPracovnika, false);
             pracovnik.Obedoval = true;
             --MyAgent.PocetObedujucich;
+            pracovnik.Stav = "Nečinný";
             NaplanujMozneObedy();
             AkCakaSpracujDalsieho();
         }

@@ -43,5 +43,10 @@ namespace agents
 			DlzkaCakania = new Stat();
 		}
 		//meta! tag="end"
+
+		public void UpdateZaverecnychStatistik()
+        {
+			DlzkaRadu.AddSample(((ManagerPripravyDavok)MyManager).Front.Count);
+        }
 	}
 }

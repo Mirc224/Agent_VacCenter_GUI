@@ -19,6 +19,7 @@ namespace agents
 
 		public int PocetPacientovVojdenych { get; set; }
 		public int PocetPacientovOdidenych { get; set; }
+		public bool Generuj { get; set; }
 
 		private OSPRNG.UniformDiscreteRNG _generatorNepridenychPacientov;
 		public AgentOkolia(int id, Simulation mySim, Agent parent) :
@@ -37,6 +38,7 @@ namespace agents
 			Pacient.AktualneID = 0;
 			CelkovaDobaCakaniaPacientov.Clear();
 			PocetNepridenychPacientov = _generatorNepridenychPacientov.Sample();
+			Generuj = true;
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

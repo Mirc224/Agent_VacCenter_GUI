@@ -45,6 +45,12 @@ namespace managers
             var pacient = ((Sprava)message).Pacient;
             ++MyAgent.PocetPacientovOdidenych;
             MyAgent.CelkovaDobaCakaniaPacientov.AddSample(pacient.CelkovaDobaCakania);
+            if (!MyAgent.Generuj && MyAgent.PocetPacientovVojdenych == MyAgent.PocetPacientovOdidenych)
+            {
+                (MySim as VacCenterSimulation).UpdateStatistikPredUkoncenim();
+                MySim.SetMaxSimSpeed();
+            }
+                
         }
 
         //meta! sender="SchedulerPrichodov", id="29", type="Notice"
@@ -56,7 +62,11 @@ namespace managers
             ((Sprava)message).Pacient = new Pacient(MySim);
 
             Notice(message);
-
+            if (MySim.CurrentTime > 540 * 60)
+            {
+                MyAgent.Generuj = false;
+                return;
+            }
             var novaInicializacnaSprava = new Sprava(MySim) { Addressee = MyAgent.SchedulerPrichodov, Code = Mc.NoticeNaplanujPrichod };
             Notice(novaInicializacnaSprava);
         }

@@ -38,5 +38,10 @@ namespace agents
 			DlzkaRadu = new WStat(MySim);
 		}
 		//meta! tag="end"
+
+		public void UpdateZaverecnychStatistik()
+        {
+			DlzkaRadu.AddSample(PocetLudiVCakarni);
+        }
 	}
 }

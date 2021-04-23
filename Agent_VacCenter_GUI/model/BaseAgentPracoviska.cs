@@ -166,5 +166,16 @@ namespace Agent_VacCenter_GUI.model
             }
         }
 
+        public void UpdateZaverecnychStatistik()
+        {
+            VytazeniePracovnikov.AddSample(PocetPracujucich);
+            DlzkaRadu.AddSample(MyManager.Front.Count);
+        }
+
+        public new BaseManagerPracoviska MyManager 
+        {
+            get => base.MyManager as BaseManagerPracoviska;
+        }
+
     }
 }

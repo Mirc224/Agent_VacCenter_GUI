@@ -2,6 +2,7 @@ using OSPABA;
 using agents;
 using Agent_VacCenter_GUI;
 using System;
+using OSPStat;
 
 namespace simulation
 {
@@ -14,25 +15,27 @@ namespace simulation
 				return t.ToString(@"hh\:mm\:ss");
 			}
 		}
-	public double ZaciatocnyCasVSekundach { get => 28800; }
+		public double ZaciatocnyCasVSekundach { get => 28800; }
 		public double RealnyCasVSekundach { get => CurrentTime + ZaciatocnyCasVSekundach; }
-		public double PriemernaDlzkaRaduRegistracia;
-		public double PriemernaDlzkaRaduVysetrenie;
-		public double PriemernaDlzkaRaduOckovanie;
 
-		public double PriemernyCasCakaniaRegistracia;
-		public double PriemernyCasCakaniaVysetrenie;
-		public double PriemernyCasCakaniaOckovanie;
+		public Stat PriemernaDlzkaRaduRegistracia { get; private set; } = new Stat();
+		public Stat PriemernaDlzkaRaduVysetrenie { get; private set; } = new Stat();
+		public Stat PriemernaDlzkaRaduOckovanie { get; private set; } = new Stat();
 
-		public double PriemerneVytazenieAdmin;
-		public double PriemerneVytazenieDoktor;
-		public double PriemerneVytazenieSestricka;
+		public Stat PriemernyCasCakaniaRegistracia { get; private set; } = new Stat();
+		public Stat PriemernyCasCakaniaVysetrenie { get; private set; } = new Stat();
+		public Stat PriemernyCasCakaniaOckovanie { get; private set; } = new Stat();
 
-		public double PriemernaDlzkaRaduStriekacky;
-		public double PriemernyCasCakaniaStriekacky;
+		public Stat PriemerneVytazenieAdmin { get; private set; } = new Stat();
+		public Stat PriemerneVytazenieDoktor { get; private set; } = new Stat();
+		public Stat PriemerneVytazenieSestricka { get; private set; } = new Stat();
+		public Stat PriemernaDlzkaRaduStriekacky { get; private set; } = new Stat();
+		public Stat PriemernyCasCakaniaStriekacky { get; private set; } = new Stat();
 
-		public double PriemernaCakaciaDoba;
-		public double PriemernyPocetLudiVCakarni;
+		public Stat PriemernaCakaciaDoba { get; private set; } = new Stat();
+		public Stat PriemernyPocetLudiVCakarni { get; private set; } = new Stat();
+
+		public Stat PriemernyNadcas { get; private set; } = new Stat();
 
 		public AppGUI GUI;
 		public VacCenterSimulation(AppGUI gui)
@@ -41,87 +44,108 @@ namespace simulation
 			Init();
 		}
 
+		public void ZmenaRychlosti()
+        {
+			if (GUI != null)
+				if (GUI.MaximalnaRychlost)
+					SetMaxSimSpeed();
+				else
+					SetSimSpeed(Math.Ceiling(GUI.AktualnaRychlostSimulacie / 10000), 1.0/GUI.AktualnaRychlostSimulacie);
+
+		}
+
 		override protected void PrepareSimulation()
 		{
 			base.PrepareSimulation();
 			// Create global statistcis
 
+			PriemernyNadcas.Clear();
 
-			PriemernaDlzkaRaduRegistracia = 0;
-			PriemernaDlzkaRaduVysetrenie = 0;
-			PriemernaDlzkaRaduOckovanie = 0;
+			PriemernaDlzkaRaduRegistracia.Clear();
+			PriemernaDlzkaRaduVysetrenie.Clear();
+			PriemernaDlzkaRaduOckovanie.Clear();
 
-			PriemernyCasCakaniaRegistracia = 0;
-			PriemernyCasCakaniaVysetrenie = 0;
-			PriemernyCasCakaniaOckovanie = 0;
+			PriemernyCasCakaniaRegistracia.Clear();
+			PriemernyCasCakaniaVysetrenie.Clear();
+			PriemernyCasCakaniaOckovanie.Clear();
 
-			PriemerneVytazenieAdmin = 0;
-			PriemerneVytazenieDoktor = 0;
-			PriemerneVytazenieSestricka = 0;
+			PriemerneVytazenieAdmin.Clear();
+			PriemerneVytazenieDoktor.Clear();
+			PriemerneVytazenieSestricka.Clear();
 
-			PriemernaDlzkaRaduStriekacky = 0;
-			PriemernyCasCakaniaStriekacky = 0;
+			PriemernaDlzkaRaduStriekacky.Clear();
+			PriemernyCasCakaniaStriekacky.Clear();
 
-			PriemernaCakaciaDoba = 0;
-			PriemernyPocetLudiVCakarni = 0;
-			
+			PriemernaCakaciaDoba.Clear();
+			PriemernyPocetLudiVCakarni.Clear();
+
 		}
 
 		override protected void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Reset entities, queues, local statistics, etc...
+			ZmenaRychlosti();
 		}
 
+		public void UpdateStatistikPredUkoncenim()
+        {
+			PriemernyNadcas.AddSample(CurrentTime - 540 * 60);
+			AgentRegistracie.UpdateZaverecnychStatistik();
+			AgentVysetrenia.UpdateZaverecnychStatistik();
+			AgentOckovania.UpdateZaverecnychStatistik();
+			AgentCakarne.UpdateZaverecnychStatistik();
+			AgentPripravyDavok.UpdateZaverecnychStatistik();
+		}
 		override protected void ReplicationFinished()
 		{
 			// Collect local statistics into global, update UI, etc...
 			base.ReplicationFinished();
+            //Console.WriteLine(CurrentTime - 540 * 60);
 
+			PriemernaDlzkaRaduRegistracia.AddSample( AgentRegistracie.DlzkaRadu.Mean());
+			PriemernaDlzkaRaduVysetrenie.AddSample(AgentVysetrenia.DlzkaRadu.Mean());
+			PriemernaDlzkaRaduOckovanie.AddSample( AgentOckovania.DlzkaRadu.Mean());
 
-			PriemernaDlzkaRaduRegistracia += AgentRegistracie.DlzkaRadu.Mean();
-			PriemernaDlzkaRaduVysetrenie += AgentVysetrenia.DlzkaRadu.Mean();
-			PriemernaDlzkaRaduOckovanie += AgentOckovania.DlzkaRadu.Mean();
+			PriemernyCasCakaniaRegistracia.AddSample(AgentRegistracie.DlzkaCakania.Mean());
+			PriemernyCasCakaniaVysetrenie.AddSample(AgentVysetrenia.DlzkaCakania.Mean());
+			PriemernyCasCakaniaOckovanie.AddSample(AgentOckovania.DlzkaCakania.Mean());
 
-			PriemernyCasCakaniaRegistracia += AgentRegistracie.DlzkaCakania.Mean();
-			PriemernyCasCakaniaVysetrenie += AgentVysetrenia.DlzkaCakania.Mean();
-			PriemernyCasCakaniaOckovanie += AgentOckovania.DlzkaCakania.Mean();
+			PriemerneVytazenieAdmin.AddSample(AgentRegistracie.PriemerneVytazeniePracovnikov);
+			PriemerneVytazenieDoktor.AddSample(AgentVysetrenia.PriemerneVytazeniePracovnikov);
+			PriemerneVytazenieSestricka.AddSample(AgentOckovania.PriemerneVytazeniePracovnikov);
 
-			PriemerneVytazenieAdmin += AgentRegistracie.PriemerneVytazeniePracovnikov;
-			PriemerneVytazenieDoktor += AgentVysetrenia.PriemerneVytazeniePracovnikov;
-			PriemerneVytazenieSestricka += AgentOckovania.PriemerneVytazeniePracovnikov;
+			PriemernaDlzkaRaduStriekacky.AddSample(AgentPripravyDavok.DlzkaRadu.Mean());
+			PriemernyCasCakaniaStriekacky.AddSample(AgentPripravyDavok.DlzkaCakania.Mean());
 
-			PriemernaDlzkaRaduStriekacky += AgentPripravyDavok.DlzkaRadu.Mean();
-			PriemernyCasCakaniaStriekacky += AgentPripravyDavok.DlzkaCakania.Mean();
+			PriemernyPocetLudiVCakarni.AddSample(AgentCakarne.DlzkaRadu.Mean());
 
-			PriemernyPocetLudiVCakarni += AgentCakarne.DlzkaRadu.Mean();
-
-			PriemernaCakaciaDoba += AgentOkolia.CelkovaDobaCakaniaPacientov.Mean();
+			PriemernaCakaciaDoba.AddSample(AgentOkolia.CelkovaDobaCakaniaPacientov.Mean());
 
 			if((CurrentReplication + 1) % 100 == 0)
             {
 				System.Console.WriteLine($"R{CurrentReplication + 1}: Koniec replikace");
-				System.Console.WriteLine($"Vytazenie administracie: {PriemerneVytazenieAdmin / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerna dlzka radu: {PriemernaDlzkaRaduRegistracia / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerny cas cakania: {PriemernyCasCakaniaRegistracia / (CurrentReplication + 1)}");
+				System.Console.WriteLine($"Vytazenie administracie: {PriemerneVytazenieAdmin.Mean()}");
+				System.Console.WriteLine($"Priemerna dlzka radu: {PriemernaDlzkaRaduRegistracia.Mean()}");
+				System.Console.WriteLine($"Priemerny cas cakania: {PriemernyCasCakaniaRegistracia.Mean()}");
 				System.Console.WriteLine();
 
-				System.Console.WriteLine($"Vytazenie doktorov: {PriemerneVytazenieDoktor / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerna dlzka radu: {PriemernaDlzkaRaduVysetrenie / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerny cas cakania: {PriemernyCasCakaniaVysetrenie / (CurrentReplication + 1)}");
+				System.Console.WriteLine($"Vytazenie doktorov: {PriemerneVytazenieDoktor.Mean()}");
+				System.Console.WriteLine($"Priemerna dlzka radu: {PriemernaDlzkaRaduVysetrenie.Mean()}");
+				System.Console.WriteLine($"Priemerny cas cakania: {PriemernyCasCakaniaVysetrenie.Mean()}");
 				System.Console.WriteLine();
 
-				System.Console.WriteLine($"Vytazenie sestriciek: {PriemerneVytazenieSestricka / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerna dlzka radu: {PriemernaDlzkaRaduOckovanie / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerny cas cakania: {PriemernyCasCakaniaOckovanie / (CurrentReplication + 1)}");
+				System.Console.WriteLine($"Vytazenie sestriciek: {PriemerneVytazenieSestricka.Mean()}");
+				System.Console.WriteLine($"Priemerna dlzka radu: {PriemernaDlzkaRaduOckovanie.Mean()}");
+				System.Console.WriteLine($"Priemerny cas cakania: {PriemernyCasCakaniaOckovanie.Mean()}");
 				System.Console.WriteLine();
 
-				System.Console.WriteLine($"Priemerna dlzka radu striekacky: {PriemernaDlzkaRaduStriekacky / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerny cas cakania striekacky: {PriemernyCasCakaniaStriekacky / (CurrentReplication + 1)}");
+				System.Console.WriteLine($"Priemerna dlzka radu striekacky: {PriemernaDlzkaRaduStriekacky.Mean()}");
+				System.Console.WriteLine($"Priemerny cas cakania striekacky: {PriemernyCasCakaniaStriekacky.Mean()}");
 				System.Console.WriteLine();
 
-				System.Console.WriteLine($"Priemerny pocet ludi v cakarni: {PriemernyPocetLudiVCakarni / (CurrentReplication + 1)}");
-				System.Console.WriteLine($"Priemerny cas cakania: {PriemernaCakaciaDoba / (CurrentReplication + 1)}");
+				System.Console.WriteLine($"Priemerny pocet ludi v cakarni: {PriemernyPocetLudiVCakarni.Mean()}");
+				System.Console.WriteLine($"Priemerny cas cakania: {PriemernaCakaciaDoba.Mean()}");
 
 				System.Console.WriteLine();
 
