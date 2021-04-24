@@ -57,6 +57,7 @@ namespace managers
             else
             {
                 double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
+
                 sprava.Pacient.CelkovaDobaCakania += dobaCakania;
                 MyAgent.DlzkaCakania.AddSample(dobaCakania);
                 NaplanujObsluhu(message);

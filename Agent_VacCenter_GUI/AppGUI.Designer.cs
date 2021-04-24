@@ -32,18 +32,19 @@ namespace Agent_VacCenter_GUI
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabReplikacie = new System.Windows.Forms.TabPage();
             this.tabulkaReplikacie = new System.Windows.Forms.DataGridView();
+            this.statistika = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hodnota = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.intervalySpolahlivostiReplikace = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPacienti = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.labelDobaCakaniaCakaren = new System.Windows.Forms.Label();
+            this.labelLudiVCakarni = new System.Windows.Forms.Label();
             this.tabulkaPacienti = new System.Windows.Forms.DataGridView();
-            this.idPacienta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cinnost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.casPrichodu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cakanieRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cakanieVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cakanieOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cakanieCakaren = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabRegistracia = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelVytazenieRegistracia = new System.Windows.Forms.Label();
+            this.labelDobaCakaniaRegistracia = new System.Windows.Forms.Label();
+            this.labelDlzkaRaduRegistracia = new System.Windows.Forms.Label();
             this.tabulkaRegistracia = new System.Windows.Forms.DataGridView();
             this.cisloPracovnikaRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stavPracovnikaRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,40 +52,61 @@ namespace Agent_VacCenter_GUI
             this.vytazenieRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabVysetrenie = new System.Windows.Forms.TabPage();
             this.vysetreniePanel = new System.Windows.Forms.Panel();
+            this.labelVytazenieVysetrenie = new System.Windows.Forms.Label();
+            this.labelDobaCakaniaVysetrenie = new System.Windows.Forms.Label();
+            this.labelDlzkaRaduVysetrenie = new System.Windows.Forms.Label();
             this.tabulkaVysetrenie = new System.Windows.Forms.DataGridView();
-            this.cisloPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stavPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.obedovalVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vytazenieVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabOckovanie = new System.Windows.Forms.TabPage();
             this.ockovaniePanel = new System.Windows.Forms.Panel();
+            this.labelVytazenieOckovanie = new System.Windows.Forms.Label();
+            this.labelDobaCakaniaOckovanie = new System.Windows.Forms.Label();
+            this.labelDlzkaRaduOckovanie = new System.Windows.Forms.Label();
             this.tabulkaOckovanie = new System.Windows.Forms.DataGridView();
+            this.tabZavislost = new System.Windows.Forms.TabPage();
+            this.startPauseButton = new System.Windows.Forms.Button();
+            this.casLabel = new System.Windows.Forms.Label();
+            this.trackBarSlider = new System.Windows.Forms.TrackBar();
+            this.maxRychlostCHB = new System.Windows.Forms.CheckBox();
+            this.stopButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBoxZavislost = new System.Windows.Forms.CheckBox();
+            this.inputPocetPacientov = new System.Windows.Forms.TextBox();
+            this.inputReplikacie = new System.Windows.Forms.TextBox();
+            this.labelGuiUpdate = new System.Windows.Forms.Label();
+            this.labelReplikacie = new System.Windows.Forms.Label();
+            this.labelPocetObjednanych = new System.Windows.Forms.Label();
+            this.labelMaxDoktori = new System.Windows.Forms.Label();
+            this.checkBoxSpecifickePrichody = new System.Windows.Forms.CheckBox();
+            this.labelSestricky = new System.Windows.Forms.Label();
+            this.labelDoktori = new System.Windows.Forms.Label();
+            this.labelAdmini = new System.Windows.Forms.Label();
+            this.inputAdmini = new System.Windows.Forms.TextBox();
+            this.inputDoktori = new System.Windows.Forms.TextBox();
+            this.inputSestricky = new System.Windows.Forms.TextBox();
+            this.inputMaxDoktori = new System.Windows.Forms.TextBox();
+            this.inputZavislostUpdate = new System.Windows.Forms.TextBox();
+            this.buttonPouziNastavenia = new System.Windows.Forms.Button();
+            this.idPacienta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cinnost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.casPrichodu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cakanieRegistracia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cakanieVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cakanieOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cakanieCakaren = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cisloPracovnikaOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stavPracovnikaOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.obedovalOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vytazenieOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pocetStriekaciekOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabZavislost = new System.Windows.Forms.TabPage();
-            this.startStopButton = new System.Windows.Forms.Button();
-            this.casLabel = new System.Windows.Forms.Label();
-            this.trackBarSlider = new System.Windows.Forms.TrackBar();
-            this.maxRychlostCHB = new System.Windows.Forms.CheckBox();
-            this.statistika = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hodnota = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.intervalySpolahlivostiReplikace = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.labelDlzkaRaduRegistracia = new System.Windows.Forms.Label();
-            this.labelDobaCakaniaRegistracia = new System.Windows.Forms.Label();
-            this.labelVytazenieRegistracia = new System.Windows.Forms.Label();
-            this.labelVytazenieVysetrenie = new System.Windows.Forms.Label();
-            this.labelDobaCakaniaVysetrenie = new System.Windows.Forms.Label();
-            this.labelDlzkaRaduVysetrenie = new System.Windows.Forms.Label();
-            this.labelVytazenieOckovanie = new System.Windows.Forms.Label();
-            this.labelDobaCakaniaOckovanie = new System.Windows.Forms.Label();
-            this.labelDlzkaRaduOckovanie = new System.Windows.Forms.Label();
+            this.cisloPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stavPracovnikaVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.obedovalVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vytazenieVysetrenie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabReplikacie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaReplikacie)).BeginInit();
             this.tabPacienti.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaPacienti)).BeginInit();
             this.tabRegistracia.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -96,6 +118,7 @@ namespace Agent_VacCenter_GUI
             this.ockovaniePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaOckovanie)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSlider)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -109,10 +132,10 @@ namespace Agent_VacCenter_GUI
             this.tabControl1.Controls.Add(this.tabVysetrenie);
             this.tabControl1.Controls.Add(this.tabOckovanie);
             this.tabControl1.Controls.Add(this.tabZavislost);
-            this.tabControl1.Location = new System.Drawing.Point(-1, 96);
+            this.tabControl1.Location = new System.Drawing.Point(9, 138);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1083, 595);
+            this.tabControl1.Size = new System.Drawing.Size(1497, 705);
             this.tabControl1.TabIndex = 0;
             // 
             // tabReplikacie
@@ -120,7 +143,7 @@ namespace Agent_VacCenter_GUI
             this.tabReplikacie.Controls.Add(this.tabulkaReplikacie);
             this.tabReplikacie.Location = new System.Drawing.Point(4, 25);
             this.tabReplikacie.Name = "tabReplikacie";
-            this.tabReplikacie.Size = new System.Drawing.Size(1075, 566);
+            this.tabReplikacie.Size = new System.Drawing.Size(1489, 676);
             this.tabReplikacie.TabIndex = 5;
             this.tabReplikacie.Text = "Replikacie";
             this.tabReplikacie.UseVisualStyleBackColor = true;
@@ -142,8 +165,32 @@ namespace Agent_VacCenter_GUI
             this.tabulkaReplikacie.RowHeadersVisible = false;
             this.tabulkaReplikacie.RowHeadersWidth = 51;
             this.tabulkaReplikacie.RowTemplate.Height = 24;
-            this.tabulkaReplikacie.Size = new System.Drawing.Size(1075, 566);
+            this.tabulkaReplikacie.Size = new System.Drawing.Size(1489, 676);
             this.tabulkaReplikacie.TabIndex = 0;
+            // 
+            // statistika
+            // 
+            this.statistika.HeaderText = "Štatistika";
+            this.statistika.MinimumWidth = 6;
+            this.statistika.Name = "statistika";
+            this.statistika.ReadOnly = true;
+            this.statistika.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // hodnota
+            // 
+            this.hodnota.HeaderText = "Hodnota";
+            this.hodnota.MinimumWidth = 6;
+            this.hodnota.Name = "hodnota";
+            this.hodnota.ReadOnly = true;
+            this.hodnota.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // intervalySpolahlivostiReplikace
+            // 
+            this.intervalySpolahlivostiReplikace.HeaderText = "Intervaly spoľahlivosti";
+            this.intervalySpolahlivostiReplikace.MinimumWidth = 6;
+            this.intervalySpolahlivostiReplikace.Name = "intervalySpolahlivostiReplikace";
+            this.intervalySpolahlivostiReplikace.ReadOnly = true;
+            this.intervalySpolahlivostiReplikace.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tabPacienti
             // 
@@ -152,18 +199,40 @@ namespace Agent_VacCenter_GUI
             this.tabPacienti.Location = new System.Drawing.Point(4, 25);
             this.tabPacienti.Name = "tabPacienti";
             this.tabPacienti.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPacienti.Size = new System.Drawing.Size(1075, 566);
+            this.tabPacienti.Size = new System.Drawing.Size(1489, 676);
             this.tabPacienti.TabIndex = 0;
             this.tabPacienti.Text = "Pacienti";
             this.tabPacienti.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.labelDobaCakaniaCakaren);
+            this.panel2.Controls.Add(this.labelLudiVCakarni);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1069, 55);
+            this.panel2.Size = new System.Drawing.Size(1483, 55);
             this.panel2.TabIndex = 3;
+            // 
+            // labelDobaCakaniaCakaren
+            // 
+            this.labelDobaCakaniaCakaren.AutoSize = true;
+            this.labelDobaCakaniaCakaren.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDobaCakaniaCakaren.Location = new System.Drawing.Point(615, 21);
+            this.labelDobaCakaniaCakaren.Name = "labelDobaCakaniaCakaren";
+            this.labelDobaCakaniaCakaren.Size = new System.Drawing.Size(203, 20);
+            this.labelDobaCakaniaCakaren.TabIndex = 3;
+            this.labelDobaCakaniaCakaren.Text = "Celková doba čakania: ";
+            // 
+            // labelLudiVCakarni
+            // 
+            this.labelLudiVCakarni.AutoSize = true;
+            this.labelLudiVCakarni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelLudiVCakarni.Location = new System.Drawing.Point(90, 21);
+            this.labelLudiVCakarni.Name = "labelLudiVCakarni";
+            this.labelLudiVCakarni.Size = new System.Drawing.Size(179, 20);
+            this.labelLudiVCakarni.TabIndex = 2;
+            this.labelLudiVCakarni.Text = "AVG ľudí v čakárni: ";
             // 
             // tabulkaPacienti
             // 
@@ -188,61 +257,8 @@ namespace Agent_VacCenter_GUI
             this.tabulkaPacienti.RowHeadersVisible = false;
             this.tabulkaPacienti.RowHeadersWidth = 51;
             this.tabulkaPacienti.RowTemplate.Height = 24;
-            this.tabulkaPacienti.Size = new System.Drawing.Size(1069, 501);
+            this.tabulkaPacienti.Size = new System.Drawing.Size(1486, 609);
             this.tabulkaPacienti.TabIndex = 0;
-            // 
-            // idPacienta
-            // 
-            this.idPacienta.HeaderText = "IdPacienta";
-            this.idPacienta.MinimumWidth = 6;
-            this.idPacienta.Name = "idPacienta";
-            this.idPacienta.ReadOnly = true;
-            this.idPacienta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // cinnost
-            // 
-            this.cinnost.HeaderText = "Činnosť";
-            this.cinnost.MinimumWidth = 6;
-            this.cinnost.Name = "cinnost";
-            this.cinnost.ReadOnly = true;
-            this.cinnost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // casPrichodu
-            // 
-            this.casPrichodu.HeaderText = "Čas príchodu";
-            this.casPrichodu.MinimumWidth = 6;
-            this.casPrichodu.Name = "casPrichodu";
-            this.casPrichodu.ReadOnly = true;
-            // 
-            // cakanieRegistracia
-            // 
-            this.cakanieRegistracia.HeaderText = "Čakanie - Registracia";
-            this.cakanieRegistracia.MinimumWidth = 6;
-            this.cakanieRegistracia.Name = "cakanieRegistracia";
-            this.cakanieRegistracia.ReadOnly = true;
-            // 
-            // cakanieVysetrenie
-            // 
-            this.cakanieVysetrenie.HeaderText = "Čakanie - Vyšetrenie";
-            this.cakanieVysetrenie.MinimumWidth = 6;
-            this.cakanieVysetrenie.Name = "cakanieVysetrenie";
-            this.cakanieVysetrenie.ReadOnly = true;
-            this.cakanieVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // cakanieOckovanie
-            // 
-            this.cakanieOckovanie.HeaderText = "Čakanie - Očkovanie";
-            this.cakanieOckovanie.MinimumWidth = 6;
-            this.cakanieOckovanie.Name = "cakanieOckovanie";
-            this.cakanieOckovanie.ReadOnly = true;
-            // 
-            // cakanieCakaren
-            // 
-            this.cakanieCakaren.HeaderText = "Čakanie - Čakáreň";
-            this.cakanieCakaren.MinimumWidth = 6;
-            this.cakanieCakaren.Name = "cakanieCakaren";
-            this.cakanieCakaren.ReadOnly = true;
-            this.cakanieCakaren.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tabRegistracia
             // 
@@ -251,7 +267,7 @@ namespace Agent_VacCenter_GUI
             this.tabRegistracia.Location = new System.Drawing.Point(4, 25);
             this.tabRegistracia.Name = "tabRegistracia";
             this.tabRegistracia.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRegistracia.Size = new System.Drawing.Size(1075, 566);
+            this.tabRegistracia.Size = new System.Drawing.Size(1489, 676);
             this.tabRegistracia.TabIndex = 1;
             this.tabRegistracia.Text = "Registracia";
             this.tabRegistracia.UseVisualStyleBackColor = true;
@@ -264,8 +280,38 @@ namespace Agent_VacCenter_GUI
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1069, 55);
+            this.panel1.Size = new System.Drawing.Size(1483, 55);
             this.panel1.TabIndex = 3;
+            // 
+            // labelVytazenieRegistracia
+            // 
+            this.labelVytazenieRegistracia.AutoSize = true;
+            this.labelVytazenieRegistracia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelVytazenieRegistracia.Location = new System.Drawing.Point(709, 18);
+            this.labelVytazenieRegistracia.Name = "labelVytazenieRegistracia";
+            this.labelVytazenieRegistracia.Size = new System.Drawing.Size(104, 20);
+            this.labelVytazenieRegistracia.TabIndex = 2;
+            this.labelVytazenieRegistracia.Text = "Vyťaženie: ";
+            // 
+            // labelDobaCakaniaRegistracia
+            // 
+            this.labelDobaCakaniaRegistracia.AutoSize = true;
+            this.labelDobaCakaniaRegistracia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDobaCakaniaRegistracia.Location = new System.Drawing.Point(356, 18);
+            this.labelDobaCakaniaRegistracia.Name = "labelDobaCakaniaRegistracia";
+            this.labelDobaCakaniaRegistracia.Size = new System.Drawing.Size(135, 20);
+            this.labelDobaCakaniaRegistracia.TabIndex = 1;
+            this.labelDobaCakaniaRegistracia.Text = "Doba čakania: ";
+            // 
+            // labelDlzkaRaduRegistracia
+            // 
+            this.labelDlzkaRaduRegistracia.AutoSize = true;
+            this.labelDlzkaRaduRegistracia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDlzkaRaduRegistracia.Location = new System.Drawing.Point(1, 18);
+            this.labelDlzkaRaduRegistracia.Name = "labelDlzkaRaduRegistracia";
+            this.labelDlzkaRaduRegistracia.Size = new System.Drawing.Size(112, 20);
+            this.labelDlzkaRaduRegistracia.TabIndex = 0;
+            this.labelDlzkaRaduRegistracia.Text = "Dĺžka radu: ";
             // 
             // tabulkaRegistracia
             // 
@@ -287,7 +333,7 @@ namespace Agent_VacCenter_GUI
             this.tabulkaRegistracia.RowHeadersVisible = false;
             this.tabulkaRegistracia.RowHeadersWidth = 51;
             this.tabulkaRegistracia.RowTemplate.Height = 24;
-            this.tabulkaRegistracia.Size = new System.Drawing.Size(1069, 502);
+            this.tabulkaRegistracia.Size = new System.Drawing.Size(1483, 616);
             this.tabulkaRegistracia.TabIndex = 0;
             // 
             // cisloPracovnikaRegistracia
@@ -328,7 +374,7 @@ namespace Agent_VacCenter_GUI
             this.tabVysetrenie.Controls.Add(this.tabulkaVysetrenie);
             this.tabVysetrenie.Location = new System.Drawing.Point(4, 25);
             this.tabVysetrenie.Name = "tabVysetrenie";
-            this.tabVysetrenie.Size = new System.Drawing.Size(1075, 566);
+            this.tabVysetrenie.Size = new System.Drawing.Size(1489, 676);
             this.tabVysetrenie.TabIndex = 2;
             this.tabVysetrenie.Text = "Vysetrenie";
             this.tabVysetrenie.UseVisualStyleBackColor = true;
@@ -341,8 +387,38 @@ namespace Agent_VacCenter_GUI
             this.vysetreniePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.vysetreniePanel.Location = new System.Drawing.Point(0, 0);
             this.vysetreniePanel.Name = "vysetreniePanel";
-            this.vysetreniePanel.Size = new System.Drawing.Size(1075, 55);
+            this.vysetreniePanel.Size = new System.Drawing.Size(1489, 55);
             this.vysetreniePanel.TabIndex = 3;
+            // 
+            // labelVytazenieVysetrenie
+            // 
+            this.labelVytazenieVysetrenie.AutoSize = true;
+            this.labelVytazenieVysetrenie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelVytazenieVysetrenie.Location = new System.Drawing.Point(707, 16);
+            this.labelVytazenieVysetrenie.Name = "labelVytazenieVysetrenie";
+            this.labelVytazenieVysetrenie.Size = new System.Drawing.Size(104, 20);
+            this.labelVytazenieVysetrenie.TabIndex = 5;
+            this.labelVytazenieVysetrenie.Text = "Vyťaženie: ";
+            // 
+            // labelDobaCakaniaVysetrenie
+            // 
+            this.labelDobaCakaniaVysetrenie.AutoSize = true;
+            this.labelDobaCakaniaVysetrenie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDobaCakaniaVysetrenie.Location = new System.Drawing.Point(359, 16);
+            this.labelDobaCakaniaVysetrenie.Name = "labelDobaCakaniaVysetrenie";
+            this.labelDobaCakaniaVysetrenie.Size = new System.Drawing.Size(135, 20);
+            this.labelDobaCakaniaVysetrenie.TabIndex = 4;
+            this.labelDobaCakaniaVysetrenie.Text = "Doba čakania: ";
+            // 
+            // labelDlzkaRaduVysetrenie
+            // 
+            this.labelDlzkaRaduVysetrenie.AutoSize = true;
+            this.labelDlzkaRaduVysetrenie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDlzkaRaduVysetrenie.Location = new System.Drawing.Point(3, 16);
+            this.labelDlzkaRaduVysetrenie.Name = "labelDlzkaRaduVysetrenie";
+            this.labelDlzkaRaduVysetrenie.Size = new System.Drawing.Size(112, 20);
+            this.labelDlzkaRaduVysetrenie.TabIndex = 3;
+            this.labelDlzkaRaduVysetrenie.Text = "Dĺžka radu: ";
             // 
             // tabulkaVysetrenie
             // 
@@ -364,39 +440,8 @@ namespace Agent_VacCenter_GUI
             this.tabulkaVysetrenie.RowHeadersVisible = false;
             this.tabulkaVysetrenie.RowHeadersWidth = 51;
             this.tabulkaVysetrenie.RowTemplate.Height = 24;
-            this.tabulkaVysetrenie.Size = new System.Drawing.Size(1072, 505);
+            this.tabulkaVysetrenie.Size = new System.Drawing.Size(1483, 615);
             this.tabulkaVysetrenie.TabIndex = 1;
-            // 
-            // cisloPracovnikaVysetrenie
-            // 
-            this.cisloPracovnikaVysetrenie.HeaderText = "Číslo pracovníka";
-            this.cisloPracovnikaVysetrenie.MinimumWidth = 6;
-            this.cisloPracovnikaVysetrenie.Name = "cisloPracovnikaVysetrenie";
-            this.cisloPracovnikaVysetrenie.ReadOnly = true;
-            this.cisloPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // stavPracovnikaVysetrenie
-            // 
-            this.stavPracovnikaVysetrenie.HeaderText = "Stav";
-            this.stavPracovnikaVysetrenie.MinimumWidth = 6;
-            this.stavPracovnikaVysetrenie.Name = "stavPracovnikaVysetrenie";
-            this.stavPracovnikaVysetrenie.ReadOnly = true;
-            this.stavPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // obedovalVysetrenie
-            // 
-            this.obedovalVysetrenie.HeaderText = "Obedoval";
-            this.obedovalVysetrenie.MinimumWidth = 6;
-            this.obedovalVysetrenie.Name = "obedovalVysetrenie";
-            this.obedovalVysetrenie.ReadOnly = true;
-            this.obedovalVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // vytazenieVysetrenie
-            // 
-            this.vytazenieVysetrenie.HeaderText = "Vyťaženie";
-            this.vytazenieVysetrenie.MinimumWidth = 6;
-            this.vytazenieVysetrenie.Name = "vytazenieVysetrenie";
-            this.vytazenieVysetrenie.ReadOnly = true;
             // 
             // tabOckovanie
             // 
@@ -404,7 +449,7 @@ namespace Agent_VacCenter_GUI
             this.tabOckovanie.Controls.Add(this.tabulkaOckovanie);
             this.tabOckovanie.Location = new System.Drawing.Point(4, 25);
             this.tabOckovanie.Name = "tabOckovanie";
-            this.tabOckovanie.Size = new System.Drawing.Size(1075, 566);
+            this.tabOckovanie.Size = new System.Drawing.Size(1489, 676);
             this.tabOckovanie.TabIndex = 3;
             this.tabOckovanie.Text = "Ockovanie";
             this.tabOckovanie.UseVisualStyleBackColor = true;
@@ -417,8 +462,38 @@ namespace Agent_VacCenter_GUI
             this.ockovaniePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ockovaniePanel.Location = new System.Drawing.Point(0, 0);
             this.ockovaniePanel.Name = "ockovaniePanel";
-            this.ockovaniePanel.Size = new System.Drawing.Size(1075, 55);
+            this.ockovaniePanel.Size = new System.Drawing.Size(1489, 55);
             this.ockovaniePanel.TabIndex = 2;
+            // 
+            // labelVytazenieOckovanie
+            // 
+            this.labelVytazenieOckovanie.AutoSize = true;
+            this.labelVytazenieOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelVytazenieOckovanie.Location = new System.Drawing.Point(752, 20);
+            this.labelVytazenieOckovanie.Name = "labelVytazenieOckovanie";
+            this.labelVytazenieOckovanie.Size = new System.Drawing.Size(104, 20);
+            this.labelVytazenieOckovanie.TabIndex = 5;
+            this.labelVytazenieOckovanie.Text = "Vyťaženie: ";
+            // 
+            // labelDobaCakaniaOckovanie
+            // 
+            this.labelDobaCakaniaOckovanie.AutoSize = true;
+            this.labelDobaCakaniaOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDobaCakaniaOckovanie.Location = new System.Drawing.Point(381, 20);
+            this.labelDobaCakaniaOckovanie.Name = "labelDobaCakaniaOckovanie";
+            this.labelDobaCakaniaOckovanie.Size = new System.Drawing.Size(135, 20);
+            this.labelDobaCakaniaOckovanie.TabIndex = 4;
+            this.labelDobaCakaniaOckovanie.Text = "Doba čakania: ";
+            // 
+            // labelDlzkaRaduOckovanie
+            // 
+            this.labelDlzkaRaduOckovanie.AutoSize = true;
+            this.labelDlzkaRaduOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDlzkaRaduOckovanie.Location = new System.Drawing.Point(5, 20);
+            this.labelDlzkaRaduOckovanie.Name = "labelDlzkaRaduOckovanie";
+            this.labelDlzkaRaduOckovanie.Size = new System.Drawing.Size(112, 20);
+            this.labelDlzkaRaduOckovanie.TabIndex = 3;
+            this.labelDlzkaRaduOckovanie.Text = "Dĺžka radu: ";
             // 
             // tabulkaOckovanie
             // 
@@ -441,8 +516,360 @@ namespace Agent_VacCenter_GUI
             this.tabulkaOckovanie.RowHeadersVisible = false;
             this.tabulkaOckovanie.RowHeadersWidth = 51;
             this.tabulkaOckovanie.RowTemplate.Height = 24;
-            this.tabulkaOckovanie.Size = new System.Drawing.Size(1072, 505);
+            this.tabulkaOckovanie.Size = new System.Drawing.Size(1483, 612);
             this.tabulkaOckovanie.TabIndex = 1;
+            // 
+            // tabZavislost
+            // 
+            this.tabZavislost.Location = new System.Drawing.Point(4, 25);
+            this.tabZavislost.Name = "tabZavislost";
+            this.tabZavislost.Padding = new System.Windows.Forms.Padding(3);
+            this.tabZavislost.Size = new System.Drawing.Size(1497, 672);
+            this.tabZavislost.TabIndex = 4;
+            this.tabZavislost.Text = "Zavislost";
+            this.tabZavislost.UseVisualStyleBackColor = true;
+            // 
+            // startPauseButton
+            // 
+            this.startPauseButton.Location = new System.Drawing.Point(9, 99);
+            this.startPauseButton.Name = "startPauseButton";
+            this.startPauseButton.Size = new System.Drawing.Size(82, 32);
+            this.startPauseButton.TabIndex = 1;
+            this.startPauseButton.Text = "Start";
+            this.startPauseButton.UseVisualStyleBackColor = true;
+            this.startPauseButton.Click += new System.EventHandler(this.startStopButton_Click);
+            // 
+            // casLabel
+            // 
+            this.casLabel.AutoSize = true;
+            this.casLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.casLabel.Location = new System.Drawing.Point(1370, 45);
+            this.casLabel.Name = "casLabel";
+            this.casLabel.Size = new System.Drawing.Size(98, 25);
+            this.casLabel.TabIndex = 2;
+            this.casLabel.Text = "00:00:00";
+            // 
+            // trackBarSlider
+            // 
+            this.trackBarSlider.Location = new System.Drawing.Point(1313, 100);
+            this.trackBarSlider.Name = "trackBarSlider";
+            this.trackBarSlider.Size = new System.Drawing.Size(184, 56);
+            this.trackBarSlider.TabIndex = 3;
+            this.trackBarSlider.Scroll += new System.EventHandler(this.trackBarSlider_Scroll);
+            // 
+            // maxRychlostCHB
+            // 
+            this.maxRychlostCHB.AutoSize = true;
+            this.maxRychlostCHB.Location = new System.Drawing.Point(1365, 73);
+            this.maxRychlostCHB.Name = "maxRychlostCHB";
+            this.maxRychlostCHB.Size = new System.Drawing.Size(113, 21);
+            this.maxRychlostCHB.TabIndex = 4;
+            this.maxRychlostCHB.Text = "Max. rýchlosť";
+            this.maxRychlostCHB.UseVisualStyleBackColor = true;
+            this.maxRychlostCHB.CheckedChanged += new System.EventHandler(this.maxRychlostCHB_CheckedChanged);
+            // 
+            // stopButton
+            // 
+            this.stopButton.Location = new System.Drawing.Point(97, 99);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(82, 32);
+            this.stopButton.TabIndex = 5;
+            this.stopButton.Text = "Stop";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 8;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxZavislost, 5, 2);
+            this.tableLayoutPanel1.Controls.Add(this.inputPocetPacientov, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.inputReplikacie, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.labelGuiUpdate, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.labelReplikacie, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.labelPocetObjednanych, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.labelMaxDoktori, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.checkBoxSpecifickePrichody, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.labelSestricky, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.labelDoktori, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.labelAdmini, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.inputAdmini, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.inputDoktori, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.inputSestricky, 7, 0);
+            this.tableLayoutPanel1.Controls.Add(this.inputMaxDoktori, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.inputZavislostUpdate, 5, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 9);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1251, 84);
+            this.tableLayoutPanel1.TabIndex = 6;
+            // 
+            // checkBoxZavislost
+            // 
+            this.checkBoxZavislost.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxZavislost.AutoSize = true;
+            this.checkBoxZavislost.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxZavislost.Location = new System.Drawing.Point(783, 59);
+            this.checkBoxZavislost.Name = "checkBoxZavislost";
+            this.checkBoxZavislost.Size = new System.Drawing.Size(150, 22);
+            this.checkBoxZavislost.TabIndex = 15;
+            this.checkBoxZavislost.Text = "Závislosti";
+            this.checkBoxZavislost.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxZavislost.UseVisualStyleBackColor = true;
+            // 
+            // inputPocetPacientov
+            // 
+            this.inputPocetPacientov.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputPocetPacientov.Location = new System.Drawing.Point(471, 31);
+            this.inputPocetPacientov.Name = "inputPocetPacientov";
+            this.inputPocetPacientov.Size = new System.Drawing.Size(150, 22);
+            this.inputPocetPacientov.TabIndex = 13;
+            // 
+            // inputReplikacie
+            // 
+            this.inputReplikacie.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputReplikacie.Location = new System.Drawing.Point(159, 31);
+            this.inputReplikacie.Name = "inputReplikacie";
+            this.inputReplikacie.Size = new System.Drawing.Size(150, 22);
+            this.inputReplikacie.TabIndex = 12;
+            // 
+            // labelGuiUpdate
+            // 
+            this.labelGuiUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelGuiUpdate.AutoSize = true;
+            this.labelGuiUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelGuiUpdate.Location = new System.Drawing.Point(627, 28);
+            this.labelGuiUpdate.Name = "labelGuiUpdate";
+            this.labelGuiUpdate.Size = new System.Drawing.Size(150, 28);
+            this.labelGuiUpdate.TabIndex = 10;
+            this.labelGuiUpdate.Text = "Bod závislosti:";
+            this.labelGuiUpdate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelReplikacie
+            // 
+            this.labelReplikacie.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelReplikacie.AutoSize = true;
+            this.labelReplikacie.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelReplikacie.Location = new System.Drawing.Point(3, 28);
+            this.labelReplikacie.Name = "labelReplikacie";
+            this.labelReplikacie.Size = new System.Drawing.Size(150, 28);
+            this.labelReplikacie.TabIndex = 9;
+            this.labelReplikacie.Text = "Replikácie:";
+            this.labelReplikacie.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelPocetObjednanych
+            // 
+            this.labelPocetObjednanych.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPocetObjednanych.AutoSize = true;
+            this.labelPocetObjednanych.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelPocetObjednanych.Location = new System.Drawing.Point(315, 28);
+            this.labelPocetObjednanych.Name = "labelPocetObjednanych";
+            this.labelPocetObjednanych.Size = new System.Drawing.Size(150, 28);
+            this.labelPocetObjednanych.TabIndex = 8;
+            this.labelPocetObjednanych.Text = "Počet pacientov:";
+            this.labelPocetObjednanych.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelMaxDoktori
+            // 
+            this.labelMaxDoktori.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelMaxDoktori.AutoSize = true;
+            this.labelMaxDoktori.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelMaxDoktori.Location = new System.Drawing.Point(627, 0);
+            this.labelMaxDoktori.Name = "labelMaxDoktori";
+            this.labelMaxDoktori.Size = new System.Drawing.Size(150, 28);
+            this.labelMaxDoktori.TabIndex = 7;
+            this.labelMaxDoktori.Text = "Max doktori:";
+            this.labelMaxDoktori.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // checkBoxSpecifickePrichody
+            // 
+            this.checkBoxSpecifickePrichody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxSpecifickePrichody.AutoSize = true;
+            this.checkBoxSpecifickePrichody.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxSpecifickePrichody.Location = new System.Drawing.Point(315, 59);
+            this.checkBoxSpecifickePrichody.Name = "checkBoxSpecifickePrichody";
+            this.checkBoxSpecifickePrichody.Size = new System.Drawing.Size(150, 22);
+            this.checkBoxSpecifickePrichody.TabIndex = 14;
+            this.checkBoxSpecifickePrichody.Text = "Skoršie príchody";
+            this.checkBoxSpecifickePrichody.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxSpecifickePrichody.UseVisualStyleBackColor = true;
+            this.checkBoxSpecifickePrichody.CheckedChanged += new System.EventHandler(this.checkBoxSpecifickePrichody_CheckedChanged);
+            // 
+            // labelSestricky
+            // 
+            this.labelSestricky.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelSestricky.AutoSize = true;
+            this.labelSestricky.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelSestricky.Location = new System.Drawing.Point(939, 0);
+            this.labelSestricky.Name = "labelSestricky";
+            this.labelSestricky.Size = new System.Drawing.Size(150, 28);
+            this.labelSestricky.TabIndex = 2;
+            this.labelSestricky.Text = "Sestričky:";
+            this.labelSestricky.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelDoktori
+            // 
+            this.labelDoktori.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDoktori.AutoSize = true;
+            this.labelDoktori.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDoktori.Location = new System.Drawing.Point(315, 0);
+            this.labelDoktori.Name = "labelDoktori";
+            this.labelDoktori.Size = new System.Drawing.Size(150, 28);
+            this.labelDoktori.TabIndex = 1;
+            this.labelDoktori.Text = "Doktori:";
+            this.labelDoktori.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelAdmini
+            // 
+            this.labelAdmini.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelAdmini.AutoSize = true;
+            this.labelAdmini.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelAdmini.Location = new System.Drawing.Point(3, 0);
+            this.labelAdmini.Name = "labelAdmini";
+            this.labelAdmini.Size = new System.Drawing.Size(150, 28);
+            this.labelAdmini.TabIndex = 0;
+            this.labelAdmini.Text = "Admin:";
+            this.labelAdmini.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // inputAdmini
+            // 
+            this.inputAdmini.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputAdmini.Location = new System.Drawing.Point(159, 3);
+            this.inputAdmini.Name = "inputAdmini";
+            this.inputAdmini.Size = new System.Drawing.Size(150, 22);
+            this.inputAdmini.TabIndex = 3;
+            // 
+            // inputDoktori
+            // 
+            this.inputDoktori.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputDoktori.Location = new System.Drawing.Point(471, 3);
+            this.inputDoktori.Name = "inputDoktori";
+            this.inputDoktori.Size = new System.Drawing.Size(150, 22);
+            this.inputDoktori.TabIndex = 4;
+            // 
+            // inputSestricky
+            // 
+            this.inputSestricky.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputSestricky.Location = new System.Drawing.Point(1095, 3);
+            this.inputSestricky.Name = "inputSestricky";
+            this.inputSestricky.Size = new System.Drawing.Size(153, 22);
+            this.inputSestricky.TabIndex = 5;
+            // 
+            // inputMaxDoktori
+            // 
+            this.inputMaxDoktori.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputMaxDoktori.Location = new System.Drawing.Point(783, 3);
+            this.inputMaxDoktori.Name = "inputMaxDoktori";
+            this.inputMaxDoktori.Size = new System.Drawing.Size(150, 22);
+            this.inputMaxDoktori.TabIndex = 6;
+            // 
+            // inputZavislostUpdate
+            // 
+            this.inputZavislostUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputZavislostUpdate.Location = new System.Drawing.Point(783, 31);
+            this.inputZavislostUpdate.Name = "inputZavislostUpdate";
+            this.inputZavislostUpdate.Size = new System.Drawing.Size(150, 22);
+            this.inputZavislostUpdate.TabIndex = 11;
+            // 
+            // buttonPouziNastavenia
+            // 
+            this.buttonPouziNastavenia.Location = new System.Drawing.Point(1177, 100);
+            this.buttonPouziNastavenia.Name = "buttonPouziNastavenia";
+            this.buttonPouziNastavenia.Size = new System.Drawing.Size(82, 32);
+            this.buttonPouziNastavenia.TabIndex = 7;
+            this.buttonPouziNastavenia.Text = "Aplikuj";
+            this.buttonPouziNastavenia.UseVisualStyleBackColor = true;
+            // 
+            // idPacienta
+            // 
+            this.idPacienta.HeaderText = "IdPacienta";
+            this.idPacienta.MinimumWidth = 6;
+            this.idPacienta.Name = "idPacienta";
+            this.idPacienta.ReadOnly = true;
+            this.idPacienta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cinnost
+            // 
+            this.cinnost.HeaderText = "Činnosť";
+            this.cinnost.MinimumWidth = 6;
+            this.cinnost.Name = "cinnost";
+            this.cinnost.ReadOnly = true;
+            this.cinnost.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // casPrichodu
+            // 
+            this.casPrichodu.HeaderText = "Čas príchodu";
+            this.casPrichodu.MinimumWidth = 6;
+            this.casPrichodu.Name = "casPrichodu";
+            this.casPrichodu.ReadOnly = true;
+            this.casPrichodu.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cakanieRegistracia
+            // 
+            this.cakanieRegistracia.HeaderText = "Čakanie - Registracia";
+            this.cakanieRegistracia.MinimumWidth = 6;
+            this.cakanieRegistracia.Name = "cakanieRegistracia";
+            this.cakanieRegistracia.ReadOnly = true;
+            this.cakanieRegistracia.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cakanieVysetrenie
+            // 
+            this.cakanieVysetrenie.HeaderText = "Čakanie - Vyšetrenie";
+            this.cakanieVysetrenie.MinimumWidth = 6;
+            this.cakanieVysetrenie.Name = "cakanieVysetrenie";
+            this.cakanieVysetrenie.ReadOnly = true;
+            this.cakanieVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cakanieOckovanie
+            // 
+            this.cakanieOckovanie.HeaderText = "Čakanie - Očkovanie";
+            this.cakanieOckovanie.MinimumWidth = 6;
+            this.cakanieOckovanie.Name = "cakanieOckovanie";
+            this.cakanieOckovanie.ReadOnly = true;
+            this.cakanieOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // cakanieCakaren
+            // 
+            this.cakanieCakaren.HeaderText = "Čakanie - Čakáreň";
+            this.cakanieCakaren.MinimumWidth = 6;
+            this.cakanieCakaren.Name = "cakanieCakaren";
+            this.cakanieCakaren.ReadOnly = true;
+            this.cakanieCakaren.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // cisloPracovnikaOckovanie
             // 
@@ -474,6 +901,7 @@ namespace Agent_VacCenter_GUI
             this.vytazenieOckovanie.MinimumWidth = 6;
             this.vytazenieOckovanie.Name = "vytazenieOckovanie";
             this.vytazenieOckovanie.ReadOnly = true;
+            this.vytazenieOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // pocetStriekaciekOckovanie
             // 
@@ -483,185 +911,61 @@ namespace Agent_VacCenter_GUI
             this.pocetStriekaciekOckovanie.ReadOnly = true;
             this.pocetStriekaciekOckovanie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // tabZavislost
+            // cisloPracovnikaVysetrenie
             // 
-            this.tabZavislost.Location = new System.Drawing.Point(4, 25);
-            this.tabZavislost.Name = "tabZavislost";
-            this.tabZavislost.Padding = new System.Windows.Forms.Padding(3);
-            this.tabZavislost.Size = new System.Drawing.Size(1075, 566);
-            this.tabZavislost.TabIndex = 4;
-            this.tabZavislost.Text = "Zavislost";
-            this.tabZavislost.UseVisualStyleBackColor = true;
+            this.cisloPracovnikaVysetrenie.HeaderText = "Číslo pracovníka";
+            this.cisloPracovnikaVysetrenie.MinimumWidth = 6;
+            this.cisloPracovnikaVysetrenie.Name = "cisloPracovnikaVysetrenie";
+            this.cisloPracovnikaVysetrenie.ReadOnly = true;
+            this.cisloPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // startStopButton
+            // stavPracovnikaVysetrenie
             // 
-            this.startStopButton.Location = new System.Drawing.Point(12, 58);
-            this.startStopButton.Name = "startStopButton";
-            this.startStopButton.Size = new System.Drawing.Size(82, 32);
-            this.startStopButton.TabIndex = 1;
-            this.startStopButton.Text = "Start";
-            this.startStopButton.UseVisualStyleBackColor = true;
-            this.startStopButton.Click += new System.EventHandler(this.startStopButton_Click);
+            this.stavPracovnikaVysetrenie.HeaderText = "Stav";
+            this.stavPracovnikaVysetrenie.MinimumWidth = 6;
+            this.stavPracovnikaVysetrenie.Name = "stavPracovnikaVysetrenie";
+            this.stavPracovnikaVysetrenie.ReadOnly = true;
+            this.stavPracovnikaVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // casLabel
+            // obedovalVysetrenie
             // 
-            this.casLabel.AutoSize = true;
-            this.casLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.casLabel.Location = new System.Drawing.Point(886, 10);
-            this.casLabel.Name = "casLabel";
-            this.casLabel.Size = new System.Drawing.Size(98, 25);
-            this.casLabel.TabIndex = 2;
-            this.casLabel.Text = "00:00:00";
+            this.obedovalVysetrenie.HeaderText = "Obedoval";
+            this.obedovalVysetrenie.MinimumWidth = 6;
+            this.obedovalVysetrenie.Name = "obedovalVysetrenie";
+            this.obedovalVysetrenie.ReadOnly = true;
+            this.obedovalVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // trackBarSlider
+            // vytazenieVysetrenie
             // 
-            this.trackBarSlider.Location = new System.Drawing.Point(854, 38);
-            this.trackBarSlider.Name = "trackBarSlider";
-            this.trackBarSlider.Size = new System.Drawing.Size(201, 56);
-            this.trackBarSlider.TabIndex = 3;
-            this.trackBarSlider.Scroll += new System.EventHandler(this.trackBarSlider_Scroll);
-            // 
-            // maxRychlostCHB
-            // 
-            this.maxRychlostCHB.AutoSize = true;
-            this.maxRychlostCHB.Location = new System.Drawing.Point(871, 73);
-            this.maxRychlostCHB.Name = "maxRychlostCHB";
-            this.maxRychlostCHB.Size = new System.Drawing.Size(113, 21);
-            this.maxRychlostCHB.TabIndex = 4;
-            this.maxRychlostCHB.Text = "Max. rýchlosť";
-            this.maxRychlostCHB.UseVisualStyleBackColor = true;
-            this.maxRychlostCHB.CheckedChanged += new System.EventHandler(this.maxRychlostCHB_CheckedChanged);
-            // 
-            // statistika
-            // 
-            this.statistika.HeaderText = "Štatistika";
-            this.statistika.MinimumWidth = 6;
-            this.statistika.Name = "statistika";
-            this.statistika.ReadOnly = true;
-            this.statistika.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // hodnota
-            // 
-            this.hodnota.HeaderText = "Hodnota";
-            this.hodnota.MinimumWidth = 6;
-            this.hodnota.Name = "hodnota";
-            this.hodnota.ReadOnly = true;
-            this.hodnota.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // intervalySpolahlivostiReplikace
-            // 
-            this.intervalySpolahlivostiReplikace.HeaderText = "Intervaly spoľahlivosti";
-            this.intervalySpolahlivostiReplikace.MinimumWidth = 6;
-            this.intervalySpolahlivostiReplikace.Name = "intervalySpolahlivostiReplikace";
-            this.intervalySpolahlivostiReplikace.ReadOnly = true;
-            this.intervalySpolahlivostiReplikace.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // labelDlzkaRaduRegistracia
-            // 
-            this.labelDlzkaRaduRegistracia.AutoSize = true;
-            this.labelDlzkaRaduRegistracia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelDlzkaRaduRegistracia.Location = new System.Drawing.Point(1, 18);
-            this.labelDlzkaRaduRegistracia.Name = "labelDlzkaRaduRegistracia";
-            this.labelDlzkaRaduRegistracia.Size = new System.Drawing.Size(112, 20);
-            this.labelDlzkaRaduRegistracia.TabIndex = 0;
-            this.labelDlzkaRaduRegistracia.Text = "Dĺžka radu: ";
-            // 
-            // labelDobaCakaniaRegistracia
-            // 
-            this.labelDobaCakaniaRegistracia.AutoSize = true;
-            this.labelDobaCakaniaRegistracia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelDobaCakaniaRegistracia.Location = new System.Drawing.Point(323, 18);
-            this.labelDobaCakaniaRegistracia.Name = "labelDobaCakaniaRegistracia";
-            this.labelDobaCakaniaRegistracia.Size = new System.Drawing.Size(135, 20);
-            this.labelDobaCakaniaRegistracia.TabIndex = 1;
-            this.labelDobaCakaniaRegistracia.Text = "Doba čakania: ";
-            // 
-            // labelVytazenieRegistracia
-            // 
-            this.labelVytazenieRegistracia.AutoSize = true;
-            this.labelVytazenieRegistracia.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelVytazenieRegistracia.Location = new System.Drawing.Point(641, 18);
-            this.labelVytazenieRegistracia.Name = "labelVytazenieRegistracia";
-            this.labelVytazenieRegistracia.Size = new System.Drawing.Size(104, 20);
-            this.labelVytazenieRegistracia.TabIndex = 2;
-            this.labelVytazenieRegistracia.Text = "Vyťaženie: ";
-            // 
-            // labelVytazenieVysetrenie
-            // 
-            this.labelVytazenieVysetrenie.AutoSize = true;
-            this.labelVytazenieVysetrenie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelVytazenieVysetrenie.Location = new System.Drawing.Point(643, 16);
-            this.labelVytazenieVysetrenie.Name = "labelVytazenieVysetrenie";
-            this.labelVytazenieVysetrenie.Size = new System.Drawing.Size(104, 20);
-            this.labelVytazenieVysetrenie.TabIndex = 5;
-            this.labelVytazenieVysetrenie.Text = "Vyťaženie: ";
-            // 
-            // labelDobaCakaniaVysetrenie
-            // 
-            this.labelDobaCakaniaVysetrenie.AutoSize = true;
-            this.labelDobaCakaniaVysetrenie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelDobaCakaniaVysetrenie.Location = new System.Drawing.Point(325, 16);
-            this.labelDobaCakaniaVysetrenie.Name = "labelDobaCakaniaVysetrenie";
-            this.labelDobaCakaniaVysetrenie.Size = new System.Drawing.Size(135, 20);
-            this.labelDobaCakaniaVysetrenie.TabIndex = 4;
-            this.labelDobaCakaniaVysetrenie.Text = "Doba čakania: ";
-            // 
-            // labelDlzkaRaduVysetrenie
-            // 
-            this.labelDlzkaRaduVysetrenie.AutoSize = true;
-            this.labelDlzkaRaduVysetrenie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelDlzkaRaduVysetrenie.Location = new System.Drawing.Point(3, 16);
-            this.labelDlzkaRaduVysetrenie.Name = "labelDlzkaRaduVysetrenie";
-            this.labelDlzkaRaduVysetrenie.Size = new System.Drawing.Size(112, 20);
-            this.labelDlzkaRaduVysetrenie.TabIndex = 3;
-            this.labelDlzkaRaduVysetrenie.Text = "Dĺžka radu: ";
-            // 
-            // labelVytazenieOckovanie
-            // 
-            this.labelVytazenieOckovanie.AutoSize = true;
-            this.labelVytazenieOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelVytazenieOckovanie.Location = new System.Drawing.Point(645, 20);
-            this.labelVytazenieOckovanie.Name = "labelVytazenieOckovanie";
-            this.labelVytazenieOckovanie.Size = new System.Drawing.Size(104, 20);
-            this.labelVytazenieOckovanie.TabIndex = 5;
-            this.labelVytazenieOckovanie.Text = "Vyťaženie: ";
-            // 
-            // labelDobaCakaniaOckovanie
-            // 
-            this.labelDobaCakaniaOckovanie.AutoSize = true;
-            this.labelDobaCakaniaOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelDobaCakaniaOckovanie.Location = new System.Drawing.Point(327, 20);
-            this.labelDobaCakaniaOckovanie.Name = "labelDobaCakaniaOckovanie";
-            this.labelDobaCakaniaOckovanie.Size = new System.Drawing.Size(135, 20);
-            this.labelDobaCakaniaOckovanie.TabIndex = 4;
-            this.labelDobaCakaniaOckovanie.Text = "Doba čakania: ";
-            // 
-            // labelDlzkaRaduOckovanie
-            // 
-            this.labelDlzkaRaduOckovanie.AutoSize = true;
-            this.labelDlzkaRaduOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelDlzkaRaduOckovanie.Location = new System.Drawing.Point(5, 20);
-            this.labelDlzkaRaduOckovanie.Name = "labelDlzkaRaduOckovanie";
-            this.labelDlzkaRaduOckovanie.Size = new System.Drawing.Size(112, 20);
-            this.labelDlzkaRaduOckovanie.TabIndex = 3;
-            this.labelDlzkaRaduOckovanie.Text = "Dĺžka radu: ";
+            this.vytazenieVysetrenie.HeaderText = "Vyťaženie";
+            this.vytazenieVysetrenie.MinimumWidth = 6;
+            this.vytazenieVysetrenie.Name = "vytazenieVysetrenie";
+            this.vytazenieVysetrenie.ReadOnly = true;
+            this.vytazenieVysetrenie.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // AppGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1081, 692);
+            this.ClientSize = new System.Drawing.Size(1503, 845);
+            this.Controls.Add(this.buttonPouziNastavenia);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.stopButton);
             this.Controls.Add(this.maxRychlostCHB);
             this.Controls.Add(this.trackBarSlider);
             this.Controls.Add(this.casLabel);
-            this.Controls.Add(this.startStopButton);
+            this.Controls.Add(this.startPauseButton);
             this.Controls.Add(this.tabControl1);
             this.Name = "AppGUI";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AppGUI_FormClosed);
+            this.Load += new System.EventHandler(this.AppGUI_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabReplikacie.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaReplikacie)).EndInit();
             this.tabPacienti.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaPacienti)).EndInit();
             this.tabRegistracia.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -676,6 +980,8 @@ namespace Agent_VacCenter_GUI
             this.ockovaniePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaOckovanie)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSlider)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -692,13 +998,6 @@ namespace Agent_VacCenter_GUI
         private System.Windows.Forms.DataGridView tabulkaReplikacie;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView tabulkaPacienti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idPacienta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cinnost;
-        private System.Windows.Forms.DataGridViewTextBoxColumn casPrichodu;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieRegistracia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieCakaren;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView tabulkaRegistracia;
         private System.Windows.Forms.Panel vysetreniePanel;
@@ -706,20 +1005,11 @@ namespace Agent_VacCenter_GUI
         private System.Windows.Forms.Panel ockovaniePanel;
         private System.Windows.Forms.DataGridView tabulkaOckovanie;
         private System.Windows.Forms.TabPage tabZavislost;
-        private System.Windows.Forms.Button startStopButton;
+        private System.Windows.Forms.Button startPauseButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaRegistracia;
         private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaRegistracia;
         private System.Windows.Forms.DataGridViewTextBoxColumn obedovalRegistracia;
         private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieRegistracia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieVysetrenie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieOckovanie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn pocetStriekaciekOckovanie;
         private System.Windows.Forms.Label casLabel;
         private System.Windows.Forms.TrackBar trackBarSlider;
         private System.Windows.Forms.CheckBox maxRychlostCHB;
@@ -735,6 +1025,43 @@ namespace Agent_VacCenter_GUI
         private System.Windows.Forms.Label labelVytazenieOckovanie;
         private System.Windows.Forms.Label labelDobaCakaniaOckovanie;
         private System.Windows.Forms.Label labelDlzkaRaduOckovanie;
+        private System.Windows.Forms.Button stopButton;
+        private System.Windows.Forms.Label labelDobaCakaniaCakaren;
+        private System.Windows.Forms.Label labelLudiVCakarni;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.CheckBox checkBoxZavislost;
+        private System.Windows.Forms.TextBox inputPocetPacientov;
+        private System.Windows.Forms.TextBox inputReplikacie;
+        private System.Windows.Forms.Label labelGuiUpdate;
+        private System.Windows.Forms.Label labelReplikacie;
+        private System.Windows.Forms.Label labelPocetObjednanych;
+        private System.Windows.Forms.Label labelMaxDoktori;
+        private System.Windows.Forms.Label labelSestricky;
+        private System.Windows.Forms.Label labelDoktori;
+        private System.Windows.Forms.Label labelAdmini;
+        private System.Windows.Forms.TextBox inputAdmini;
+        private System.Windows.Forms.TextBox inputDoktori;
+        private System.Windows.Forms.TextBox inputSestricky;
+        private System.Windows.Forms.TextBox inputMaxDoktori;
+        private System.Windows.Forms.TextBox inputZavislostUpdate;
+        private System.Windows.Forms.CheckBox checkBoxSpecifickePrichody;
+        private System.Windows.Forms.Button buttonPouziNastavenia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idPacienta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cinnost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn casPrichodu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieRegistracia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cakanieCakaren;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieVysetrenie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cisloPracovnikaOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn stavPracovnikaOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn obedovalOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn vytazenieOckovanie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pocetStriekaciekOckovanie;
     }
 }
 

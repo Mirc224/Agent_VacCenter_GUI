@@ -4,25 +4,31 @@ using managers;
 using continualAssistants;
 using OSPStat;
 using entities;
+using System.Collections.Generic;
+using Agent_VacCenter_GUI.model;
+using System.Collections;
 
 namespace agents
 {
 	//meta! id="2"
-	public class AgentOkolia : Agent
+	public class AgentOkolia : Agent, ISimUpdates
 	{
 		public SchedulerPrichodov SchedulerPrichodov { get; private set; }
 		public Stat CelkovaDobaCakaniaPacientov { get; private set; }
 		public int PocetNepridenychPacientov { get; private set; }
-
-		public int PocetObjednanychPacientov { get; private set; } = 540;
+		public int PocetObjednanychPacientov { get; set; } = 540;
 		public double CasMedziPrichodmi { get => (double)(540 * 60)/ PocetObjednanychPacientov;}
-
+		public List<Pacient> ZoznamPridenychPacientov { get; private set; }
 		public int PocetPacientovVojdenych { get; set; }
 		public int PocetPacientovOdidenych { get; set; }
 		public bool Generuj { get; set; }
+		public BitArray OdideniPacienti { get; private set; }
 
+		public int UpdatujPacientovOdIndexu { get; private set; }
+		private int _poslednyUpdatePacientovOdIndexu;
+		public List<string[]> InformacieOPacientoch { get; private set; }
 		private OSPRNG.UniformDiscreteRNG _generatorNepridenychPacientov;
-		public AgentOkolia(int id, Simulation mySim, Agent parent) :
+		public AgentOkolia(int id, Simulation mySim, Agent parent) : 
 			base(id, mySim, parent)
 		{
 			Init();
@@ -35,8 +41,13 @@ namespace agents
 			_generatorNepridenychPacientov.Seed();
 			PocetPacientovVojdenych = 0;
 			PocetPacientovOdidenych = 0;
+			UpdatujPacientovOdIndexu = 0;
+			_poslednyUpdatePacientovOdIndexu = 0;
 			Pacient.AktualneID = 0;
 			CelkovaDobaCakaniaPacientov.Clear();
+			ZoznamPridenychPacientov.Clear();
+			InformacieOPacientoch.Clear();
+			OdideniPacienti.SetAll(false);
 			PocetNepridenychPacientov = _generatorNepridenychPacientov.Sample();
 			Generuj = true;
 		}
@@ -55,5 +66,54 @@ namespace agents
 			CelkovaDobaCakaniaPacientov = new Stat();
 		}
 		//meta! tag="end"
+
+		public void InicializaciaPredSimulaciou()
+        {
+			ZoznamPridenychPacientov = new List<Pacient>(PocetObjednanychPacientov);
+			OdideniPacienti = new BitArray(PocetObjednanychPacientov);
+			InformacieOPacientoch = new List<string[]>(PocetObjednanychPacientov);
+        }
+
+		public void UpdatujStatistiky()
+		{
+
+			int i = 0;
+			Pacient tmpPacient;
+			string[] infoOPacientovi;
+
+			for (i = _poslednyUpdatePacientovOdIndexu; i < InformacieOPacientoch.Count; ++i)
+			{
+				tmpPacient = ZoznamPridenychPacientov[i];
+				infoOPacientovi = InformacieOPacientoch[i];
+				infoOPacientovi[1] = tmpPacient.Stav;
+				infoOPacientovi[3] = string.Format("{0:0.##}s", tmpPacient.DobaCakaniaNaRegistraciu);
+				infoOPacientovi[4] = string.Format("{0:0.##}s", tmpPacient.DobaCakaniaNaVysetrenie);
+				infoOPacientovi[5] = string.Format("{0:0.##}s", tmpPacient.DobaCakaniaNaOckovanie);
+				infoOPacientovi[6] = string.Format("{0:0.##}min", tmpPacient.DobaCakaniaVCakarni / 60);
+			}
+
+			for (i = InformacieOPacientoch.Count; i < ZoznamPridenychPacientov.Count; ++i)
+            {
+				tmpPacient = ZoznamPridenychPacientov[i];
+				InformacieOPacientoch.Add(new string[] { tmpPacient.IDPacienta.ToString(), tmpPacient.Stav, tmpPacient.NaformovatovanyCasPrichodu, 
+														 string.Format("{0:0.##}s", tmpPacient.DobaCakaniaNaRegistraciu),
+														 string.Format("{0:0.##}s", tmpPacient.DobaCakaniaNaVysetrenie),
+														 string.Format("{0:0.##}s", tmpPacient.DobaCakaniaNaOckovanie),
+														 string.Format("{0:0.##}min", tmpPacient.DobaCakaniaVCakarni/60)});
+			}
+			
+			for(i = _poslednyUpdatePacientovOdIndexu; i < PocetObjednanychPacientov; ++i)
+            {
+				if(!OdideniPacienti[i])
+                {
+					UpdatujPacientovOdIndexu = _poslednyUpdatePacientovOdIndexu;
+					_poslednyUpdatePacientovOdIndexu = i;
+					break;
+                }
+
+            }
+
+		}
+
 	}
 }

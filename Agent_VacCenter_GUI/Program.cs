@@ -18,7 +18,7 @@ namespace Agent_VacCenter_GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new AppGUI());
-            Console.WriteLine("Simulating...");
+            //Console.WriteLine("Simulating...");
 
             /*var replikacie = 2000;
             //var casReplikacie = 540 * 60;

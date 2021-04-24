@@ -17,6 +17,7 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
+			DolnaHranicaPracovnikov = 6;
 			MaxPocetPracovnikov = 6;
 			InicializaciaPredSimulaciou(Lokacie.MiestnostVysetrenie);
 		}

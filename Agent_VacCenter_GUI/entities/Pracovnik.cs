@@ -16,7 +16,6 @@ namespace entities
     {
         public TypPracovnika TypPracovnika { get; set; }
         public int IDPracovnika { get; set; }
-        public string Stav { get; set; } = "Nečinný";
         public bool Obedoval { get; set; } = false;
         //public bool Nedostupny { get; set; } = false;
         public double ZaciatokObsluhovania { get; set; } = 0;

@@ -94,6 +94,7 @@
     <Compile Include="model\BaseAgentPracoviska.cs" />
     <Compile Include="model\BaseManagerPracoviska.cs" />
     <Compile Include="model\BaseSchedulerObedov.cs" />
+    <Compile Include="model\ISimUpdates.cs" />
     <Compile Include="model\StatistikyPracoviska.cs" />
     <Compile Include="parameters\ParametreSimulacie.cs" />
     <Compile Include="Program.cs" />

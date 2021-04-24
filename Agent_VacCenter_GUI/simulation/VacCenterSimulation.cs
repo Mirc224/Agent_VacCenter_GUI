@@ -3,6 +3,8 @@ using agents;
 using Agent_VacCenter_GUI;
 using System;
 using OSPStat;
+using Agent_VacCenter_GUI.model;
+using parameters;
 
 namespace simulation
 {
@@ -17,6 +19,7 @@ namespace simulation
 		}
 		public double ZaciatocnyCasVSekundach { get => 28800; }
 		public double RealnyCasVSekundach { get => CurrentTime + ZaciatocnyCasVSekundach; }
+		public ParametreSimulacie AktualneParametreSimulacie { get; private set; }
 
 		public Stat PriemernaDlzkaRaduRegistracia { get; private set; } = new Stat();
 		public Stat PriemernaDlzkaRaduVysetrenie { get; private set; } = new Stat();
@@ -37,11 +40,14 @@ namespace simulation
 
 		public Stat PriemernyNadcas { get; private set; } = new Stat();
 
+		private ISimUpdates[] _agentiNaInicializaciu;
+
 		public AppGUI GUI;
 		public VacCenterSimulation(AppGUI gui)
 		{
 			GUI = gui;
 			Init();
+			_agentiNaInicializaciu = new ISimUpdates[] { AgentOkolia};
 		}
 
 		public void ZmenaRychlosti()
@@ -78,6 +84,11 @@ namespace simulation
 
 			PriemernaCakaciaDoba.Clear();
 			PriemernyPocetLudiVCakarni.Clear();
+
+			for(int i = 0; i < _agentiNaInicializaciu.Length; ++i)
+            {
+				_agentiNaInicializaciu[i].InicializaciaPredSimulaciou();
+            }
 
 		}
 
@@ -122,7 +133,7 @@ namespace simulation
 
 			PriemernaCakaciaDoba.AddSample(AgentOkolia.CelkovaDobaCakaniaPacientov.Mean());
 
-			if((CurrentReplication + 1) % 100 == 0)
+/*			if((CurrentReplication + 1) % 100 == 0)
             {
 				System.Console.WriteLine($"R{CurrentReplication + 1}: Koniec replikace");
 				System.Console.WriteLine($"Vytazenie administracie: {PriemerneVytazenieAdmin.Mean()}");
@@ -150,11 +161,14 @@ namespace simulation
 				System.Console.WriteLine();
 
 				System.Console.WriteLine(AgentOkolia.PocetNepridenychPacientov + " " + AgentOkolia.PocetPacientovVojdenych);
-			}
-			if (GUI != null)
-				GUI.AfterReplicationGUIUpdate();
+			}*/
 		}
 
+		public void AplikujParametreSimulacie(ParametreSimulacie param)
+        {
+			AktualneParametreSimulacie = param;
+			AgentOkolia.PocetObjednanychPacientov = param.PocetPacientov;
+        }
 		override protected void SimulationFinished()
 		{
 			// Dysplay simulation results

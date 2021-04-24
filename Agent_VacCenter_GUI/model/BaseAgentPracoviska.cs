@@ -17,6 +17,14 @@ namespace Agent_VacCenter_GUI.model
         public int PocetObedujucich { get; set; } = 0;
         public int PocetUzNajedenychPracovnikov { get; set; } = 0;
         public int PocetVolnychPracovnikov { get => MaxPocetPracovnikov - PocetPracujucich - PocetObedujucich; }
+        public int HornaHranicaPracovnikov { get => _dolnaHranicaPracovnikov;
+            set 
+            {
+                _dolnaHranicaPracovnikov = value;
+                MaxPocetPracovnikov = value;
+            }
+        }
+        public int DolnaHranicaPracovnikov { get; set; }
         public bool ObsluhaVolna { get => PocetVolnychPracovnikov > 0; }
         public WStat DlzkaRadu { get; protected set; }
         public Stat DlzkaCakania { get; protected set; }
@@ -24,6 +32,8 @@ namespace Agent_VacCenter_GUI.model
         public bool JeCasObeda { get; set; } = false;
         public BitArray DostupniPracovnici { get; set; }
         public BitArray NenajedeniPracovnici { get; set; }
+
+        private int _dolnaHranicaPracovnikov = 3;
 
         public double PriemerneVytazeniePracovnikov { get => VytazeniePracovnikov.Mean() / MaxPocetPracovnikov; }
         //public List<Pracovnik> NenajedeniPracovnici { get; protected set; }
@@ -33,7 +43,8 @@ namespace Agent_VacCenter_GUI.model
         public BaseAgentPracoviska(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
-
+            DolnaHranicaPracovnikov = 3;
+            HornaHranicaPracovnikov = DolnaHranicaPracovnikov;
         }
 
         public Pracovnik DajVolnehoPracovnika()

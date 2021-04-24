@@ -29,7 +29,9 @@ namespace continualAssistants
             else
                 trvanie = 30 * 60;
 
-            (message as Sprava).Pacient.Stav = $"Èaká v èakárni ({string.Format("{0:0.##}", trvanie/60)}min)";
+            var sprava = (message as Sprava);
+            sprava.Pacient.Stav = $"Èaká v èakárni ({string.Format("{0:0.##}", trvanie/60)}min)";
+            sprava.Pacient.DobaCakaniaVCakarni = trvanie;
             Hold(trvanie, message);
         }
 

@@ -44,6 +44,7 @@ namespace managers
         {
             var pacient = ((Sprava)message).Pacient;
             ++MyAgent.PocetPacientovOdidenych;
+            MyAgent.OdideniPacienti.Set(pacient.IDPacienta, true);
             MyAgent.CelkovaDobaCakaniaPacientov.AddSample(pacient.CelkovaDobaCakania);
             if (!MyAgent.Generuj && MyAgent.PocetPacientovVojdenych == MyAgent.PocetPacientovOdidenych)
             {
@@ -57,12 +58,13 @@ namespace managers
         public void ProcessNoticePrichodPacienta(MessageForm message)
         {
             ++MyAgent.PocetPacientovVojdenych;
-            //message.Addressee = MySim.FindAgent(SimId.AgentModelu);
+            var pacient = new Pacient(MySim);
+            pacient.CasPrichodu = (MySim as VacCenterSimulation).RealnyCasVSekundach;
             message.Addressee = ((VacCenterSimulation)MySim).AgentModelu;
-            ((Sprava)message).Pacient = new Pacient(MySim);
-
+            ((Sprava)message).Pacient = pacient;
+            MyAgent.ZoznamPridenychPacientov.Add(pacient);
             Notice(message);
-            if (MySim.CurrentTime > 540 * 60)
+            if (MyAgent.PocetPacientovVojdenych == MyAgent.PocetObjednanychPacientov || MySim.CurrentTime > 540 * 60)
             {
                 MyAgent.Generuj = false;
                 return;

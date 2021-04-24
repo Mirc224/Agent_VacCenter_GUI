@@ -8,7 +8,11 @@ namespace parameters
 {
     public class ParametreSimulacie
     {
-        public int replikacie;
-        public double casSimulacie;
+        public int Replikacie { get; set; }
+        public double CasSimulacie { get; set; }
+        public bool SpecialnePrichody { get; set; }
+        public int ReplikaciiNaUpdate { get; set; }
+        public bool ZobrazenieZavislosti { get; set; }
+        public int PocetPacientov { get; set; }
     }
 }
