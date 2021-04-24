@@ -6,7 +6,7 @@ namespace continualAssistants
     //meta! id="38"
     public class ProcessVysetrenia : Process
     {
-        private OSPRNG.ExponentialRNG _generatorTrvania = new OSPRNG.ExponentialRNG(260);
+        private OSPRNG.ExponentialRNG _generatorTrvania;
         public ProcessVysetrenia(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -16,7 +16,7 @@ namespace continualAssistants
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            _generatorTrvania.Seed();
+             _generatorTrvania = new OSPRNG.ExponentialRNG(260, (MySim as VacCenterSimulation).GeneratorNasad);
         }
 
         //meta! sender="AgentVysetrenia", id="40", type="Notice"

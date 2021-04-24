@@ -45,6 +45,8 @@ namespace managers
             var pacient = ((Sprava)message).Pacient;
             ++MyAgent.PocetPacientovOdidenych;
             MyAgent.OdideniPacienti.Set(pacient.IDPacienta, true);
+            //System.Console.WriteLine(pacient.CelkovaDobaCakania);
+            //System.Console.WriteLine(pacient.DobaCakaniaNaOckovanie + pacient.DobaCakaniaNaVysetrenie + pacient.DobaCakaniaNaRegistraciu);
             MyAgent.CelkovaDobaCakaniaPacientov.AddSample(pacient.CelkovaDobaCakania);
             if (!MyAgent.Generuj && MyAgent.PocetPacientovVojdenych == MyAgent.PocetPacientovOdidenych)
             {

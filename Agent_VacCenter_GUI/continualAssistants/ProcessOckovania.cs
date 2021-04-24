@@ -6,7 +6,7 @@ namespace continualAssistants
     //meta! id="43"
     public class ProcessOckovania : Process
     {
-        private OSPRNG.TriangularRNG _generatorTrvania = new OSPRNG.TriangularRNG(20, 75, 100);
+        private OSPRNG.TriangularRNG _generatorTrvania;
         public ProcessOckovania(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -16,7 +16,7 @@ namespace continualAssistants
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            _generatorTrvania.Seed();
+            _generatorTrvania = new OSPRNG.TriangularRNG(20, 75, 100, (MySim as VacCenterSimulation).GeneratorNasad);
         }
 
         //meta! sender="AgentOckovania", id="45", type="Notice"

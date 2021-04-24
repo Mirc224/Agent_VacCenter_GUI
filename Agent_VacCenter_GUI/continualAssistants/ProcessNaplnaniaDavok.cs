@@ -8,7 +8,7 @@ namespace continualAssistants
     //meta! id="90"
     public class ProcessNaplnaniaDavok : Process
     {
-        private OSPRNG.TriangularRNG _generatorTrvania = new OSPRNG.TriangularRNG(6, 10, 40);
+        private OSPRNG.TriangularRNG _generatorTrvania;
         public ProcessNaplnaniaDavok(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -18,7 +18,7 @@ namespace continualAssistants
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            _generatorTrvania.Seed();
+            _generatorTrvania = new OSPRNG.TriangularRNG(6, 10, 40, (MySim as VacCenterSimulation).GeneratorNasad);
         }
 
         //meta! sender="AgentPripravyDavok", id="92", type="Notice"

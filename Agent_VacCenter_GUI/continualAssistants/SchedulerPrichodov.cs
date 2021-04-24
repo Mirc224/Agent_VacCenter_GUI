@@ -6,7 +6,7 @@ namespace continualAssistants
 	//meta! id="26"
 	public class SchedulerPrichodov : Scheduler
 	{
-		private OSPRNG.UniformContinuousRNG _generatorPravdepodobnosti = new OSPRNG.UniformContinuousRNG(0,1);
+		private OSPRNG.UniformContinuousRNG _generatorPravdepodobnosti;
 		public SchedulerPrichodov(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{
@@ -16,7 +16,7 @@ namespace continualAssistants
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-			_generatorPravdepodobnosti.Seed();
+			_generatorPravdepodobnosti = new OSPRNG.UniformContinuousRNG(0, 1, (MySim as VacCenterSimulation).GeneratorNasad);
 		}
 
 		//meta! sender="AgentOkolia", id="28", type="Notice"

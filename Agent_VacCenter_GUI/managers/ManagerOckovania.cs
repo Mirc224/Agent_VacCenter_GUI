@@ -38,7 +38,7 @@ namespace managers
             message.Code = Mc.ZaockujPacienta;
             Response(message);
 
-            --sestricka.PocetNaplnenych;
+            //--sestricka.PocetNaplnenych;
             if(sestricka.PocetNaplnenych > 0)
             {
                 DokonceniePracePracovnikom(sestricka);
@@ -77,7 +77,8 @@ namespace managers
             else
             {
                 double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-                sprava.Pacient.CelkovaDobaCakania += dobaCakania;
+                //sprava.Pacient.CelkovaDobaCakania += dobaCakania;
+                sprava.Pacient.DobaCakaniaNaOckovanie = dobaCakania;
                 MyAgent.DlzkaCakania.AddSample(dobaCakania);
 
                 NaplanujObsluhu(message);

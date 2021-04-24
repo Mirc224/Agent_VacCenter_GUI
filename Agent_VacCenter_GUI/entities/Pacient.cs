@@ -8,16 +8,10 @@ namespace entities
     {
         public static int AktualneID {get; set;}
         public int IDPacienta { get; private set; }
-        public double CelkovaDobaCakania { get => _celkovaDobaCakania;
-            set 
-            {
-                _casyCakaniaNaUkony[_cisloUkonu++] = value - _celkovaDobaCakania;
-                _celkovaDobaCakania += value; 
-            } 
-        }
-        public double DobaCakaniaNaRegistraciu { get => _casyCakaniaNaUkony[0];}
-        public double DobaCakaniaNaVysetrenie { get => _casyCakaniaNaUkony[1]; }
-        public double DobaCakaniaNaOckovanie { get => _casyCakaniaNaUkony[2]; }
+        public double CelkovaDobaCakania { get => DobaCakaniaNaRegistraciu + DobaCakaniaNaVysetrenie + DobaCakaniaNaOckovanie; }
+        public double DobaCakaniaNaRegistraciu { get => _casyCakaniaNaUkony[0]; set => _casyCakaniaNaUkony[0] = value; }
+        public double DobaCakaniaNaVysetrenie { get => _casyCakaniaNaUkony[1]; set => _casyCakaniaNaUkony[1] = value; }
+        public double DobaCakaniaNaOckovanie { get => _casyCakaniaNaUkony[2]; set => _casyCakaniaNaUkony[2] = value; }
         public double DobaCakaniaVCakarni { get; set; }
         public double CasPrichodu { get; set; }
 

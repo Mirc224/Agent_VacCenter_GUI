@@ -814,6 +814,7 @@ namespace Agent_VacCenter_GUI
             this.buttonPouziNastavenia.TabIndex = 7;
             this.buttonPouziNastavenia.Text = "Aplikuj";
             this.buttonPouziNastavenia.UseVisualStyleBackColor = true;
+            this.buttonPouziNastavenia.Click += new System.EventHandler(this.buttonPouziNastavenia_Click);
             // 
             // idPacienta
             // 

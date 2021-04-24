@@ -16,7 +16,7 @@ namespace continualAssistants
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            _generatorTrvania.Seed();
+            _generatorTrvania = new OSPRNG.TriangularRNG(5 * 60, 15 * 60, 30 * 60, (MySim as VacCenterSimulation).GeneratorNasad);
         }
 
         //meta! sender="AgentJedalne", id="125", type="Start"

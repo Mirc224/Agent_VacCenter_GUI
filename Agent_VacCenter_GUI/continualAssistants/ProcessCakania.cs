@@ -6,7 +6,7 @@ namespace continualAssistants
     //meta! id="54"
     public class ProcessCakania : Process
     {
-        private OSPRNG.UniformContinuousRNG _generatorTrvania = new OSPRNG.UniformContinuousRNG(0, 1);
+        private OSPRNG.UniformContinuousRNG _generatorTrvania;
         public ProcessCakania(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -16,7 +16,7 @@ namespace continualAssistants
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            _generatorTrvania.Seed();
+            _generatorTrvania = new OSPRNG.UniformContinuousRNG(0, 1, (MySim as VacCenterSimulation).GeneratorNasad);
         }
 
         //meta! sender="AgentCakarne", id="56", type="Notice"

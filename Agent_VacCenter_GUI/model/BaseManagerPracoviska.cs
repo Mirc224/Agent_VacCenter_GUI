@@ -23,7 +23,19 @@ namespace Agent_VacCenter_GUI.model
             {
                 var sprava = Front.Dequeue();
                 double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-                sprava.Pacient.CelkovaDobaCakania += dobaCakania;
+                //sprava.Pacient.CelkovaDobaCakania += dobaCakania;
+                switch(MyAgent.LokaciaPracoviska)
+                {
+                    case Lokacie.MiestnostRegistracia:
+                        sprava.Pacient.DobaCakaniaNaRegistraciu = dobaCakania;
+                        break;
+                    case Lokacie.MiestnostVysetrenie:
+                        sprava.Pacient.DobaCakaniaNaVysetrenie = dobaCakania;
+                        break;
+                    case Lokacie.MiestnostOckovanie:
+                        sprava.Pacient.DobaCakaniaNaOckovanie = dobaCakania;
+                        break;
+                }
                 MyAgent.DlzkaCakania.AddSample(dobaCakania);
 
                 sprava.Addressee = MyAgent.ProcessObsluhy;
@@ -65,20 +77,20 @@ namespace Agent_VacCenter_GUI.model
         protected void NaplanujMozneObedy()
         {
 
-            if(MyAgent.PocetUzNajedenychPracovnikov < MyAgent.MaxPocetPracovnikov && MyAgent.JeCasObeda)
+            if(MyAgent.PocetUzNajedenychPracovnikov < MyAgent.PocetPracovnikov && MyAgent.JeCasObeda)
             {
                 //var zamestnanciNaObed = new List<Pracovnik>(MyAgent.MaxPocetPracovnikov);
                 var dostupniNenajedeni = new BitArray(MyAgent.DostupniPracovnici);
                 dostupniNenajedeni.And(MyAgent.NenajedeniPracovnici);
                 int i = 0;
-                for(i = 0; i < MyAgent.MaxPocetPracovnikov; ++i)
+                for(i = 0; i < MyAgent.PocetPracovnikov; ++i)
                 {
                     if (dostupniNenajedeni[i])
-                        if(MyAgent.PocetObedujucich < MyAgent.MaxPocetPracovnikov / 2)
+                        if(MyAgent.PocetObedujucich < MyAgent.PocetPracovnikov / 2)
                         {
                             //zamestnanciNaObed.Add(MyAgent.Pracovnici[i]);
                             SkustPoslatPracovnikaNaObed(MyAgent.Pracovnici[i]);
-                            if (MyAgent.PocetUzNajedenychPracovnikov == MyAgent.MaxPocetPracovnikov)
+                            if (MyAgent.PocetUzNajedenychPracovnikov == MyAgent.PocetPracovnikov)
                                 break;
                         }
                         else
@@ -94,7 +106,7 @@ namespace Agent_VacCenter_GUI.model
             //if (pracovnik.Nedostupny  || pracovnik.Obedoval)
             //throw new Exception("Toto nemoze nastat!");
             //pracovnik.Nedostupny = true;
-            if(MyAgent.NenajedeniPracovnici[pracovnik.IDPracovnika] && MyAgent.PocetObedujucich < MyAgent.MaxPocetPracovnikov / 2 && MyAgent.JeCasObeda)
+            if(MyAgent.NenajedeniPracovnici[pracovnik.IDPracovnika] && MyAgent.PocetObedujucich < MyAgent.PocetPracovnikov / 2 && MyAgent.JeCasObeda)
             {
                 var sprava = new Sprava(MySim);
                 sprava.Code = Mc.VykonajObed;

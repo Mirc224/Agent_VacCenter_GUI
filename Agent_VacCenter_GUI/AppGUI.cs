@@ -37,12 +37,22 @@ namespace Agent_VacCenter_GUI
             _vysetrenieLabels = new Label[] { labelDlzkaRaduVysetrenie, labelDobaCakaniaVysetrenie, labelVytazenieVysetrenie };
             _ockovanieLabels = new Label[] { labelDlzkaRaduOckovanie, labelDobaCakaniaOckovanie, labelVytazenieOckovanie };
             _pacientiLabels = new Label[] { labelLudiVCakarni, labelDobaCakaniaCakaren };
-            _parametreSimulacie = new ParametreSimulacie() { CasSimulacie = 540 * 60, Replikacie = 1000,
-                                                             ReplikaciiNaUpdate = 100,
-                                                             PocetPacientov = 540,
-                                                             SpecialnePrichody = false,
-                                                             ZobrazenieZavislosti = false };
-            
+            _parametreSimulacie = new ParametreSimulacie()
+            {
+                CasSimulacie = 540 * 60,
+                Replikacie = 1000,
+                ReplikaciiNaUpdate = 100,
+                PocetPacientov = _simulation.AgentOkolia.PocetObjednanychPacientov,
+                SpecialnePrichody = false,
+                ZobrazenieZavislosti = false,
+                MinAdminov = _simulation.AgentRegistracie.PocetPracovnikov,
+                MaxAdminov = _simulation.AgentRegistracie.PocetPracovnikov,
+                MinDoktorov = _simulation.AgentVysetrenia.PocetPracovnikov,
+                MaxDoktorov = _simulation.AgentVysetrenia.PocetPracovnikov,
+                MinSestriciek = _simulation.AgentOckovania.PocetPracovnikov,
+                MaxSestriciek = _simulation.AgentOckovania.PocetPracovnikov
+            };
+
             trackBarSlider.Maximum = _rychlosti.Length - 1;
             maxRychlostCHB.Checked = MaximalnaRychlost;
 
@@ -151,7 +161,7 @@ namespace Agent_VacCenter_GUI
                     tabulkaReplikacie.Rows[i++].Cells[2].Value = string.Format($"<{string.Format("{0:0.##}s", confidenceInterval[0])}, {string.Format("{0:0.##}s", confidenceInterval[1])}>");
 
                     confidenceInterval = _simulation.PriemernyPocetLudiVCakarni.ConfidenceInterval95;
-                    tabulkaReplikacie.Rows[i++].Cells[2].Value = string.Format($"<{string.Format("{0:0.##}", confidenceInterval[0] * 100)}, {string.Format("{0:0.##}", confidenceInterval[1] * 100)}>");
+                    tabulkaReplikacie.Rows[i++].Cells[2].Value = string.Format($"<{string.Format("{0:0.##}", confidenceInterval[0])}, {string.Format("{0:0.##}", confidenceInterval[1])}>");
 
                     confidenceInterval = _simulation.PriemernaCakaciaDoba.ConfidenceInterval95;
                     tabulkaReplikacie.Rows[i++].Cells[2].Value = string.Format($"<{string.Format("{0:0.##}s", confidenceInterval[0])}, {string.Format("{0:0.##}s", confidenceInterval[1])}>");
@@ -276,7 +286,7 @@ namespace Agent_VacCenter_GUI
             }
             else
             {
-                if(_simulation.IsRunning() && _simulation.IsPaused())
+                if (_simulation.IsRunning() && _simulation.IsPaused())
                 {
                     startPauseButton.Text = "Pause";
                     _simulation.ResumeSimulation();
@@ -286,7 +296,7 @@ namespace Agent_VacCenter_GUI
                     startPauseButton.Text = "Continue";
                     _simulation.PauseSimulation();
                 }
-                
+
             }
 
             //_simulation.Simulate(replikacie, casReplikacie);
@@ -294,8 +304,8 @@ namespace Agent_VacCenter_GUI
 
         private void SpustSimulaciu()
         {
-            _simulation.AplikujParametreSimulacie( _parametreSimulacie);
-            if(_parametreSimulacie.ZobrazenieZavislosti)
+            _simulation.AplikujParametreSimulacie(_parametreSimulacie);
+            if (_parametreSimulacie.ZobrazenieZavislosti)
             {
 
             }
@@ -305,7 +315,7 @@ namespace Agent_VacCenter_GUI
                 _simulation.StopSimulation();
                 _simulation.Simulate(_parametreSimulacie.Replikacie);
             }
-            
+
         }
 
         private void trackBarSlider_Scroll(object sender, EventArgs e)
@@ -337,10 +347,10 @@ namespace Agent_VacCenter_GUI
 
         private void PredvyplnVstupy()
         {
-            inputAdmini.Text = _simulation.AgentRegistracie.DolnaHranicaPracovnikov.ToString();
-            inputDoktori.Text = _simulation.AgentVysetrenia.DolnaHranicaPracovnikov.ToString();
-            inputMaxDoktori.Text = _simulation.AgentVysetrenia.HornaHranicaPracovnikov.ToString();
-            inputSestricky.Text = _simulation.AgentOckovania.DolnaHranicaPracovnikov.ToString();
+            inputAdmini.Text = _parametreSimulacie.MinAdminov.ToString();
+            inputDoktori.Text = _parametreSimulacie.MinDoktorov.ToString();
+            inputMaxDoktori.Text = _parametreSimulacie.MaxDoktorov.ToString();
+            inputSestricky.Text = _parametreSimulacie.MinSestriciek.ToString();
             inputReplikacie.Text = _parametreSimulacie.Replikacie.ToString();
             inputPocetPacientov.Text = _parametreSimulacie.PocetPacientov.ToString();
             inputZavislostUpdate.Text = _parametreSimulacie.ReplikaciiNaUpdate.ToString();
@@ -352,7 +362,7 @@ namespace Agent_VacCenter_GUI
                 inputMaxDoktori.Enabled = false;
                 inputZavislostUpdate.Enabled = false;
             }
-                
+
         }
 
         private void AppGUI_Load(object sender, EventArgs e)
@@ -363,6 +373,73 @@ namespace Agent_VacCenter_GUI
         private void checkBoxSpecifickePrichody_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonPouziNastavenia_Click(object sender, EventArgs e)
+        {
+            ParseInputs();
+        }
+
+        private void ParseInputs()
+        {
+            bool error = false;
+
+            bool specialnePrichody;
+            bool zobrazenieZavislosti;
+
+            int pocetInputov;
+            TextBox[] inputy = { inputAdmini, inputDoktori, inputSestricky, inputReplikacie, inputPocetPacientov, inputMaxDoktori, inputZavislostUpdate };
+            int[] nacitaneHodnoty = new int[inputy.Length];
+            pocetInputov = inputy.Length;
+            specialnePrichody = checkBoxSpecifickePrichody.Checked;
+            zobrazenieZavislosti = checkBoxZavislost.Checked;
+
+            if (!zobrazenieZavislosti)
+                pocetInputov -= 2;
+
+            for(int i = 0; i < pocetInputov; ++i)
+            {
+                if (ParseParametersInput(inputy[i], out nacitaneHodnoty[i]))
+                    error = true;
+            }
+
+            if(!error)
+            {
+                _parametreSimulacie = new ParametreSimulacie()
+                {
+                    MinAdminov = nacitaneHodnoty[0],
+                    MinDoktorov = nacitaneHodnoty[1],
+                    MinSestriciek = nacitaneHodnoty[2],
+                    Replikacie = nacitaneHodnoty[3],
+                    PocetPacientov = nacitaneHodnoty[4],
+                    SpecialnePrichody = specialnePrichody,
+                    ZobrazenieZavislosti = zobrazenieZavislosti
+                };
+                if(zobrazenieZavislosti)
+                {
+                    _parametreSimulacie.MaxAdminov = nacitaneHodnoty[5];
+                    _parametreSimulacie.ReplikaciiNaUpdate = nacitaneHodnoty[6];
+                }    
+            }
+        }
+
+        private bool ParseParametersInput(TextBox input, out int value)
+        {
+            bool error = false;
+            if (!int.TryParse(input.Text, out value))
+            {
+                error = true;
+                input.Text = "Wrong value";
+            }
+            else
+            {
+                if (value < 1)
+                {
+                    error = true;
+                    input.Text = "Must be greater than 0";
+                }
+            }
+            return error;
         }
     }
 }

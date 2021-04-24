@@ -22,11 +22,11 @@ namespace continualAssistants
         {
             base.PrepareReplication();
             // Setup component for the next replication
-            _generatorTrvaniaPrechoduVysetrenie.Seed();
-            _generatorTrvaniaPrechoduOckovanie.Seed();
-            _generatorTrvaniaPrechoduCakaren.Seed();
-            _generatorTrvaniaPrechoduJedalen.Seed();
-            _generatorTrvaniaPrechoduPrirpavna.Seed();
+            _generatorTrvaniaPrechoduVysetrenie = new OSPRNG.UniformContinuousRNG(40, 90, (MySim as VacCenterSimulation).GeneratorNasad);
+            _generatorTrvaniaPrechoduOckovanie = new OSPRNG.UniformContinuousRNG(20, 45, (MySim as VacCenterSimulation).GeneratorNasad);
+            _generatorTrvaniaPrechoduCakaren = new OSPRNG.UniformContinuousRNG(45, 110, (MySim as VacCenterSimulation).GeneratorNasad);
+            _generatorTrvaniaPrechoduJedalen = new OSPRNG.UniformContinuousRNG(70, 200, (MySim as VacCenterSimulation).GeneratorNasad);
+            _generatorTrvaniaPrechoduPrirpavna = new OSPRNG.UniformContinuousRNG(10, 18, (MySim as VacCenterSimulation).GeneratorNasad);
         }
 
         //meta! sender="AgentPresunu", id="69", type="Notice"

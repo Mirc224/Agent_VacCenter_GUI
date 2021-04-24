@@ -17,9 +17,10 @@ namespace agents
             base(id, mySim, parent)
         {
             Init();
-            DolnaHranicaPracovnikov = 3;
-            MaxPocetPracovnikov = 3;
-            InicializaciaPredSimulaciou(Lokacie.MiestnostOckovanie);
+
+            PocetPracovnikov = 3;
+            LokaciaPracoviska = Lokacie.MiestnostOckovanie;
+            //InicializaciaPredSimulaciou();
         }
 
         override public void PrepareReplication()

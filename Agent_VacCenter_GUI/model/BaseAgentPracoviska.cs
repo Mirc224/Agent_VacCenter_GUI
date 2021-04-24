@@ -7,24 +7,16 @@ using System.Collections.Generic;
 
 namespace Agent_VacCenter_GUI.model
 {
-    public abstract class BaseAgentPracoviska : Agent
+    public abstract class BaseAgentPracoviska : Agent, ISimUpdates
     {
         public Process ProcessObsluhy { get; protected set; }
         public Scheduler SchedulerObedov { get; protected set; }
         public StatistikyPracoviska StatistikyPracoviska { get; set; } = new StatistikyPracoviska();
-        public int MaxPocetPracovnikov { get; set; } = 3;
+        public int PocetPracovnikov { get; set; } = 3;
         public int PocetPracujucich { get; set; } = 0;
         public int PocetObedujucich { get; set; } = 0;
         public int PocetUzNajedenychPracovnikov { get; set; } = 0;
-        public int PocetVolnychPracovnikov { get => MaxPocetPracovnikov - PocetPracujucich - PocetObedujucich; }
-        public int HornaHranicaPracovnikov { get => _dolnaHranicaPracovnikov;
-            set 
-            {
-                _dolnaHranicaPracovnikov = value;
-                MaxPocetPracovnikov = value;
-            }
-        }
-        public int DolnaHranicaPracovnikov { get; set; }
+        public int PocetVolnychPracovnikov { get => PocetPracovnikov - PocetPracujucich - PocetObedujucich; }
         public bool ObsluhaVolna { get => PocetVolnychPracovnikov > 0; }
         public WStat DlzkaRadu { get; protected set; }
         public Stat DlzkaCakania { get; protected set; }
@@ -33,9 +25,9 @@ namespace Agent_VacCenter_GUI.model
         public BitArray DostupniPracovnici { get; set; }
         public BitArray NenajedeniPracovnici { get; set; }
 
-        private int _dolnaHranicaPracovnikov = 3;
+        public int LokaciaPracoviska { get; set; }
 
-        public double PriemerneVytazeniePracovnikov { get => VytazeniePracovnikov.Mean() / MaxPocetPracovnikov; }
+        public double PriemerneVytazeniePracovnikov { get => VytazeniePracovnikov.Mean() / PocetPracovnikov; }
         //public List<Pracovnik> NenajedeniPracovnici { get; protected set; }
         protected OSPRNG.UniformDiscreteRNG[] _generatoryVyberuZamenstnanca;
         public Pracovnik[] Pracovnici { get; protected set; }
@@ -43,8 +35,6 @@ namespace Agent_VacCenter_GUI.model
         public BaseAgentPracoviska(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
-            DolnaHranicaPracovnikov = 3;
-            HornaHranicaPracovnikov = DolnaHranicaPracovnikov;
         }
 
         public Pracovnik DajVolnehoPracovnika()
@@ -54,7 +44,7 @@ namespace Agent_VacCenter_GUI.model
                 if (!_staff[i].Nedostupny)
                     _dostupniPracovnici.Add(_staff[i]);*/
             int i = -1;
-            for (i = 0; i < MaxPocetPracovnikov; ++i)
+            for (i = 0; i < PocetPracovnikov; ++i)
             {
                 if (DostupniPracovnici[i])
                     _dostupniPracovnici.Add(Pracovnici[i]);
@@ -72,31 +62,31 @@ namespace Agent_VacCenter_GUI.model
 
         }
 
-        public void InicializaciaPredSimulaciou(int lokaciaPracoviska)
+        public void InicializaciaPredSimulaciou()
         {
-            NenajedeniPracovnici = new BitArray(MaxPocetPracovnikov, true);
-            DostupniPracovnici = new BitArray(MaxPocetPracovnikov, true);
+            NenajedeniPracovnici = new BitArray(PocetPracovnikov, true);
+            DostupniPracovnici = new BitArray(PocetPracovnikov, true);
             //NenajedeniPracovnici = new List<Pracovnik>(MaxPocetPracovnikov);
-            Pracovnici = new Pracovnik[MaxPocetPracovnikov];
-            if (MaxPocetPracovnikov > 1)
-                _generatoryVyberuZamenstnanca = new OSPRNG.UniformDiscreteRNG[MaxPocetPracovnikov - 1];
+            Pracovnici = new Pracovnik[PocetPracovnikov];
+            if (PocetPracovnikov > 1)
+                _generatoryVyberuZamenstnanca = new OSPRNG.UniformDiscreteRNG[PocetPracovnikov - 1];
 
-            for (int i = 0; i < MaxPocetPracovnikov; ++i)
+            for (int i = 0; i < PocetPracovnikov; ++i)
             {
-                if (lokaciaPracoviska == Lokacie.MiestnostOckovanie)
+                if (LokaciaPracoviska == Lokacie.MiestnostOckovanie)
                 {
                     Pracovnici[i] = new Sestricka(MySim);
                 }
                 else
                     Pracovnici[i] = new Pracovnik(MySim);
                 Pracovnici[i].IDPracovnika = i;
-                Pracovnici[i].Pracovisko = lokaciaPracoviska;
-                Pracovnici[i].TypPracovnika = (TypPracovnika)lokaciaPracoviska;
+                Pracovnici[i].Pracovisko = LokaciaPracoviska;
+                Pracovnici[i].TypPracovnika = (TypPracovnika)LokaciaPracoviska;
             }
 
-            for (int i = 0; i < MaxPocetPracovnikov - 1; ++i)
+            for (int i = 0; i < PocetPracovnikov - 1; ++i)
                 _generatoryVyberuZamenstnanca[i] = new OSPRNG.UniformDiscreteRNG(0, i + 1);
-            _dostupniPracovnici = new List<Pracovnik>(MaxPocetPracovnikov);
+            _dostupniPracovnici = new List<Pracovnik>(PocetPracovnikov);
         }
 
         public virtual void InicializaciaPredReplikaciou()
@@ -106,9 +96,9 @@ namespace Agent_VacCenter_GUI.model
             DostupniPracovnici.SetAll(true);
             //NenajedeniPracovnici.Clear();
             for (int i = 0; i < _generatoryVyberuZamenstnanca.Length; ++i)
-                _generatoryVyberuZamenstnanca[i].Seed();
+                _generatoryVyberuZamenstnanca[i] = new OSPRNG.UniformDiscreteRNG(0, i + 1, (MySim as VacCenterSimulation).GeneratorNasad);
 
-            for (int i = 0; i < MaxPocetPracovnikov; ++i)
+            for (int i = 0; i < PocetPracovnikov; ++i)
             {
                 Pracovnici[i].Clear();
                 //NenajedeniPracovnici.Add(_staff[i]);
@@ -155,7 +145,7 @@ namespace Agent_VacCenter_GUI.model
             if (Pracovnici[0].TypPracovnika == TypPracovnika.SESTRICKA)
             {
                 Sestricka tmpPracovnik;
-                for (int i = 0; i < MaxPocetPracovnikov; ++i)
+                for (int i = 0; i < PocetPracovnikov; ++i)
                 {
                     tmpPracovnik = (Pracovnici[i] as Sestricka);
                     StatistikyPracoviska.UdajeOPracovnikoch[i][1] = tmpPracovnik.Stav;
@@ -167,7 +157,7 @@ namespace Agent_VacCenter_GUI.model
             else
             {
                 Pracovnik tmpPracovnik;
-                for (int i = 0; i < MaxPocetPracovnikov; ++i)
+                for (int i = 0; i < PocetPracovnikov; ++i)
                 {
                     tmpPracovnik = Pracovnici[i];
                     StatistikyPracoviska.UdajeOPracovnikoch[i][1] = tmpPracovnik.Stav;

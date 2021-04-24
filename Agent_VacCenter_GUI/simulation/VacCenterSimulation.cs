@@ -40,14 +40,17 @@ namespace simulation
 
 		public Stat PriemernyNadcas { get; private set; } = new Stat();
 
+		public Random GeneratorNasad { get; set; } = new Random();
+
 		private ISimUpdates[] _agentiNaInicializaciu;
 
+		double priemernyCas = 0;
 		public AppGUI GUI;
 		public VacCenterSimulation(AppGUI gui)
 		{
 			GUI = gui;
 			Init();
-			_agentiNaInicializaciu = new ISimUpdates[] { AgentOkolia};
+			_agentiNaInicializaciu = new ISimUpdates[] { AgentOkolia, AgentRegistracie, AgentVysetrenia, AgentOckovania};
 		}
 
 		public void ZmenaRychlosti()
@@ -64,6 +67,11 @@ namespace simulation
 		{
 			base.PrepareSimulation();
 			// Create global statistcis
+			AgentRegistracie.PocetPracovnikov = AktualneParametreSimulacie.MinAdminov;
+			AgentVysetrenia.PocetPracovnikov = AktualneParametreSimulacie.MinDoktorov;
+			AgentOckovania.PocetPracovnikov = AktualneParametreSimulacie.MinSestriciek;
+
+			AgentOkolia.PocetObjednanychPacientov = AktualneParametreSimulacie.PocetPacientov;
 
 			PriemernyNadcas.Clear();
 
@@ -102,11 +110,11 @@ namespace simulation
 		public void UpdateStatistikPredUkoncenim()
         {
 			PriemernyNadcas.AddSample(CurrentTime - 540 * 60);
-			AgentRegistracie.UpdateZaverecnychStatistik();
-			AgentVysetrenia.UpdateZaverecnychStatistik();
-			AgentOckovania.UpdateZaverecnychStatistik();
-			AgentCakarne.UpdateZaverecnychStatistik();
-			AgentPripravyDavok.UpdateZaverecnychStatistik();
+			//AgentRegistracie.UpdateZaverecnychStatistik();
+			//AgentVysetrenia.UpdateZaverecnychStatistik();
+			//AgentOckovania.UpdateZaverecnychStatistik();
+			//AgentCakarne.UpdateZaverecnychStatistik();
+			//AgentPripravyDavok.UpdateZaverecnychStatistik();
 		}
 		override protected void ReplicationFinished()
 		{
@@ -132,6 +140,9 @@ namespace simulation
 			PriemernyPocetLudiVCakarni.AddSample(AgentCakarne.DlzkaRadu.Mean());
 
 			PriemernaCakaciaDoba.AddSample(AgentOkolia.CelkovaDobaCakaniaPacientov.Mean());
+
+			//priemernyCas += AgentOkolia.CelkovaDobaCakaniaPacientov.Mean();
+
 
 /*			if((CurrentReplication + 1) % 100 == 0)
             {
