@@ -1,4 +1,5 @@
-﻿using parameters;
+﻿using OxyPlot.Axes;
+using parameters;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -8,6 +9,7 @@ namespace Agent_VacCenter_GUI
     public partial class AppGUI : Form
     {
         delegate void GUIStatUpdateCallback(OSPABA.Simulation sim);
+        delegate void PauseTextCallback(string text);
         private simulation.VacCenterSimulation _simulation;
         private int[] _rychlosti = new int[] { 1, 10, 100, 1000, 10000, 100000, 500000, 1000000, 100000000 };
         public bool MaximalnaRychlost { get; set; } = false;
@@ -24,6 +26,8 @@ namespace Agent_VacCenter_GUI
         private string[] _pacientiNazvyStatistik = new string[] { "AVG ľudí v čakárni: ", "Celková doba čakania:" };
 
         private ParametreSimulacie _parametreSimulacie;
+
+        private OxyPlot.Series.LineSeries _zobrazovanaKrivka;
         public AppGUI()
         {
             _simulation = new simulation.VacCenterSimulation(this);
@@ -50,14 +54,57 @@ namespace Agent_VacCenter_GUI
                 MinDoktorov = _simulation.AgentVysetrenia.PocetPracovnikov,
                 MaxDoktorov = _simulation.AgentVysetrenia.PocetPracovnikov,
                 MinSestriciek = _simulation.AgentOckovania.PocetPracovnikov,
-                MaxSestriciek = _simulation.AgentOckovania.PocetPracovnikov
+                MaxSestriciek = _simulation.AgentOckovania.PocetPracovnikov,
+                AktualAdminov = _simulation.AgentRegistracie.PocetPracovnikov,
+                AktualDoktorov = _simulation.AgentVysetrenia.PocetPracovnikov,
+                AktualSestriciek = _simulation.AgentOckovania.PocetPracovnikov
             };
 
             trackBarSlider.Maximum = _rychlosti.Length - 1;
             maxRychlostCHB.Checked = MaximalnaRychlost;
-
+            InicializujGraf();
             PredvyplnVstupy();
         }
+
+        private void InicializujGraf()
+        {
+            grafZavislosti.Model = new OxyPlot.PlotModel { Title = "Závislosť dĺžky radu od počtu lekárov" };
+
+            var linearAxis1 = new LinearAxis();
+            linearAxis1.MajorGridlineStyle = OxyPlot.LineStyle.Solid;
+            linearAxis1.MinorGridlineStyle = OxyPlot.LineStyle.Dot;
+            linearAxis1.Position = AxisPosition.Bottom;
+            grafZavislosti.Model.Axes.Add(linearAxis1);
+
+            var linearAxis2 = new LinearAxis();
+            linearAxis2.MajorGridlineStyle = OxyPlot.LineStyle.Solid;
+            linearAxis2.MinorGridlineStyle = OxyPlot.LineStyle.Dot;
+            grafZavislosti.Model.Axes.Add(linearAxis2);
+
+            grafZavislosti.Model.ResetAllAxes();
+        }
+
+        private void PrekresliGraf()
+        {
+            grafZavislosti.InvalidatePlot(true);
+        }
+
+        private void ResetujGraf()
+        {
+            grafZavislosti.Model.Series.Clear();
+            PrekresliGraf();
+        }
+
+
+        public void VytvorNovuSeriu(string title)
+        {
+            if(grafZavislosti.Model.Series.Count == 0)
+                _zobrazovanaKrivka = new OxyPlot.Series.LineSeries { Title = title, Color=OxyPlot.OxyColors.Red };
+            else
+                _zobrazovanaKrivka = new OxyPlot.Series.LineSeries { Title = title};
+            grafZavislosti.Model.Series.Add(_zobrazovanaKrivka);
+        }
+
 
         private void Init()
         {
@@ -190,9 +237,27 @@ namespace Agent_VacCenter_GUI
             {
                 startPauseButton.Text = "Start";
                 UpdateGUI();
+                if (simulacia.AktualneParametreSimulacie.ZobrazenieZavislosti)
+                {
+                    _zobrazovanaKrivka.Points.Add(new OxyPlot.DataPoint(simulacia.AgentVysetrenia.PocetPracovnikov, simulacia.PriemernaDlzkaRaduVysetrenie.Mean()));
+                    PrekresliGraf();
+                }
             }
         }
 
+        private void SetPauseText(string text)
+        {
+            if (casLabel.InvokeRequired)
+            {
+                var d = new PauseTextCallback(SetPauseText);
+                Invoke(d, text);
+            }
+            else
+            {
+                startPauseButton.Text = text;
+            }
+
+        }
         private void UpdateGUI()
         {
             casLabel.Text = _simulation.NaformovatovanyCas;
@@ -280,7 +345,7 @@ namespace Agent_VacCenter_GUI
             {
                 var replikacie = 1000;
                 var casReplikacie = 540 * 60;
-                _simulationThread = new Thread(new ThreadStart(SpustSimulaciu));
+                _simulationThread = new Thread(() => Simuluj());
                 _simulationThread.Start();
                 startPauseButton.Text = "Pause";
             }
@@ -302,18 +367,36 @@ namespace Agent_VacCenter_GUI
             //_simulation.Simulate(replikacie, casReplikacie);
         }
 
-        private void SpustSimulaciu()
+        private void Simuluj(bool pokracuj = false)
         {
+            _parametreSimulacie.AktualAdminov = _parametreSimulacie.MinAdminov;
+            _parametreSimulacie.AktualDoktorov = _parametreSimulacie.MinDoktorov;
+            _parametreSimulacie.AktualSestriciek = _parametreSimulacie.MinSestriciek;
             _simulation.AplikujParametreSimulacie(_parametreSimulacie);
+            
             if (_parametreSimulacie.ZobrazenieZavislosti)
             {
+                ResetujGraf();
+                VytvorNovuSeriu($"Adminov: {_parametreSimulacie.AktualAdminov} Sestričiek: {_parametreSimulacie.AktualSestriciek}");
+                int maxDoktorov = _simulation.AktualneParametreSimulacie.MaxDoktorov;
+                int minDoktorov = _simulation.AktualneParametreSimulacie.MinDoktorov;
 
+                for (int pocetLekarov = minDoktorov; pocetLekarov <= maxDoktorov; ++pocetLekarov)
+                {
+                    _simulation.ResumeSimulation();
+                    _simulation.StopSimulation();
+                    _simulation.AktualneParametreSimulacie.AktualDoktorov = pocetLekarov;
+                    _simulation.Simulate(_simulation.AktualneParametreSimulacie.ReplikaciiNaUpdate);
+                    SetPauseText("Pause");
+                }
+                SetPauseText("Start");
             }
             else
             {
                 _simulation.ResumeSimulation();
                 _simulation.StopSimulation();
-                _simulation.Simulate(_parametreSimulacie.Replikacie);
+                _simulation.Simulate(_simulation.AktualneParametreSimulacie.Replikacie);
+
             }
 
         }
@@ -397,13 +480,13 @@ namespace Agent_VacCenter_GUI
             if (!zobrazenieZavislosti)
                 pocetInputov -= 2;
 
-            for(int i = 0; i < pocetInputov; ++i)
+            for (int i = 0; i < pocetInputov; ++i)
             {
                 if (ParseParametersInput(inputy[i], out nacitaneHodnoty[i]))
                     error = true;
             }
 
-            if(!error)
+            if (!error)
             {
                 _parametreSimulacie = new ParametreSimulacie()
                 {
@@ -415,11 +498,11 @@ namespace Agent_VacCenter_GUI
                     SpecialnePrichody = specialnePrichody,
                     ZobrazenieZavislosti = zobrazenieZavislosti
                 };
-                if(zobrazenieZavislosti)
+                if (zobrazenieZavislosti)
                 {
-                    _parametreSimulacie.MaxAdminov = nacitaneHodnoty[5];
+                    _parametreSimulacie.MaxDoktorov = nacitaneHodnoty[5];
                     _parametreSimulacie.ReplikaciiNaUpdate = nacitaneHodnoty[6];
-                }    
+                }
             }
         }
 
@@ -440,6 +523,20 @@ namespace Agent_VacCenter_GUI
                 }
             }
             return error;
+        }
+
+        private void checkBoxZavislost_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBoxZavislost.Checked)
+            {
+                inputMaxDoktori.Enabled = true;
+                inputZavislostUpdate.Enabled = true;
+            }
+            else
+            {
+                inputMaxDoktori.Enabled = false;
+                inputZavislostUpdate.Enabled = false;
+            }
         }
     }
 }

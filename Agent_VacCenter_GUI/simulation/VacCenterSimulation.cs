@@ -17,6 +17,8 @@ namespace simulation
 				return t.ToString(@"hh\:mm\:ss");
 			}
 		}
+
+		public double CasPrevadzkyVSekundach { get; set; } = 540 * 60;
 		public double ZaciatocnyCasVSekundach { get => 28800; }
 		public double RealnyCasVSekundach { get => CurrentTime + ZaciatocnyCasVSekundach; }
 		public ParametreSimulacie AktualneParametreSimulacie { get; private set; }
@@ -67,9 +69,9 @@ namespace simulation
 		{
 			base.PrepareSimulation();
 			// Create global statistcis
-			AgentRegistracie.PocetPracovnikov = AktualneParametreSimulacie.MinAdminov;
-			AgentVysetrenia.PocetPracovnikov = AktualneParametreSimulacie.MinDoktorov;
-			AgentOckovania.PocetPracovnikov = AktualneParametreSimulacie.MinSestriciek;
+			AgentRegistracie.PocetPracovnikov = AktualneParametreSimulacie.AktualAdminov;
+			AgentVysetrenia.PocetPracovnikov = AktualneParametreSimulacie.AktualDoktorov;
+			AgentOckovania.PocetPracovnikov = AktualneParametreSimulacie.AktualSestriciek;
 
 			AgentOkolia.PocetObjednanychPacientov = AktualneParametreSimulacie.PocetPacientov;
 

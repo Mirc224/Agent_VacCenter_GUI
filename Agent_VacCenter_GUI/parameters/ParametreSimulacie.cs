@@ -16,10 +16,13 @@ namespace parameters
         public int PocetPacientov { get; set; }
 
         public int MinDoktorov { get; set; }
+        public int AktualDoktorov { get; set; }
         public int MaxDoktorov { get; set; }
         public int MinSestriciek { get; set; }
+        public int AktualSestriciek {get; set;}
         public int MaxSestriciek { get; set; }
         public int MinAdminov { get; set; }
+        public int AktualAdminov {get; set;}
         public int MaxAdminov { get; set; }
 
     }

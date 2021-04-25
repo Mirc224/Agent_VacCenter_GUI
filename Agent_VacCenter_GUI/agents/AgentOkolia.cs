@@ -38,7 +38,6 @@ namespace agents
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-			_generatorNepridenychPacientov.Seed();
 			PocetPacientovVojdenych = 0;
 			PocetPacientovOdidenych = 0;
 			UpdatujPacientovOdIndexu = 0;
@@ -48,8 +47,13 @@ namespace agents
 			ZoznamPridenychPacientov.Clear();
 			InformacieOPacientoch.Clear();
 			OdideniPacienti.SetAll(false);
-			PocetNepridenychPacientov = _generatorNepridenychPacientov.Sample();
 			Generuj = true;
+		}
+
+		public void VygenerujNepridenych()
+        {
+			_generatorNepridenychPacientov = new OSPRNG.UniformDiscreteRNG(5, 25, (MySim as VacCenterSimulation).GeneratorNasad);
+			PocetNepridenychPacientov = _generatorNepridenychPacientov.Sample();
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
