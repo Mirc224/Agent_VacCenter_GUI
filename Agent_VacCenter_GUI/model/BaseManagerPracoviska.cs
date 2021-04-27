@@ -80,32 +80,43 @@ namespace Agent_VacCenter_GUI.model
             if(MyAgent.PocetUzNajedenychPracovnikov < MyAgent.PocetPracovnikov && MyAgent.JeCasObeda)
             {
                 //var zamestnanciNaObed = new List<Pracovnik>(MyAgent.MaxPocetPracovnikov);
+                var dostupniPracovnici = MyAgent.DostupniPracovniciList;
+                dostupniPracovnici.Clear();
                 var dostupniNenajedeni = new BitArray(MyAgent.DostupniPracovnici);
                 dostupniNenajedeni.And(MyAgent.NenajedeniPracovnici);
                 int i = 0;
                 for(i = 0; i < MyAgent.PocetPracovnikov; ++i)
                 {
                     if (dostupniNenajedeni[i])
-                        if(MyAgent.PocetObedujucich < MyAgent.PocetPracovnikov / 2)
-                        {
-                            //zamestnanciNaObed.Add(MyAgent.Pracovnici[i]);
-                            SkustPoslatPracovnikaNaObed(MyAgent.Pracovnici[i]);
-                            if (MyAgent.PocetUzNajedenychPracovnikov == MyAgent.PocetPracovnikov)
-                                break;
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        dostupniPracovnici.Add(MyAgent.Pracovnici[i]);
                 }
+
+                int index = -1;
+                while (dostupniPracovnici.Count != 0 && MyAgent.PocetObedujucich < MyAgent.PocetPracovnikov / 2)
+                {
+                    if (dostupniPracovnici.Count == 0)
+                        return;
+                    if(dostupniPracovnici.Count == 1)
+                    {
+                        SkustPoslatPracovnikaNaObed(dostupniPracovnici[0]);
+                        dostupniPracovnici.Clear();
+                        return;
+                    }
+                    var generator = MyAgent.GeneratoryVyberuZamenstnancaNaObed[dostupniPracovnici.Count - 2];
+
+                    if (MyAgent.PocetUzNajedenychPracovnikov == MyAgent.PocetPracovnikov)
+                        break;
+                    
+                    index = generator.Sample();
+                    SkustPoslatPracovnikaNaObed(dostupniPracovnici[index]);
+                    dostupniPracovnici.RemoveAt(index);
+                }
+                
             }
         }
 
         protected bool SkustPoslatPracovnikaNaObed(Pracovnik pracovnik)
         {
-            //if (pracovnik.Nedostupny  || pracovnik.Obedoval)
-            //throw new Exception("Toto nemoze nastat!");
-            //pracovnik.Nedostupny = true;
             if(MyAgent.NenajedeniPracovnici[pracovnik.IDPracovnika] && MyAgent.PocetObedujucich < MyAgent.PocetPracovnikov / 2 && MyAgent.JeCasObeda)
             {
                 var sprava = new Sprava(MySim);

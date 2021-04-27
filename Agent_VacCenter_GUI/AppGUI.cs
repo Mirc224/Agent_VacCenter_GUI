@@ -19,11 +19,13 @@ namespace Agent_VacCenter_GUI
         private Label[] _vysetrenieLabels;
         private Label[] _ockovanieLabels;
         private Label[] _pacientiLabels;
+        private Label[] _striekackyLabels;
 
         private Thread _simulationThread;
 
-        private string[] _pracoviskaNazvyStatistik = new string[] { "Dĺžka radu:", "Doba čakania:", "Vyťaženie:" };
+        private string[] _pracoviskaNazvyStatistik = new string[] { "Dĺžka radu: ", "Doba čakania: ", "Vyťaženie: " };
         private string[] _pacientiNazvyStatistik = new string[] { "AVG ľudí v čakárni: ", "Celková doba čakania:" };
+        private string[] _striekackyNazvyStatistik = new string[] { "Dĺžka radu striekačky: ", "Doba čakania striekačky: " };
 
         private ParametreSimulacie _parametreSimulacie;
 
@@ -41,6 +43,8 @@ namespace Agent_VacCenter_GUI
             _vysetrenieLabels = new Label[] { labelDlzkaRaduVysetrenie, labelDobaCakaniaVysetrenie, labelVytazenieVysetrenie };
             _ockovanieLabels = new Label[] { labelDlzkaRaduOckovanie, labelDobaCakaniaOckovanie, labelVytazenieOckovanie };
             _pacientiLabels = new Label[] { labelLudiVCakarni, labelDobaCakaniaCakaren };
+            _striekackyLabels = new Label[] { labelDlzkaRaduStriekacky, labelDobaCakaniaStriekacky };
+
             _parametreSimulacie = new ParametreSimulacie()
             {
                 CasSimulacie = 540 * 60,
@@ -98,10 +102,10 @@ namespace Agent_VacCenter_GUI
 
         public void VytvorNovuSeriu(string title)
         {
-            if(grafZavislosti.Model.Series.Count == 0)
-                _zobrazovanaKrivka = new OxyPlot.Series.LineSeries { Title = title, Color=OxyPlot.OxyColors.Red };
+            if (grafZavislosti.Model.Series.Count == 0)
+                _zobrazovanaKrivka = new OxyPlot.Series.LineSeries { Title = title, Color = OxyPlot.OxyColors.Red };
             else
-                _zobrazovanaKrivka = new OxyPlot.Series.LineSeries { Title = title};
+                _zobrazovanaKrivka = new OxyPlot.Series.LineSeries { Title = title };
             grafZavislosti.Model.Series.Add(_zobrazovanaKrivka);
         }
 
@@ -281,6 +285,9 @@ namespace Agent_VacCenter_GUI
             VypisStatistikyPracoviska(_pacientiNazvyStatistik, _pacientiLabels, new string[] { string.Format("{0:0.####}", (_simulation.AgentCakarne.DlzkaRadu.Mean())),
                                                                                               string.Format("{0:0.####}s", (_simulation.AgentOkolia.CelkovaDobaCakaniaPacientov.Mean()))});
 
+            VypisStatistikyPracoviska(_striekackyNazvyStatistik, _striekackyLabels, new string[] { string.Format("{0:0.####}", (_simulation.AgentPripravyDavok.DlzkaRadu.Mean())),
+                                                                                                   string.Format("{0:0.####}s", (_simulation.AgentPripravyDavok.DlzkaCakania.Mean()))});
+
             UpdatniTabulkuPacientov();
         }
 
@@ -373,7 +380,7 @@ namespace Agent_VacCenter_GUI
             _parametreSimulacie.AktualDoktorov = _parametreSimulacie.MinDoktorov;
             _parametreSimulacie.AktualSestriciek = _parametreSimulacie.MinSestriciek;
             _simulation.AplikujParametreSimulacie(_parametreSimulacie);
-            
+
             if (_parametreSimulacie.ZobrazenieZavislosti)
             {
                 ResetujGraf();
@@ -437,8 +444,11 @@ namespace Agent_VacCenter_GUI
             inputReplikacie.Text = _parametreSimulacie.Replikacie.ToString();
             inputPocetPacientov.Text = _parametreSimulacie.PocetPacientov.ToString();
             inputZavislostUpdate.Text = _parametreSimulacie.ReplikaciiNaUpdate.ToString();
+            inputSeed.Text = _parametreSimulacie.Seed.ToString();
             checkBoxSpecifickePrichody.Checked = _parametreSimulacie.SpecialnePrichody;
             checkBoxZavislost.Checked = _parametreSimulacie.ZobrazenieZavislosti;
+            checkBoxAutoSeed.Checked = _parametreSimulacie.AutoSeed;
+
 
             if (!checkBoxZavislost.Checked)
             {
@@ -446,14 +456,13 @@ namespace Agent_VacCenter_GUI
                 inputZavislostUpdate.Enabled = false;
             }
 
+            if(_parametreSimulacie.AutoSeed)
+            {
+                inputSeed.Enabled = false;
+            }
         }
 
         private void AppGUI_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxSpecifickePrichody_CheckedChanged(object sender, EventArgs e)
         {
 
         }
@@ -469,13 +478,16 @@ namespace Agent_VacCenter_GUI
 
             bool specialnePrichody;
             bool zobrazenieZavislosti;
+            bool autoSeed;
 
+            int seed = 0;
             int pocetInputov;
             TextBox[] inputy = { inputAdmini, inputDoktori, inputSestricky, inputReplikacie, inputPocetPacientov, inputMaxDoktori, inputZavislostUpdate };
             int[] nacitaneHodnoty = new int[inputy.Length];
             pocetInputov = inputy.Length;
             specialnePrichody = checkBoxSpecifickePrichody.Checked;
             zobrazenieZavislosti = checkBoxZavislost.Checked;
+            autoSeed = checkBoxAutoSeed.Checked;
 
             if (!zobrazenieZavislosti)
                 pocetInputov -= 2;
@@ -485,6 +497,14 @@ namespace Agent_VacCenter_GUI
                 if (ParseParametersInput(inputy[i], out nacitaneHodnoty[i]))
                     error = true;
             }
+
+            if (!autoSeed)
+                if (!int.TryParse(inputSeed.Text, out seed))
+                {
+                    error = true;
+                    inputSeed.Text = "Wrong value";
+                }
+
 
             if (!error)
             {
@@ -502,6 +522,11 @@ namespace Agent_VacCenter_GUI
                 {
                     _parametreSimulacie.MaxDoktorov = nacitaneHodnoty[5];
                     _parametreSimulacie.ReplikaciiNaUpdate = nacitaneHodnoty[6];
+                }
+                _parametreSimulacie.AutoSeed = autoSeed;
+                if(!autoSeed)
+                {
+                    _parametreSimulacie.Seed = seed;
                 }
             }
         }
@@ -527,7 +552,7 @@ namespace Agent_VacCenter_GUI
 
         private void checkBoxZavislost_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBoxZavislost.Checked)
+            if (checkBoxZavislost.Checked)
             {
                 inputMaxDoktori.Enabled = true;
                 inputZavislostUpdate.Enabled = true;
@@ -536,6 +561,18 @@ namespace Agent_VacCenter_GUI
             {
                 inputMaxDoktori.Enabled = false;
                 inputZavislostUpdate.Enabled = false;
+            }
+        }
+
+        private void checkBoxAutoSeed_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBoxAutoSeed.Checked)
+            {
+                inputSeed.Enabled = false;
+            }
+            else
+            {
+                inputSeed.Enabled = true;
             }
         }
     }

@@ -38,7 +38,7 @@ namespace managers
             message.Code = Mc.ZaockujPacienta;
             Response(message);
 
-            //--sestricka.PocetNaplnenych;
+            --sestricka.PocetNaplnenych;
             if(sestricka.PocetNaplnenych > 0)
             {
                 DokonceniePracePracovnikom(sestricka);
@@ -71,6 +71,7 @@ namespace managers
             sprava.ZaciatokObsluhy = MySim.CurrentTime;
             if (!MyAgent.ObsluhaVolna)
             {
+                sprava.Pacient.Stav = "Èaká na oèkovanie";
                 Front.Enqueue(sprava);
                 MyAgent.DlzkaRadu.AddSample(Front.Count);
             }

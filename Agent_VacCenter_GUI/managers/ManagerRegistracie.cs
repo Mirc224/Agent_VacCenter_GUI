@@ -51,6 +51,7 @@ namespace managers
             sprava.ZaciatokObsluhy = MySim.CurrentTime;
             if (!MyAgent.ObsluhaVolna)
             {
+                sprava.Pacient.Stav = "Èaká na registráciu";
                 Front.Enqueue(sprava);
                 MyAgent.DlzkaRadu.AddSample(Front.Count);
             }

@@ -79,12 +79,16 @@ namespace Agent_VacCenter_GUI
             this.vytazenieOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pocetStriekaciekOckovanie = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabZavislost = new System.Windows.Forms.TabPage();
+            this.grafZavislosti = new OxyPlot.WindowsForms.PlotView();
             this.startPauseButton = new System.Windows.Forms.Button();
             this.casLabel = new System.Windows.Forms.Label();
             this.trackBarSlider = new System.Windows.Forms.TrackBar();
             this.maxRychlostCHB = new System.Windows.Forms.CheckBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBoxAutoSeed = new System.Windows.Forms.CheckBox();
+            this.inputSeed = new System.Windows.Forms.TextBox();
+            this.labelSeed = new System.Windows.Forms.Label();
             this.checkBoxZavislost = new System.Windows.Forms.CheckBox();
             this.inputPocetPacientov = new System.Windows.Forms.TextBox();
             this.inputReplikacie = new System.Windows.Forms.TextBox();
@@ -102,10 +106,8 @@ namespace Agent_VacCenter_GUI
             this.inputMaxDoktori = new System.Windows.Forms.TextBox();
             this.inputZavislostUpdate = new System.Windows.Forms.TextBox();
             this.buttonPouziNastavenia = new System.Windows.Forms.Button();
-            this.labelSeed = new System.Windows.Forms.Label();
-            this.inputSeed = new System.Windows.Forms.TextBox();
-            this.checkBoxAutoSeed = new System.Windows.Forms.CheckBox();
-            this.grafZavislosti = new OxyPlot.WindowsForms.PlotView();
+            this.labelDlzkaRaduStriekacky = new System.Windows.Forms.Label();
+            this.labelDobaCakaniaStriekacky = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabReplikacie.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabulkaReplikacie)).BeginInit();
@@ -549,6 +551,8 @@ namespace Agent_VacCenter_GUI
             // 
             // ockovaniePanel
             // 
+            this.ockovaniePanel.Controls.Add(this.labelDobaCakaniaStriekacky);
+            this.ockovaniePanel.Controls.Add(this.labelDlzkaRaduStriekacky);
             this.ockovaniePanel.Controls.Add(this.labelVytazenieOckovanie);
             this.ockovaniePanel.Controls.Add(this.labelDobaCakaniaOckovanie);
             this.ockovaniePanel.Controls.Add(this.labelDlzkaRaduOckovanie);
@@ -562,7 +566,7 @@ namespace Agent_VacCenter_GUI
             // 
             this.labelVytazenieOckovanie.AutoSize = true;
             this.labelVytazenieOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelVytazenieOckovanie.Location = new System.Drawing.Point(752, 20);
+            this.labelVytazenieOckovanie.Location = new System.Drawing.Point(513, 20);
             this.labelVytazenieOckovanie.Name = "labelVytazenieOckovanie";
             this.labelVytazenieOckovanie.Size = new System.Drawing.Size(104, 20);
             this.labelVytazenieOckovanie.TabIndex = 5;
@@ -572,7 +576,7 @@ namespace Agent_VacCenter_GUI
             // 
             this.labelDobaCakaniaOckovanie.AutoSize = true;
             this.labelDobaCakaniaOckovanie.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelDobaCakaniaOckovanie.Location = new System.Drawing.Point(381, 20);
+            this.labelDobaCakaniaOckovanie.Location = new System.Drawing.Point(232, 20);
             this.labelDobaCakaniaOckovanie.Name = "labelDobaCakaniaOckovanie";
             this.labelDobaCakaniaOckovanie.Size = new System.Drawing.Size(135, 20);
             this.labelDobaCakaniaOckovanie.TabIndex = 4;
@@ -663,6 +667,21 @@ namespace Agent_VacCenter_GUI
             this.tabZavislost.Text = "Zavislost";
             this.tabZavislost.UseVisualStyleBackColor = true;
             // 
+            // grafZavislosti
+            // 
+            this.grafZavislosti.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grafZavislosti.Location = new System.Drawing.Point(-4, -1);
+            this.grafZavislosti.Name = "grafZavislosti";
+            this.grafZavislosti.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.grafZavislosti.Size = new System.Drawing.Size(1493, 681);
+            this.grafZavislosti.TabIndex = 0;
+            this.grafZavislosti.Text = "plotView1";
+            this.grafZavislosti.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.grafZavislosti.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.grafZavislosti.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
             // startPauseButton
             // 
             this.startPauseButton.Location = new System.Drawing.Point(9, 99);
@@ -750,6 +769,45 @@ namespace Agent_VacCenter_GUI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1251, 84);
             this.tableLayoutPanel1.TabIndex = 6;
+            // 
+            // checkBoxAutoSeed
+            // 
+            this.checkBoxAutoSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxAutoSeed.AutoSize = true;
+            this.checkBoxAutoSeed.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxAutoSeed.Location = new System.Drawing.Point(939, 59);
+            this.checkBoxAutoSeed.Name = "checkBoxAutoSeed";
+            this.checkBoxAutoSeed.Size = new System.Drawing.Size(150, 22);
+            this.checkBoxAutoSeed.TabIndex = 18;
+            this.checkBoxAutoSeed.Text = "AutoSeed";
+            this.checkBoxAutoSeed.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxAutoSeed.UseVisualStyleBackColor = true;
+            this.checkBoxAutoSeed.CheckedChanged += new System.EventHandler(this.checkBoxAutoSeed_CheckedChanged);
+            // 
+            // inputSeed
+            // 
+            this.inputSeed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputSeed.Location = new System.Drawing.Point(1095, 31);
+            this.inputSeed.Name = "inputSeed";
+            this.inputSeed.Size = new System.Drawing.Size(153, 22);
+            this.inputSeed.TabIndex = 17;
+            // 
+            // labelSeed
+            // 
+            this.labelSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelSeed.AutoSize = true;
+            this.labelSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelSeed.Location = new System.Drawing.Point(939, 28);
+            this.labelSeed.Name = "labelSeed";
+            this.labelSeed.Size = new System.Drawing.Size(150, 28);
+            this.labelSeed.TabIndex = 16;
+            this.labelSeed.Text = "Seed:";
+            this.labelSeed.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBoxZavislost
             // 
@@ -855,7 +913,6 @@ namespace Agent_VacCenter_GUI
             this.checkBoxSpecifickePrichody.Text = "Skoršie príchody";
             this.checkBoxSpecifickePrichody.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkBoxSpecifickePrichody.UseVisualStyleBackColor = true;
-            this.checkBoxSpecifickePrichody.CheckedChanged += new System.EventHandler(this.checkBoxSpecifickePrichody_CheckedChanged);
             // 
             // labelSestricky
             // 
@@ -954,58 +1011,25 @@ namespace Agent_VacCenter_GUI
             this.buttonPouziNastavenia.UseVisualStyleBackColor = true;
             this.buttonPouziNastavenia.Click += new System.EventHandler(this.buttonPouziNastavenia_Click);
             // 
-            // labelSeed
+            // labelDlzkaRaduStriekacky
             // 
-            this.labelSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelSeed.AutoSize = true;
-            this.labelSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelSeed.Location = new System.Drawing.Point(939, 28);
-            this.labelSeed.Name = "labelSeed";
-            this.labelSeed.Size = new System.Drawing.Size(150, 28);
-            this.labelSeed.TabIndex = 16;
-            this.labelSeed.Text = "Seed:";
-            this.labelSeed.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelDlzkaRaduStriekacky.AutoSize = true;
+            this.labelDlzkaRaduStriekacky.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDlzkaRaduStriekacky.Location = new System.Drawing.Point(775, 20);
+            this.labelDlzkaRaduStriekacky.Name = "labelDlzkaRaduStriekacky";
+            this.labelDlzkaRaduStriekacky.Size = new System.Drawing.Size(203, 20);
+            this.labelDlzkaRaduStriekacky.TabIndex = 6;
+            this.labelDlzkaRaduStriekacky.Text = "Dĺžka radu striekačky: ";
             // 
-            // inputSeed
+            // labelDobaCakaniaStriekacky
             // 
-            this.inputSeed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.inputSeed.Location = new System.Drawing.Point(1095, 31);
-            this.inputSeed.Name = "inputSeed";
-            this.inputSeed.Size = new System.Drawing.Size(153, 22);
-            this.inputSeed.TabIndex = 17;
-            // 
-            // checkBoxAutoSeed
-            // 
-            this.checkBoxAutoSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxAutoSeed.AutoSize = true;
-            this.checkBoxAutoSeed.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxAutoSeed.Location = new System.Drawing.Point(939, 59);
-            this.checkBoxAutoSeed.Name = "checkBoxAutoSeed";
-            this.checkBoxAutoSeed.Size = new System.Drawing.Size(150, 22);
-            this.checkBoxAutoSeed.TabIndex = 18;
-            this.checkBoxAutoSeed.Text = "AutoSeed";
-            this.checkBoxAutoSeed.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxAutoSeed.UseVisualStyleBackColor = true;
-            // 
-            // grafZavislosti
-            // 
-            this.grafZavislosti.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grafZavislosti.Location = new System.Drawing.Point(-4, -1);
-            this.grafZavislosti.Name = "grafZavislosti";
-            this.grafZavislosti.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.grafZavislosti.Size = new System.Drawing.Size(1493, 681);
-            this.grafZavislosti.TabIndex = 0;
-            this.grafZavislosti.Text = "plotView1";
-            this.grafZavislosti.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.grafZavislosti.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.grafZavislosti.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            this.labelDobaCakaniaStriekacky.AutoSize = true;
+            this.labelDobaCakaniaStriekacky.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelDobaCakaniaStriekacky.Location = new System.Drawing.Point(1106, 20);
+            this.labelDobaCakaniaStriekacky.Name = "labelDobaCakaniaStriekacky";
+            this.labelDobaCakaniaStriekacky.Size = new System.Drawing.Size(226, 20);
+            this.labelDobaCakaniaStriekacky.TabIndex = 7;
+            this.labelDobaCakaniaStriekacky.Text = "Doba čakania striekačky: ";
             // 
             // AppGUI
             // 
@@ -1021,7 +1045,7 @@ namespace Agent_VacCenter_GUI
             this.Controls.Add(this.startPauseButton);
             this.Controls.Add(this.tabControl1);
             this.Name = "AppGUI";
-            this.Text = "Form1";
+            this.Text = "Vac-center19 - AgentBased";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AppGUI_FormClosed);
             this.Load += new System.EventHandler(this.AppGUI_Load);
             this.tabControl1.ResumeLayout(false);
@@ -1131,6 +1155,8 @@ namespace Agent_VacCenter_GUI
         private System.Windows.Forms.CheckBox checkBoxAutoSeed;
         private System.Windows.Forms.TextBox inputSeed;
         private System.Windows.Forms.Label labelSeed;
+        private System.Windows.Forms.Label labelDobaCakaniaStriekacky;
+        private System.Windows.Forms.Label labelDlzkaRaduStriekacky;
     }
 }
 

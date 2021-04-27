@@ -2,59 +2,129 @@ using OSPABA;
 using simulation;
 using agents;
 using DataStructures;
+using System;
 
 namespace continualAssistants
 {
-	//meta! id="26"
-	public class SchedulerPrichodov : Scheduler
-	{
-		private OSPRNG.UniformContinuousRNG _generatorPravdepodobnosti;
-		private PairingHeap<double, double> _haldaPrichodov;
+    //meta! id="26"
+    public class SchedulerPrichodov : Scheduler
+    {
+        private OSPRNG.UniformContinuousRNG _generatorPravdepodobnosti;
+        private PairingHeap<double, double> _haldaPrichodov;
 
-		public SchedulerPrichodov(int id, Simulation mySim, CommonAgent myAgent) :
-			base(id, mySim, myAgent)
-		{
-		}
+        private OSPRNG.UniformContinuousRNG[] _generatoryPrichodov;
+        private OSPRNG.UniformContinuousRNG _generatorPravdepodobnostiSpecifickehoPrichodu;
+        private OSPRNG.UniformContinuousRNG _generatorPravdepodobnostiDostaveniaVCas;
 
-		override public void PrepareReplication()
-		{
-			base.PrepareReplication();
-			// Setup component for the next replication
-			_generatorPravdepodobnosti = new OSPRNG.UniformContinuousRNG(0, 1, (MySim as VacCenterSimulation).GeneratorNasad);
-			_haldaPrichodov = new PairingHeap<double, double>();
-			MyAgent.VygenerujNepridenych();
+        public SchedulerPrichodov(int id, Simulation mySim, CommonAgent myAgent) :
+            base(id, mySim, myAgent)
+        {
+        }
 
-			double casSimulacie = 0;
-			var sim = MySim as VacCenterSimulation;
+        override public void PrepareReplication()
+        {
+            base.PrepareReplication();
+            // Setup component for the next replication
+            var sim = MySim as VacCenterSimulation;
+            _generatorPravdepodobnosti = new OSPRNG.UniformContinuousRNG(0, 1, sim.GeneratorNasad);
+            _haldaPrichodov = new PairingHeap<double, double>();
+            MyAgent.VygenerujNepridenych();
 
-			int multiplier = 1;
-			double casovyRozostup = 0;
-			for(int i = 0; i < MyAgent.PocetObjednanychPacientov; ++i)
+            double casObjednania = 0;
+
+            int multiplier = 1;
+            double casPrichodu;
+            double casovyRozostup = 0;
+
+            if (sim.AktualneParametreSimulacie.SpecialnePrichody)
             {
-				multiplier = 1;
-				while (_generatorPravdepodobnosti.Sample() < MyAgent.PocetNepridenychPacientov / (double)MyAgent.PocetObjednanychPacientov)
-				{
-					++multiplier;
-				}
-				casovyRozostup = multiplier * MyAgent.CasMedziPrichodmi;
-				if (casovyRozostup + casSimulacie > sim.CasPrevadzkyVSekundach)
-				{
-					return;
-				}
-				casSimulacie += casovyRozostup;
-				_haldaPrichodov.Insert(casSimulacie, casSimulacie);
-				if (casSimulacie > sim.CasPrevadzkyVSekundach)
-					return;
-			}
+                double pravdepodobnost;
 
-		}
+                _generatorPravdepodobnostiSpecifickehoPrichodu = new OSPRNG.UniformContinuousRNG(0, 1, sim.GeneratorNasad);
+                _generatorPravdepodobnostiDostaveniaVCas = new OSPRNG.UniformContinuousRNG(0, 1, sim.GeneratorNasad);
+                _generatoryPrichodov = new OSPRNG.UniformContinuousRNG[] { new OSPRNG.UniformContinuousRNG(20 * 60, 60 * 60, sim.GeneratorNasad),
+                                                                           new OSPRNG.UniformContinuousRNG(1 * 60, 20 * 60, sim.GeneratorNasad),
+                                                                           new OSPRNG.UniformContinuousRNG(60 * 60, 80 * 60, sim.GeneratorNasad),
+                                                                           new OSPRNG.UniformContinuousRNG(80 * 60, 240 * 60, sim.GeneratorNasad),
+                                                                           };
+                for (int i = 0; i < MyAgent.PocetObjednanychPacientov; ++i)
+                {
+                    multiplier = 1;
+                    while (_generatorPravdepodobnosti.Sample() < MyAgent.PocetNepridenychPacientov / (double)MyAgent.PocetObjednanychPacientov)
+                    {
+                        ++multiplier;
+                    }
+                    casovyRozostup = multiplier * MyAgent.CasMedziPrichodmi;
+                    if (casovyRozostup + casObjednania > sim.CasPrevadzkyVSekundach)
+                    {
+                        return;
+                    }
 
-		//meta! sender="AgentOkolia", id="28", type="Notice"
-		public void ProcessNoticeNaplanujPrichod(MessageForm message)
-		{
-			//int multiplier = 1;
-			var sim = MySim as VacCenterSimulation;
-			/*while (_generatorPravdepodobnosti.Sample() < MyAgent.PocetNepridenychPacientov / (double)MyAgent.PocetObjednanychPacientov)
+                    casObjednania += casovyRozostup;
+
+                    if (!(_generatorPravdepodobnostiDostaveniaVCas.Sample() < 0.1))
+                    {
+                        pravdepodobnost = _generatorPravdepodobnostiSpecifickehoPrichodu.Sample();
+                        casPrichodu = DajCasPrichodu(casObjednania, pravdepodobnost);
+                    }
+                    else
+                        casPrichodu = casObjednania;
+
+                    _haldaPrichodov.Insert(casPrichodu, casPrichodu);
+                    
+                    if (casObjednania > sim.CasPrevadzkyVSekundach)
+                        return;
+                }
+            }
+            else
+                for (int i = 0; i < MyAgent.PocetObjednanychPacientov; ++i)
+                {
+                    multiplier = 1;
+                    while (_generatorPravdepodobnosti.Sample() < MyAgent.PocetNepridenychPacientov / (double)MyAgent.PocetObjednanychPacientov)
+                    {
+                        ++multiplier;
+                    }
+                    casovyRozostup = multiplier * MyAgent.CasMedziPrichodmi;
+                    if (casovyRozostup + casObjednania > sim.CasPrevadzkyVSekundach)
+                    {
+                        return;
+                    }
+                    casObjednania += casovyRozostup;
+                    _haldaPrichodov.Insert(casObjednania, casObjednania);
+                    if (casObjednania > sim.CasPrevadzkyVSekundach)
+                        return;
+                }
+
+        }
+
+        private double DajCasPrichodu(double casSimulacie, double vygenerovanaPravdepodobnost)
+        {
+            double casPrichodu;
+
+            if (vygenerovanaPravdepodobnost < 0.4)
+            {
+                casPrichodu = casSimulacie - _generatoryPrichodov[0].Sample();
+            }
+            else if (vygenerovanaPravdepodobnost < 0.7)
+            {
+                casPrichodu = casSimulacie - _generatoryPrichodov[1].Sample();
+            }
+            else if (vygenerovanaPravdepodobnost < 0.9)
+            {
+                casPrichodu = casSimulacie - _generatoryPrichodov[2].Sample();
+            }
+            else
+                casPrichodu = casSimulacie - _generatoryPrichodov[3].Sample();
+
+            return Math.Max(casPrichodu, 0);
+        }
+
+        //meta! sender="AgentOkolia", id="28", type="Notice"
+        public void ProcessNoticeNaplanujPrichod(MessageForm message)
+        {
+            //int multiplier = 1;
+            var sim = MySim as VacCenterSimulation;
+            /*while (_generatorPravdepodobnosti.Sample() < MyAgent.PocetNepridenychPacientov / (double)MyAgent.PocetObjednanychPacientov)
             {
                 ++multiplier;
 				if(multiplier * MyAgent.CasMedziPrichodmi + MySim.CurrentTime > sim.CasPrevadzkyVSekundach)
@@ -63,58 +133,58 @@ namespace continualAssistants
 					return;
                 }
             }*/
-			if (_haldaPrichodov.Count == 0)
+            if (_haldaPrichodov.Count == 0)
             {
-				MyAgent.Generuj = false;
-				return;
-			}
-				
-				
-			message.Code = Mc.NoticePrichodPacienta;
-			double casPrichodu = _haldaPrichodov.GetMin();
+                MyAgent.Generuj = false;
+                return;
+            }
+
+
+            message.Code = Mc.NoticePrichodPacienta;
+            double casPrichodu = _haldaPrichodov.GetMin();
             //System.Console.WriteLine(casPrichodu - sim.CurrentTime);
-			Hold(casPrichodu - sim.CurrentTime, message);
-		}
+            Hold(casPrichodu - sim.CurrentTime, message);
+        }
 
-		public void ProcessNoticePrichodPacienta(MessageForm message)
-		{
-			message.Addressee = MyAgent;
-			Notice(message);
-		}
+        public void ProcessNoticePrichodPacienta(MessageForm message)
+        {
+            message.Addressee = MyAgent;
+            Notice(message);
+        }
 
-		//meta! userInfo="Process messages defined in code", id="0"
-		public void ProcessDefault(MessageForm message)
-		{
-			switch (message.Code)
-			{
-			}
-		}
+        //meta! userInfo="Process messages defined in code", id="0"
+        public void ProcessDefault(MessageForm message)
+        {
+            switch (message.Code)
+            {
+            }
+        }
 
-		//meta! userInfo="Generated code: do not modify", tag="begin"
-		override public void ProcessMessage(MessageForm message)
-		{
-			switch (message.Code)
-			{
-			case Mc.NoticeNaplanujPrichod:
-				ProcessNoticeNaplanujPrichod(message);
-			break;
+        //meta! userInfo="Generated code: do not modify", tag="begin"
+        override public void ProcessMessage(MessageForm message)
+        {
+            switch (message.Code)
+            {
+                case Mc.NoticeNaplanujPrichod:
+                    ProcessNoticeNaplanujPrichod(message);
+                    break;
 
-			case Mc.NoticePrichodPacienta:
-				ProcessNoticePrichodPacienta(message);
-			break;
+                case Mc.NoticePrichodPacienta:
+                    ProcessNoticePrichodPacienta(message);
+                    break;
 
-			default:
-				ProcessDefault(message);
-			break;
-			}
-		}
-		//meta! tag="end"
-		public new AgentOkolia MyAgent
-		{
-			get
-			{
-				return (AgentOkolia)base.MyAgent;
-			}
-		}
-	}
+                default:
+                    ProcessDefault(message);
+                    break;
+            }
+        }
+        //meta! tag="end"
+        public new AgentOkolia MyAgent
+        {
+            get
+            {
+                return (AgentOkolia)base.MyAgent;
+            }
+        }
+    }
 }

@@ -24,6 +24,8 @@ namespace parameters
         public int MinAdminov { get; set; }
         public int AktualAdminov {get; set;}
         public int MaxAdminov { get; set; }
+        public bool AutoSeed { get; set; } = true;
+        public int Seed { get; set; } = 224;
 
     }
 }

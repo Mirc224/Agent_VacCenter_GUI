@@ -18,7 +18,7 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-			PocetPracovnikov = 4;
+			PocetPracovnikov = 5;
 			LokaciaPracoviska = Lokacie.MiestnostRegistracia;
 			//InicializaciaPredSimulaciou();
 		}

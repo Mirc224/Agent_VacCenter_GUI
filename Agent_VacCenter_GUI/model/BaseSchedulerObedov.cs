@@ -25,7 +25,7 @@ namespace Agent_VacCenter_GUI.model
             var sprava = new Sprava(MySim);
             sprava.Code = Mc.NoticeCasObeda;
             double casCakania = Math.Max(Hodina * 3600 + Minuta * 60 + Sekunda - MySim.ZaciatocnyCasVSekundach,0);
-            //Hold(casCakania, sprava);
+            Hold(casCakania, sprava);
         }
 
         public void ProcessDefault(MessageForm message)

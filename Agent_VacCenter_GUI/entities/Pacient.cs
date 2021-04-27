@@ -15,7 +15,6 @@ namespace entities
         public double DobaCakaniaVCakarni { get; set; }
         public double CasPrichodu { get; set; }
 
-        private int _cisloUkonu = 0;
         private double[] _casyCakaniaNaUkony = new double[3];
         public string NaformovatovanyCasPrichodu
         {

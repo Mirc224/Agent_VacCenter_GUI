@@ -40,6 +40,7 @@ namespace managers
             {
                 Front.Enqueue(sprava);
                 MyAgent.DlzkaRadu.AddSample(Front.Count);
+                sprava.Pacient.Stav = "Èaká na vyšetrenie";
             }
             else
             {

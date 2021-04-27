@@ -69,6 +69,10 @@ namespace simulation
 		{
 			base.PrepareSimulation();
 			// Create global statistcis
+			if (AktualneParametreSimulacie.AutoSeed)
+				GeneratorNasad = new Random();
+			else
+				GeneratorNasad = new Random(AktualneParametreSimulacie.Seed);
 			AgentRegistracie.PocetPracovnikov = AktualneParametreSimulacie.AktualAdminov;
 			AgentVysetrenia.PocetPracovnikov = AktualneParametreSimulacie.AktualDoktorov;
 			AgentOckovania.PocetPracovnikov = AktualneParametreSimulacie.AktualSestriciek;

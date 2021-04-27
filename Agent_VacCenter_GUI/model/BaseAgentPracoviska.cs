@@ -30,8 +30,9 @@ namespace Agent_VacCenter_GUI.model
         public double PriemerneVytazeniePracovnikov { get => VytazeniePracovnikov.Mean() / PocetPracovnikov; }
         //public List<Pracovnik> NenajedeniPracovnici { get; protected set; }
         protected OSPRNG.UniformDiscreteRNG[] _generatoryVyberuZamenstnanca;
+        public OSPRNG.UniformDiscreteRNG[] GeneratoryVyberuZamenstnancaNaObed { get; private set; }
         public Pracovnik[] Pracovnici { get; protected set; }
-        protected List<Pracovnik> _dostupniPracovnici;
+        public List<Pracovnik> DostupniPracovniciList { get; set; }
         public BaseAgentPracoviska(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
@@ -39,7 +40,7 @@ namespace Agent_VacCenter_GUI.model
 
         public Pracovnik DajVolnehoPracovnika()
         {
-            _dostupniPracovnici.Clear();
+            DostupniPracovniciList.Clear();
             /*for (int i = 0; i < MaxPocetPracovnikov; ++i)
                 if (!_staff[i].Nedostupny)
                     _dostupniPracovnici.Add(_staff[i]);*/
@@ -47,18 +48,18 @@ namespace Agent_VacCenter_GUI.model
             for (i = 0; i < PocetPracovnikov; ++i)
             {
                 if (DostupniPracovnici[i])
-                    _dostupniPracovnici.Add(Pracovnici[i]);
+                    DostupniPracovniciList.Add(Pracovnici[i]);
             }
 
-            if (_dostupniPracovnici.Count == 0)
+            if (DostupniPracovniciList.Count == 0)
                 return null;
 
-            if (_dostupniPracovnici.Count == 1)
-                return _dostupniPracovnici[0];
+            if (DostupniPracovniciList.Count == 1)
+                return DostupniPracovniciList[0];
 
-            var generator = _generatoryVyberuZamenstnanca[_dostupniPracovnici.Count - 2];
+            var generator = _generatoryVyberuZamenstnanca[DostupniPracovniciList.Count - 2];
 
-            return _dostupniPracovnici[generator.Sample()];
+            return DostupniPracovniciList[generator.Sample()];
 
         }
 
@@ -69,7 +70,12 @@ namespace Agent_VacCenter_GUI.model
             //NenajedeniPracovnici = new List<Pracovnik>(MaxPocetPracovnikov);
             Pracovnici = new Pracovnik[PocetPracovnikov];
             if (PocetPracovnikov > 1)
+            {
                 _generatoryVyberuZamenstnanca = new OSPRNG.UniformDiscreteRNG[PocetPracovnikov - 1];
+                GeneratoryVyberuZamenstnancaNaObed = new OSPRNG.UniformDiscreteRNG[PocetPracovnikov - 1];
+
+            }
+
 
             for (int i = 0; i < PocetPracovnikov; ++i)
             {
@@ -85,8 +91,12 @@ namespace Agent_VacCenter_GUI.model
             }
 
             for (int i = 0; i < PocetPracovnikov - 1; ++i)
+            {
                 _generatoryVyberuZamenstnanca[i] = new OSPRNG.UniformDiscreteRNG(0, i + 1);
-            _dostupniPracovnici = new List<Pracovnik>(PocetPracovnikov);
+                GeneratoryVyberuZamenstnancaNaObed[i] = new OSPRNG.UniformDiscreteRNG(0, i + 1);
+            }
+                
+            DostupniPracovniciList = new List<Pracovnik>(PocetPracovnikov);
         }
 
         public virtual void InicializaciaPredReplikaciou()
@@ -96,7 +106,11 @@ namespace Agent_VacCenter_GUI.model
             DostupniPracovnici.SetAll(true);
             //NenajedeniPracovnici.Clear();
             for (int i = 0; i < _generatoryVyberuZamenstnanca.Length; ++i)
+            {
                 _generatoryVyberuZamenstnanca[i] = new OSPRNG.UniformDiscreteRNG(0, i + 1, (MySim as VacCenterSimulation).GeneratorNasad);
+                GeneratoryVyberuZamenstnancaNaObed[i] = new OSPRNG.UniformDiscreteRNG(0, i + 1, (MySim as VacCenterSimulation).GeneratorNasad);
+            }
+                
 
             for (int i = 0; i < PocetPracovnikov; ++i)
             {
@@ -104,7 +118,7 @@ namespace Agent_VacCenter_GUI.model
                 //NenajedeniPracovnici.Add(_staff[i]);
             }
 
-            _dostupniPracovnici.Clear();
+            DostupniPracovniciList.Clear();
 
             DlzkaCakania.Clear();
             DlzkaRadu.Clear();
@@ -131,17 +145,17 @@ namespace Agent_VacCenter_GUI.model
                 else
                     statistikyZamestnancov[i] = new string[] { tmpPracovnik.IDPracovnika.ToString(), tmpPracovnik.Stav, tmpPracovnik.Obedoval ? "Áno" : "nie", (tmpPracovnik.MeanUtiliztion * 100).ToString() };
             }
-            StatistikyPracoviska.PriemernaDlzkaRadu = DlzkaRadu.Mean();
-            StatistikyPracoviska.PriemernaDobaCakania = DlzkaCakania.Mean();
-            StatistikyPracoviska.Vytazenie = VytazeniePracovnikov.Mean();
+            //StatistikyPracoviska.PriemernaDlzkaRadu = DlzkaRadu.Mean();
+            //StatistikyPracoviska.PriemernaDobaCakania = DlzkaCakania.Mean();
+           // StatistikyPracoviska.Vytazenie = VytazeniePracovnikov.Mean();
             StatistikyPracoviska.UdajeOPracovnikoch = statistikyZamestnancov;
         }
 
         public void UpdatujStatistiky()
         {
-            StatistikyPracoviska.PriemernaDlzkaRadu = DlzkaRadu.Mean();
-            StatistikyPracoviska.PriemernaDobaCakania = DlzkaCakania.Mean();
-            StatistikyPracoviska.Vytazenie = VytazeniePracovnikov.Mean();
+            //StatistikyPracoviska.PriemernaDlzkaRadu = DlzkaRadu.Mean();
+            //StatistikyPracoviska.PriemernaDobaCakania = DlzkaCakania.Mean();
+            //StatistikyPracoviska.Vytazenie = VytazeniePracovnikov.Mean();
             if (Pracovnici[0].TypPracovnika == TypPracovnika.SESTRICKA)
             {
                 Sestricka tmpPracovnik;

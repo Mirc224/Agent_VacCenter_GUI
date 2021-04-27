@@ -8,9 +8,9 @@ namespace Agent_VacCenter_GUI.model
 {
     public class StatistikyPracoviska
     {
-        public double PriemernaDlzkaRadu { get; set; }
+        /*public double PriemernaDlzkaRadu { get; set; }
         public double PriemernaDobaCakania { get; set; }
-        public double Vytazenie { get; set; }
+        public double Vytazenie { get; set; }*/
         public string[][] UdajeOPracovnikoch { get; set; }
     }
 }
