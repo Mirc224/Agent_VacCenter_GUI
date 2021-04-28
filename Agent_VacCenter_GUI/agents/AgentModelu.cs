@@ -7,6 +7,9 @@ namespace agents
 	//meta! id="1"
 	public class AgentModelu : Agent
 	{
+		/**
+		 * Agent boss. Sprostredkuje komunikaciu medzi agentom okolia a agentom vakcinacneho centra. Taktiez posiela agentovi okolia inicializacny notice.
+		 */
 		public AgentModelu(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{

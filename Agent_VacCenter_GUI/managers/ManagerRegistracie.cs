@@ -11,6 +11,10 @@ namespace managers
     //meta! id="4"
     public class ManagerRegistracie : BaseManagerPracoviska
     {
+        /**
+         * Koordinuje pacienta v miestnosti registracie. Po prichode pacienta skontroluje ci je volny pracovnik a ak ano, posiela spravu procesu registracie. Ak nie
+         * je sprava zaradena do frontu sprav, kde caka na spracovanie.
+         */
         public ManagerRegistracie(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {

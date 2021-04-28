@@ -24,15 +24,15 @@ namespace Agent_VacCenter_GUI.model
         public bool JeCasObeda { get; set; } = false;
         public BitArray DostupniPracovnici { get; set; }
         public BitArray NenajedeniPracovnici { get; set; }
-
         public int LokaciaPracoviska { get; set; }
-
-        public double PriemerneVytazeniePracovnikov { get => VytazeniePracovnikov.Mean() / PocetPracovnikov; }
-        //public List<Pracovnik> NenajedeniPracovnici { get; protected set; }
-        protected OSPRNG.UniformDiscreteRNG[] _generatoryVyberuZamenstnanca;
         public OSPRNG.UniformDiscreteRNG[] GeneratoryVyberuZamenstnancaNaObed { get; private set; }
         public Pracovnik[] Pracovnici { get; protected set; }
         public List<Pracovnik> DostupniPracovniciList { get; set; }
+        //public double PriemerneVytazeniePracovnikov { get => VytazeniePracovnikov.Mean() / PocetPracovnikov; }
+        public double PriemerneVytazeniePracovnikov { get => VytazeniePracovnikov.Mean(); }
+
+        protected OSPRNG.UniformDiscreteRNG[] _generatoryVyberuZamenstnanca;
+        
         public BaseAgentPracoviska(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {
@@ -41,9 +41,6 @@ namespace Agent_VacCenter_GUI.model
         public Pracovnik DajVolnehoPracovnika()
         {
             DostupniPracovniciList.Clear();
-            /*for (int i = 0; i < MaxPocetPracovnikov; ++i)
-                if (!_staff[i].Nedostupny)
-                    _dostupniPracovnici.Add(_staff[i]);*/
             int i = -1;
             for (i = 0; i < PocetPracovnikov; ++i)
             {
@@ -67,7 +64,6 @@ namespace Agent_VacCenter_GUI.model
         {
             NenajedeniPracovnici = new BitArray(PocetPracovnikov, true);
             DostupniPracovnici = new BitArray(PocetPracovnikov, true);
-            //NenajedeniPracovnici = new List<Pracovnik>(MaxPocetPracovnikov);
             Pracovnici = new Pracovnik[PocetPracovnikov];
             if (PocetPracovnikov > 1)
             {
@@ -145,17 +141,12 @@ namespace Agent_VacCenter_GUI.model
                 else
                     statistikyZamestnancov[i] = new string[] { tmpPracovnik.IDPracovnika.ToString(), tmpPracovnik.Stav, tmpPracovnik.Obedoval ? "Áno" : "nie", (tmpPracovnik.MeanUtiliztion * 100).ToString() };
             }
-            //StatistikyPracoviska.PriemernaDlzkaRadu = DlzkaRadu.Mean();
-            //StatistikyPracoviska.PriemernaDobaCakania = DlzkaCakania.Mean();
-           // StatistikyPracoviska.Vytazenie = VytazeniePracovnikov.Mean();
+
             StatistikyPracoviska.UdajeOPracovnikoch = statistikyZamestnancov;
         }
 
         public void UpdatujStatistiky()
         {
-            //StatistikyPracoviska.PriemernaDlzkaRadu = DlzkaRadu.Mean();
-            //StatistikyPracoviska.PriemernaDobaCakania = DlzkaCakania.Mean();
-            //StatistikyPracoviska.Vytazenie = VytazeniePracovnikov.Mean();
             if (Pracovnici[0].TypPracovnika == TypPracovnika.SESTRICKA)
             {
                 Sestricka tmpPracovnik;
@@ -183,7 +174,7 @@ namespace Agent_VacCenter_GUI.model
 
         public void UpdateZaverecnychStatistik()
         {
-            VytazeniePracovnikov.AddSample(PocetPracujucich);
+            VytazeniePracovnikov.AddSample((double)PocetPracujucich / PocetPracovnikov);
             DlzkaRadu.AddSample(MyManager.Front.Count);
         }
 

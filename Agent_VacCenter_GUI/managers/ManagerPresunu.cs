@@ -7,6 +7,9 @@ namespace managers
     //meta! id="60"
     public class ManagerPresunu : Manager
     {
+        /**
+         * Komunikuje s procesom presunu. Zasiela mu spravy presunu entit a po dokonceni procesu oboznami agenta vakcinacneho centra.
+         */
         public ManagerPresunu(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -34,7 +37,6 @@ namespace managers
         public void ProcessNoticeKoniecPresunu(MessageForm message)
         {
             message.Code = Mc.VykonajPresun;
-            //message.Addressee = ((VacCenterSimulation)MySim).AgentVakCentra;
             Response(message);
         }
 

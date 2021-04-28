@@ -6,6 +6,10 @@ namespace continualAssistants
     //meta! id="43"
     public class ProcessOckovania : Process
     {
+        /**
+         * Reprezentuje proces ockovania pacienta. Obsahuje generator trvania s trojuholnikovym rozdelenim pravdepodobnosti s parametrami min=20 mod=75 a max=100.
+         * Po prichode pacienta na ockovanie sa vygeneruje doba, na ktoru je sprava pozdrzana a potom opatovne zaslana scheduleru.
+         */
         private OSPRNG.TriangularRNG _generatorTrvania;
         public ProcessOckovania(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)

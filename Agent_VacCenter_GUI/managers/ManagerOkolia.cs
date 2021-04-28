@@ -9,6 +9,12 @@ namespace managers
     //meta! id="2"
     public class ManagerOkolia : Manager
     {
+        /**
+         * Zabezpecuje posielanie pacientov do systemu ako aj ich odchod zo systemu. Dostava spravy od planovaca prichodov a na zaklade nich generuje novych pacientov
+         * a posiela ich agentovi modelu. Sleduje aj ci je este cas potrebny na generovanie pacientov a ak nie, zastavuje geneerovanie a pre korektne ukoncenie
+         * simulcneho behu sleduje, kedy je pocet vygenerovanych pacientov rovny poctu odidednych pacientov a v tom okamihu zaznamena nadcas, nastavi maximalnu
+         * rychlost simulacie, aby sa korektne ukoncila.
+         */
         public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -45,8 +51,6 @@ namespace managers
             var pacient = ((Sprava)message).Pacient;
             ++MyAgent.PocetPacientovOdidenych;
             MyAgent.OdideniPacienti.Set(pacient.IDPacienta, true);
-            //System.Console.WriteLine(pacient.CelkovaDobaCakania);
-            //System.Console.WriteLine(pacient.DobaCakaniaNaOckovanie + pacient.DobaCakaniaNaVysetrenie + pacient.DobaCakaniaNaRegistraciu);
             MyAgent.CelkovaDobaCakaniaPacientov.AddSample(pacient.CelkovaDobaCakania);
             if (!MyAgent.Generuj && MyAgent.PocetPacientovVojdenych == MyAgent.PocetPacientovOdidenych)
             {

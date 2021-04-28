@@ -9,6 +9,10 @@ namespace continualAssistants
     //meta! id="26"
     public class SchedulerPrichodov : Scheduler
     {
+        /**
+         * Planovac prichodov zakaznikov. Obsahuje generatory pre repreznetaciu jednotlivych pravdepodobnosti ako aj casu skorsieho prichodu. Vygenerovane casy sa 
+         * vkladaju do parovacej haldy, z ktorej su behom simulacie vyberane a spravy dalsieho prichodu su pozdrzane.
+         */
         private OSPRNG.UniformContinuousRNG _generatorPravdepodobnosti;
         private PairingHeap<double, double> _haldaPrichodov;
 
@@ -21,6 +25,12 @@ namespace continualAssistants
         {
         }
 
+        /**
+         * Pred replikaciou sa naplni parovacia halda, z ktorej su vyberane casy prichdovo. V pripade ak nie je zvolena moznost skorsich prichodov, je
+         * pomocou multipliera generovany cas prichodu pacienta bez skorsieho prichodu. V pripade ak vyjde, ze v nahodnom pokuse, ze dany pacient sa nedostvil
+         * tak sa multiplier zvysi o 1 a po tom co dojde k neuspesnemu nahodnemu pokusu je multiplierom vynasobeny casovy rozostup medzi pacientami a je 
+         * aktualizovany cas objednania.
+         */
         override public void PrepareReplication()
         {
             base.PrepareReplication();
@@ -97,6 +107,9 @@ namespace continualAssistants
 
         }
 
+        /**
+         * Na zaklade casu simulacie a vygenerovanej pravdepodobnosti vrati cas skorsieho prichodu pacienta.
+         */
         private double DajCasPrichodu(double casSimulacie, double vygenerovanaPravdepodobnost)
         {
             double casPrichodu;

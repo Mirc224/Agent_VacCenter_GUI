@@ -6,6 +6,9 @@ namespace continualAssistants
     //meta! id="38"
     public class ProcessVysetrenia : Process
     {
+        /**
+         * Reprezentuje proces vysetrenia pacienta. Po jeho prichode je vygenerovny cas trvania, na ktory je sprava pozdrzana a opatovne zaslana.
+         */
         private OSPRNG.ExponentialRNG _generatorTrvania;
         public ProcessVysetrenia(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)

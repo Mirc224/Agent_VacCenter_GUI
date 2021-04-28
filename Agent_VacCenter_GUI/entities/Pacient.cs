@@ -6,6 +6,9 @@ namespace entities
 {
     public class Pacient : StavovaEntita
     {
+        /**
+         * Entita reprezentujuca pacienta. Obsahuje atributy pre zber statsitik ohladom cakacich dob casu prichodu a podobne.
+         */
         public static int AktualneID {get; set;}
         public int IDPacienta { get; private set; }
         public double CelkovaDobaCakania { get => DobaCakaniaNaRegistraciu + DobaCakaniaNaVysetrenie + DobaCakaniaNaOckovanie; }
@@ -25,7 +28,6 @@ namespace entities
             }
         }
 
-        private double _celkovaDobaCakania;
         public Pacient(OSPABA.Simulation sim)
             : base(sim) 
         {

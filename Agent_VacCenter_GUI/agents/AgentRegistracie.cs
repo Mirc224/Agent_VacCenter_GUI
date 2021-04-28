@@ -12,7 +12,10 @@ namespace agents
 	//meta! id="4"
 	public class AgentRegistracie : BaseAgentPracoviska
 	{
-
+		/**
+		 * Reprezentuje registraciu v modeli. Vstupny bod pacientov. Potomok triedy base agent pracoviska. Obsahuje naviac proces registracie, ktoremu posiela spravu
+		 * hned ako je volny nejaky z pracovnikov pracoviska.
+		 */
 		public ProcessRegistracie ProcessRegistracie { get; private set; }
 		public AgentRegistracie(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)

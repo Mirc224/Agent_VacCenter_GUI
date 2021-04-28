@@ -13,6 +13,10 @@ namespace agents
 	//meta! id="2"
 	public class AgentOkolia : Agent, ISimUpdates
 	{
+		/**
+		 * Agent okolia symbolizuje okolie systemu a je bodom, kde do systemu vstupuju pacienti. O ich prichody sa stara scheduler prichodov. Nachadzaju sa tu
+		 * atributy pre zber statistik ako aj pomocne premene pre nasledny efektivny vypis.
+		 */
 		public SchedulerPrichodov SchedulerPrichodov { get; private set; }
 		public Stat CelkovaDobaCakaniaPacientov { get; private set; }
 		public int PocetNepridenychPacientov { get; private set; }
@@ -34,6 +38,9 @@ namespace agents
 			Init();
 		}
 
+		/**
+		 * Resetovanie statistik pred replikaciou.
+		 */
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
@@ -50,6 +57,10 @@ namespace agents
 			Generuj = true;
 		}
 
+		/**
+		 * Pred kazdou replikaciou sa musi vygenerovat pocet nepridenych pacientov, ktori sa pouziva v scheduleri prichodov pre vypocet, ci sa dany pacient dostavi
+		 * alebo nie.
+		 */
 		public void VygenerujNepridenych()
         {
 			_generatorNepridenychPacientov = new OSPRNG.UniformDiscreteRNG(5, 25, (MySim as VacCenterSimulation).GeneratorNasad);

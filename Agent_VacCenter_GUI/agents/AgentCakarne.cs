@@ -9,6 +9,10 @@ namespace agents
 	//meta! id="48"
 	public class AgentCakarne : Agent
 	{
+		/**
+		 * Agent cakaren reprezentuje model cakarne vo vakcinacnom centre. Obsahuje v sebe proces cakania, ktoremu agent po prichode zakaznika zasle
+		 * spravu a on okamzite vytvori spravu hold. Nachaddzaju sa tu aj atributy pre zber statistiky, ktorymi je pocet ludi v cakarni.
+		 */
 		public ProcessCakania ProcessCakania { get; private set; }
 		public WStat DlzkaRadu { get; private set; }
 		public int PocetLudiVCakarni { get; set; }

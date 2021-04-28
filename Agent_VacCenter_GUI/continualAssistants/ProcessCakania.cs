@@ -6,6 +6,10 @@ namespace continualAssistants
     //meta! id="54"
     public class ProcessCakania : Process
     {
+        /**
+         * Reprezentuje cakanie v cakarni. Obsahuje generator trvania. Ten generuje cislo od 0 po 1 v zavislosti od coho je sprava pozdrzana o 15 alebo 30 minut 
+         * simulacneho casu.
+         */
         private OSPRNG.UniformContinuousRNG _generatorTrvania;
         public ProcessCakania(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)

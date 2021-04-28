@@ -6,6 +6,10 @@ namespace continualAssistants
     //meta! id="124"
     public class ProcessJedenia : Process
     {
+        /**
+         * Reprezentuje proces jedenia pacientov. Obsahuje v sebe generator trojuholnikoveho rozdelenia s parametrami min=5, mod=15, max=30. V zavislosti od 
+         * vygenerovaneho cisla pozdrzi spravu na dany cas a po jeho uplynuti ju sam sebe posle.
+         */
         private OSPRNG.TriangularRNG _generatorTrvania = new OSPRNG.TriangularRNG(5 * 60, 15 * 60, 30 * 60);
         public ProcessJedenia(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)

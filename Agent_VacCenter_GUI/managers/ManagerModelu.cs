@@ -9,6 +9,9 @@ namespace managers
 	//meta! id="1"
 	public class ManagerModelu : Manager
 	{
+		/**
+         * Manazer agenta bossa, ktory sprostredkuje komunikaciu medzi okolim a vakcinacnym centrom. Zasiela spravy o inicializcii agentovi okolia.
+         */
 		public ManagerModelu(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{
@@ -17,7 +20,6 @@ namespace managers
 
 		override public void PrepareReplication()
 		{
-			Stopwatch sw = new Stopwatch();
 			base.PrepareReplication();
 			// Setup component for the next replication
 

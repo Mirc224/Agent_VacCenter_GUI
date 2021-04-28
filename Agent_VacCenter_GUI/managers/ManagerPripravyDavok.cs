@@ -9,6 +9,10 @@ namespace managers
 	//meta! id="83"
 	public class ManagerPripravyDavok : Manager
 	{
+		/**
+         * Manazuje pripravu davok pre sestricky. Posiela spravy procesu pripravy davok v pripade ak je dostupne miesto na pripravu vakcinacnej davky. 
+         * V pripade ak nie je, je sestricka zaradena do frontu.
+         */
 		public Queue<Sprava> Front { get; private set; }
 		public ManagerPripravyDavok(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)

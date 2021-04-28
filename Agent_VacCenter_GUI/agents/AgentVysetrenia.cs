@@ -12,6 +12,10 @@ namespace agents
 	//meta! id="5"
 	public class AgentVysetrenia : BaseAgentPracoviska
 	{
+		/**
+		 * Symbolizuje vyetrenie v ramci modelu vakcinacneho centra. Potomok triedy base agent pracoviska, ktory na viac obsahuje proces vysetrenia. Tomuto prcoesu
+		 * agent zasle spravu v momente, ked je volny niektory z pracovnikov pracoviska. Ak ziaden nie je volny, je sprava zaradena do frontu.
+		 */
 		public ProcessVysetrenia ProcessVysetrenia { get; private set; }
 		public AgentVysetrenia(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -19,7 +23,6 @@ namespace agents
 			Init();
 			PocetPracovnikov = 6;
 			LokaciaPracoviska = Lokacie.MiestnostVysetrenie;
-			//InicializaciaPredSimulaciou(Lokacie.MiestnostVysetrenie);
 		}
 
 		override public void PrepareReplication()

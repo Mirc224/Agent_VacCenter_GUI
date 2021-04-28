@@ -9,6 +9,10 @@ namespace agents
 	//meta! id="83"
 	public class AgentPripravyDavok : Agent
 	{
+		/**
+		 * Reprezentuje miestnost na pripravu vakcinacnych davok pre sestricky. Obsahuje process naplnania davok, ktoremu agent zasle spravu, hned ako je volne
+		 * nejake miesto na pripravu latky. Obshuje taktiez atributy pre zber statistik.
+		 */
 		public int MaxPocetVolnych { get; set; } = 2;
 		public int PocetVolnych { get; set; } = 0;
 		public bool ObsluhaVolna { get => PocetVolnych > 0; }

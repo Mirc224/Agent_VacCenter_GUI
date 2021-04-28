@@ -8,6 +8,10 @@ namespace continualAssistants
     //meta! id="90"
     public class ProcessNaplnaniaDavok : Process
     {
+        /**
+         * Reprezentuje prcoes naplnania davok sestrickami. Ak je volne miesto na prirpavu vakcinacnych davok, je pre sestricku postupne vygenerovanych tolko 
+         * casov trvania, kolko je jej maximalny pocet striekaciek. Generator ma trojuholnikove rozdelenie pravdepodobnosti s hodnotami min=6, mod=10 a max = 40.
+         */
         private OSPRNG.TriangularRNG _generatorTrvania;
         public ProcessNaplnaniaDavok(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)

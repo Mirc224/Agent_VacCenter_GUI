@@ -8,6 +8,10 @@ namespace continualAssistants
     //meta! id="67"
     public class ProcessPresunu : Process
     {
+        /**
+         * Prcoes predstavuje presun entit v modeli. Obsahuje generator trvania prechodu pre kazdu trasu, ktorou sa entity mozu pohybovat. Po prichode spravy
+         * sa na zaklade cielovej lokacie vyberie spravny generator a sprava sa pozdrzi na vygenerovany cas.
+         */
         private OSPRNG.UniformContinuousRNG _generatorTrvaniaPrechoduVysetrenie = new OSPRNG.UniformContinuousRNG(40, 90);
         private OSPRNG.UniformContinuousRNG _generatorTrvaniaPrechoduOckovanie = new OSPRNG.UniformContinuousRNG(20, 45);
         private OSPRNG.UniformContinuousRNG _generatorTrvaniaPrechoduCakaren = new OSPRNG.UniformContinuousRNG(45, 110);

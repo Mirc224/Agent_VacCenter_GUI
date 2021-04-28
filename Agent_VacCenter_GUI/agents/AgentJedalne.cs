@@ -7,6 +7,10 @@ namespace agents
 	//meta! id="117"
 	public class AgentJedalne : Agent
 	{
+		/**
+		 * Agent jedalne symbolizuje jedalen vakcinacneho centra. Tu chodia pracovnici po tom, ked sa simulacny cas prehupne cez hranicu od kedy pracovnici na niektorom
+		 * z pracovisiek mozu chodit na obed. Obsahuje process jedenia, s ktorym agent okamzite po prichode spravy s pracovnikom komunikuje.
+		 */
 		public ProcessJedenia ProcessJedenia { get; set; }
 		public AgentJedalne(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)

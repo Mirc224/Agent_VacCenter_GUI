@@ -7,6 +7,10 @@ namespace agents
     //meta! id="3"
     public class AgentVakCentra : Agent
     {
+        /**
+         * Zastresuje cele vakcinacne centrum, zabezpecuje posielanie sprav na presuny entit v modeli. Zabezpecuje koordinaciu pacientov, aby navstevovali jednotlive
+         * ukony v takom poradi ako je potrebne.
+         */
         public AgentVakCentra(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)
         {

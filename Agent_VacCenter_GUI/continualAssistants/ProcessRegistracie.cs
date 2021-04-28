@@ -6,6 +6,9 @@ namespace continualAssistants
     //meta! id="31"
     public class ProcessRegistracie : Process
     {
+        /**
+         * Reprezentuje proces registracie pacienta. Po jeho prichode je vygenerovny cas trvania, na ktory je sprava pozdrzana a opatovne zaslana.
+         */
         private OSPRNG.UniformContinuousRNG _generatorTrvania;
         public ProcessRegistracie(int id, Simulation mySim, CommonAgent myAgent) :
             base(id, mySim, myAgent)

@@ -10,6 +10,9 @@ namespace Agent_VacCenter_GUI.model
 {
     public abstract class BaseSchedulerObedov: Scheduler
     {
+        /**
+         * Predok pre schedulery obedov na pracoviskach.
+         */
         public int Hodina { get; protected set; } = 0;
         public int Minuta { get; protected set; } = 0;
         public int Sekunda { get; protected set; } = 0;

@@ -14,6 +14,10 @@ namespace entities
     }
     public class Pracovnik: StavovaEntita
     {
+        /**
+         * Entita reprezentujuca pracovnika. Obsahuje atributy nesuce informacie o jeho stave, type, pracovisku ako aj jeho statisiky o vytazeni a dalsie
+         * pomocne atributy, ktore su potrebne pre vypocet statistik.
+         */
         public TypPracovnika TypPracovnika { get; set; }
         public int IDPracovnika { get; set; }
         public bool Obedoval { get; set; } = false;

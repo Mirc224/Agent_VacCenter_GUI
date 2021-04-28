@@ -12,6 +12,10 @@ namespace agents
     //meta! id="6"
     public class AgentOckovania : BaseAgentPracoviska
     {
+        /**
+         * Reprezentuje pracovisko ockovania. Je potomkom triedy base agent pracoviska, ktory obsahuje spolocne atributy a metody, ktore su zhodne pre vsetky pracoviska.
+         * Obsahuje v sebe process ockovania. S nim komunikuje vtedy, ak je volna obluha, inak je sprava zaradena do frontu.
+         */
         public ProcessOckovania ProcessOckovania { get; private set; }
         public AgentOckovania(int id, Simulation mySim, Agent parent) :
             base(id, mySim, parent)

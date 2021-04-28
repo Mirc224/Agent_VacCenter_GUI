@@ -7,6 +7,10 @@ namespace agents
 	//meta! id="60"
 	public class AgentPresunu : Agent
 	{
+		/**
+		 * Agent ktory zabezpecuje presuny entit v modeli. Umoznuje presuvat pacientov medzi jednotlivymi pracoviskami. Pracovnikov presuva medzi jedalnou a
+		 * svojim pracoviskom, pripadne dalsimi miestnostami potrebnymi na vykonanie ockovania.
+		 */
 		public ProcessPresunu ProcessPresunu { get; private set; }
 		public AgentPresunu(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)

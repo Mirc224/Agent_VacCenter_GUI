@@ -11,6 +11,11 @@ namespace managers
     //meta! id="6"
     public class ManagerOckovania : BaseManagerPracoviska
     {
+        /**
+         * Koordinuje pacienta v ockovacej miestnosti. Ak je volny pracovnik, zasle pacienta na obsluhu. V pripade ak volny nie je, zaradeny do cakacieho frontu,
+         * odkial su pacienti postupne vyberani. Po spracovani kazdeho pacienta kontroluje ci je pocet striekaciek u sestricky vacsi ako 0 a v pripade ak nie,
+         * posiela ju agentovi pripravy davok, kde si striekacky naplni.
+         */
         public ManagerOckovania(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -42,7 +47,6 @@ namespace managers
             if(sestricka.PocetNaplnenych > 0)
             {
                 DokonceniePracePracovnikom(sestricka);
-                //AkCakaSpracujDalsieho();
             }
             else
             {
@@ -58,7 +62,6 @@ namespace managers
         public void ProcessNaplnStriekacky(MessageForm message)
         {
             DokonceniePracePracovnikom((message as Sprava).Pracovnik);
-            //AkCakaSpracujDalsieho();
         }
 
        

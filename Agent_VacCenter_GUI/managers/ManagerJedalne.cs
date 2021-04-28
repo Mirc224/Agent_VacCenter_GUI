@@ -7,6 +7,9 @@ namespace managers
 	//meta! id="117"
 	public class ManagerJedalne : Manager
 	{
+		/**
+         * Stara sa o vykonanie obedov pracovnikov. Po ich prichode posiela spravy procesu jedenia.
+         */
 		public ManagerJedalne(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{

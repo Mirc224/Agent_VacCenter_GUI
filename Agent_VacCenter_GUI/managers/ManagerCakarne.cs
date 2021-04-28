@@ -7,6 +7,10 @@ namespace managers
     //meta! id="48"
     public class ManagerCakarne : Manager
     {
+        /**
+         * Stara sa o cakaren. Zasiela spravy procesu cakania ked dorazi pacient z ockovania a po skonceni cakania posle spravu agentovi vakcinacneho centra
+         * o odchode pacienta.
+         */
         public ManagerCakarne(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {

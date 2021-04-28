@@ -12,6 +12,9 @@ namespace Agent_VacCenter_GUI.model
 {
     public abstract class BaseManagerPracoviska : OSPABA.Manager
     {
+        /**
+         * Predstavuje predka manazera vsetkych pracovisk. Nachadzaju sa tu metody pre naplanovanie obsluhy pacientov a odchodov na obed.
+         */
         public Queue<Sprava> Front { get; protected set; }
         public BaseManagerPracoviska(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
@@ -23,7 +26,6 @@ namespace Agent_VacCenter_GUI.model
             {
                 var sprava = Front.Dequeue();
                 double dobaCakania = MySim.CurrentTime - sprava.ZaciatokObsluhy;
-                //sprava.Pacient.CelkovaDobaCakania += dobaCakania;
                 switch(MyAgent.LokaciaPracoviska)
                 {
                     case Lokacie.MiestnostRegistracia:
@@ -49,10 +51,9 @@ namespace Agent_VacCenter_GUI.model
             var pracovnik = MyAgent.DajVolnehoPracovnika();
             ++MyAgent.PocetPracujucich;
             pracovnik.Utilization.AddSample(1);
-            MyAgent.VytazeniePracovnikov.AddSample(MyAgent.PocetPracujucich);
+            MyAgent.VytazeniePracovnikov.AddSample((double)MyAgent.PocetPracujucich/(MyAgent.PocetPracovnikov - MyAgent.PocetObedujucich));
             pracovnik.ZaciatokObsluhovania = MySim.CurrentTime;
             MyAgent.DostupniPracovnici.Set(pracovnik.IDPracovnika, false);
-            //pracovnik.Nedostupny = true;
             ((Sprava)message).Pracovnik = pracovnik;
         }
 
@@ -62,7 +63,7 @@ namespace Agent_VacCenter_GUI.model
             pracovnik.Utilization.AddSample(0);
             --MyAgent.PocetPracujucich;
             pracovnik.Stav = "Nečinný";
-            MyAgent.VytazeniePracovnikov.AddSample(MyAgent.PocetPracujucich);
+            MyAgent.VytazeniePracovnikov.AddSample((double)MyAgent.PocetPracujucich / (MyAgent.PocetPracovnikov - MyAgent.PocetObedujucich));
 
             SkusPoslatNaObedAleboObsluzDalsieho(pracovnik);
             
@@ -79,7 +80,6 @@ namespace Agent_VacCenter_GUI.model
 
             if(MyAgent.PocetUzNajedenychPracovnikov < MyAgent.PocetPracovnikov && MyAgent.JeCasObeda)
             {
-                //var zamestnanciNaObed = new List<Pracovnik>(MyAgent.MaxPocetPracovnikov);
                 var dostupniPracovnici = MyAgent.DostupniPracovniciList;
                 dostupniPracovnici.Clear();
                 var dostupniNenajedeni = new BitArray(MyAgent.DostupniPracovnici);
@@ -111,7 +111,6 @@ namespace Agent_VacCenter_GUI.model
                     SkustPoslatPracovnikaNaObed(dostupniPracovnici[index]);
                     dostupniPracovnici.RemoveAt(index);
                 }
-                
             }
         }
 

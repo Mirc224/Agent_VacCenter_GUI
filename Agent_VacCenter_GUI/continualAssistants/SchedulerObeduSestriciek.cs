@@ -8,6 +8,9 @@ namespace continualAssistants
 	//meta! id="136"
 	public class SchedulerObeduSestriciek : BaseSchedulerObedov
 	{
+		/**
+         * Planovac obedov pre zdravotne sestry. V nastavenom case zasle spravu agentovi o tom, ze nastal cas obeda a pracovnici mozu zacat chodit na obed.
+         */
 		public SchedulerObeduSestriciek(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{

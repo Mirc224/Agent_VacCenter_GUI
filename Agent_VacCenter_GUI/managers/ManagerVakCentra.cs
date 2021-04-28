@@ -9,6 +9,9 @@ namespace managers
     //meta! id="3"
     public class ManagerVakCentra : Manager
     {
+        /**
+         * Stara sa o planovanie presunov entit a koordinuje ukony a poradie v ktorom ich prideny pacient musi vykonat.
+         */
         public ManagerVakCentra(int id, Simulation mySim, Agent myAgent) :
             base(id, mySim, myAgent)
         {
@@ -32,8 +35,6 @@ namespace managers
 
             message.Addressee = ((VacCenterSimulation)MySim).AgentRegistracie;
             message.Code = Mc.ZaregistrujPacienta;
-
-            //var spravaPresunu = NaplanujPresun(EntitySimulacie.Pacient, Lokacie.MiestnostRegistracia, message as Sprava);
 
             Request(message);
         }
